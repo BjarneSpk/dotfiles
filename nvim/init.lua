@@ -1,2 +1,2 @@
-require("bjarnespk")
+require("config.core")
 require("config.lazy")
