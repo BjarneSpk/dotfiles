@@ -23,7 +23,7 @@ return {
     dependencies = { {'nvim-lua/plenary.nvim'} }
   },
   'mbbill/undotree',
-  'tpope/vim-fugitive',
+
   'neovim/nvim-lspconfig',
   'williamboman/mason.nvim',
   'williamboman/mason-lspconfig.nvim',
@@ -34,5 +34,15 @@ return {
   'saadparwaiz1/cmp_luasnip',
   'L3MON4D3/LuaSnip',
   'rafamadriz/friendly-snippets',
-  'ellisonleao/gruvbox.nvim',
+
+  {
+      "NeogitOrg/neogit",
+      dependencies = {
+          "nvim-lua/plenary.nvim",         -- required
+          "sindrets/diffview.nvim",        -- optional - Diff integration
+
+          "nvim-telescope/telescope.nvim", 
+      },
+      config = true
+  }
 }
