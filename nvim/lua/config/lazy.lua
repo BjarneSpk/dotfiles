@@ -8,6 +8,7 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     { import = "config.plugins" },
+    { import = "config.plugins.colors" },
   },
   -- Configure any other settings here. See the documentation for more details.
   install = { colorscheme = { "habamax" } },

@@ -18,7 +18,18 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
 
-require('mason').setup({})
+require('mason').setup({
+			ui = {
+				width = 0.95,
+				height = 0.8,
+				border = "rounded",
+				icons = {
+					package_installed = "✓",
+					package_pending = "󰁔",
+					package_uninstalled = "✗",
+				},
+			},
+		})
 require('mason-lspconfig').setup({
   ensure_installed = {'rust_analyzer'},
   handlers = {
