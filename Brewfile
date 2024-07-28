@@ -1,25 +1,16 @@
 tap "homebrew/bundle"
-# Core application library for C
 brew "glib"
-# Vector graphics library with cross-device output support
 brew "cairo"
-# Command-line fuzzy finder written in Go
 brew "fzf"
-# Distributed revision control system
 brew "git"
-# OpenType text shaping engine
 brew "harfbuzz"
-# Development kit for the Java programming language
+brew "lazygit"
 brew "openjdk"
-# Java-based project management
 brew "maven"
-# Ambitious Vim-fork focused on extensibility and agility
 brew "neovim"
-# Search tool like grep and The Silver Searcher
 brew "ripgrep"
-# Terminal multiplexer
 brew "tmux"
-# Terminal emulator as alternative to Apple's Terminal app
+cask "font-symbols-only-nerd-font"
 cask "iterm2"
 vscode "adpyke.codesnap"
 vscode "davidanson.vscode-markdownlint"
