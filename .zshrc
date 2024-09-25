@@ -43,7 +43,7 @@ export FZF_DEFAULT_OPTS="
 # DISABLE_MAGIC_FUNCTIONS="true"
 
 # Uncomment the following line to disable colors in ls.
-DISABLE_LS_COLORS="true"
+DISABLE_LS_COLORS="false"
 
 # Uncomment the following line to disable auto-setting terminal title.
 # DISABLE_AUTO_TITLE="true"
@@ -122,8 +122,3 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim="nvim"
-alias py="python3"
-alias vimf='nvim $(fzf --algo=v1 --preview="bat --theme=ansi --color=always --style=numbers --line-range=:500 {}")'
-alias openf='open $(fzf --algo=v1 --preview="bat --theme=ansi --color=always --style=numbers --line-range=:500 {}")'
-alias ex="y"
