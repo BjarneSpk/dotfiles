@@ -3,6 +3,9 @@
 -- Add any additional keymaps here
 vim.keymap.set("n", "<leader><cr>", "a<CR><Esc>")
 
+vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Block Down" })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Block Up" })
+
 vim.keymap.set("n", "<leader>o", "o<Esc>k")
 vim.keymap.set("n", "<leader>O", "O<Esc>k")
 
@@ -21,11 +24,11 @@ vim.keymap.set("n", "<leader>%", "<C-W>v", { desc = "Split Window Right", remap 
 
 -- change [] to öä
 local diagnostic_goto = function(next, severity)
-  local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
-  severity = severity and vim.diagnostic.severity[severity] or nil
-  return function()
-    go({ severity = severity })
-  end
+    local go = next and vim.diagnostic.goto_next or vim.diagnostic.goto_prev
+    severity = severity and vim.diagnostic.severity[severity] or nil
+    return function()
+        go({ severity = severity })
+    end
 end
 
 vim.keymap.del("n", "]b")
