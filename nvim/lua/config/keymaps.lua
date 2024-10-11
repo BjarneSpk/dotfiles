@@ -1,19 +1,21 @@
 -- Keymaps are automatically loaded on the VeryLazy event
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
--- Add any additional keymaps here
 vim.keymap.set("n", "<leader><cr>", "a<CR><Esc>")
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move Block Down" })
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move Block Up" })
 
-vim.keymap.set("n", "<leader>o", "o<Esc>k")
-vim.keymap.set("n", "<leader>O", "O<Esc>k")
+vim.keymap.set("n", "<leader>o", "mzo<Esc>`z")
+vim.keymap.set("n", "<leader>O", "mzO<Esc>`z")
 
 vim.keymap.set("n", "J", "mzJ`z")
 
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set({ "x", "n", "v" }, "<leader>p", [["_dP]])
 
-vim.keymap.set({ "i", "n", "v" }, "<C-c>", "<Esc>")
+vim.keymap.set({ "x", "n", "v" }, "<leader>d", [["_d]])
+vim.keymap.set({ "x", "n", "v" }, "<leader>x", [["_x]])
+
+vim.keymap.set({ "i", "x", "n", "v" }, "<C-c>", "<Esc>")
 
 vim.keymap.set("n", "Q", "<nop>")
 
@@ -31,8 +33,7 @@ local diagnostic_goto = function(next, severity)
     end
 end
 
-vim.keymap.del("n", "]b")
-vim.keymap.del("n", "[b")
+vim.keymap.del({ "i", "x", "n", "v" }, "<C-s>")
 
 vim.keymap.del("n", "]q")
 vim.keymap.del("n", "[q")
@@ -46,9 +47,6 @@ vim.keymap.del("n", "]w")
 
 vim.keymap.del("n", "<leader><tab>[")
 vim.keymap.del("n", "<leader><tab>]")
-
-vim.keymap.set("n", "öb", "<cmd>bprevious<cr>", { desc = "Prev Buffer" })
-vim.keymap.set("n", "äb", "<cmd>bnext<cr>", { desc = "Next Buffer" })
 
 vim.keymap.set("n", "öq", vim.cmd.cprev, { desc = "Previous Quickfix" })
 vim.keymap.set("n", "äq", vim.cmd.cnext, { desc = "Next Quickfix" })

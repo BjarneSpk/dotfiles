@@ -32,9 +32,9 @@ return {
         end,
         keys = {
             {
-                "<leader>-",
+                "-",
                 "<CMD>Oil --float<CR>",
-                mode = { "n" },
+                mode = { "n", "v" },
                 desc = "Open parent directory",
             },
         },

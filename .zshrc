@@ -88,7 +88,7 @@ source $ZSH/oh-my-zsh.sh
 # User configuration
 
 # Makes Yazi change into cwd when called with 'y' and exited with 'q'
-function y() {
+function ex() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
 	yazi "$@" --cwd-file="$tmp"
 	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
@@ -101,6 +101,7 @@ function y() {
 
 export LANG=en_US.UTF-8
 
+setopt HIST_IGNORE_SPACE
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
 #   export EDITOR='vim'
@@ -122,3 +123,4 @@ export LANG=en_US.UTF-8
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+eval "$(zoxide init zsh)"
