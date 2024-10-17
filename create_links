@@ -7,3 +7,4 @@ ln -s ~/.dotfiles/.tmux.conf ~/.tmux.conf
 ln -s ~/.dotfiles/yazi ~/.config/yazi
 ln -s ~/.dotfiles/aliases.zsh ~/.oh-my-zsh/custom/aliases.zsh
 ln -s ~/.dotfiles/kitty ~/.config/kitty
+ln -s ~/.dotfiles/bat ~/.config/bat

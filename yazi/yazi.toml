@@ -1,2 +1,4 @@
 [manager]
+scrolloff = 8
 show_hidden = true
+sort_by = "modified"
