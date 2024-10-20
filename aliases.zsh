@@ -4,6 +4,10 @@ alias mv="mv -i"
 alias cp="cp -i"
 alias rm="trash"
 alias server="ssh bjarne@188.245.73.235"
+alias ls="eza"
+alias tree="eza --tree"
+alias la="ls -AH"
+alias ll="ls -lAH"
 
 vimf() {
     local file=$(fzf --algo=v1 --preview="bat --theme=ansi --color=always --style=numbers --line-range=:500 {}")
