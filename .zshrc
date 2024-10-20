@@ -1,10 +1,12 @@
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-export JAVA_HOME=$(/usr/libexec/java_home -v 17.0.2)
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+export HISTSIZE=10000
 export EDITOR=nvim
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
@@ -21,10 +23,24 @@ export FZF_DEFAULT_OPTS="
 	--color=spinner:#f6c177,info:#9ccfd8
 	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
 export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude "{.git,.DS_Store}"'
+
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+  --preview 'bat -n --color=always {}'"
+
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
+# Print tree structure in the preview window
+export FZF_ALT_C_OPTS="
+  --preview 'eza --tree --color=always {} | head -200'"
 # needed for alt c to work
 bindkey "ç" fzf-cd-widget
+# CTRL-Y to copy the command into clipboard using pbcopy
+#
+export FZF_CTRL_R_OPTS="
+  --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
+  --color header:italic
+  --header 'Press CTRL-Y to copy command into clipboard'"
 
 # Use fd (https://github.com/sharkdp/fd) for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal
@@ -46,7 +62,7 @@ _fzf_comprun() {
   shift
 
   case "$command" in
-    cd)           fzf --preview 'tree -C {} | head -200'   "$@" ;;
+    cd)           fzf --preview 'eza --tree --color=always {} | head -200'   "$@" ;;
     export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                   "$@" ;;
     *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
