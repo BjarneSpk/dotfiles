@@ -32,7 +32,7 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 # Print tree structure in the preview window
 export FZF_ALT_C_OPTS="
-  --preview 'eza --tree --color=always {} | head -200'"
+  --preview 'eza --tree --level=2 --color=always {} | head -200'"
 # needed for alt c to work
 bindkey "ç" fzf-cd-widget
 # CTRL-Y to copy the command into clipboard using pbcopy
@@ -46,12 +46,12 @@ export FZF_CTRL_R_OPTS="
 # - The first argument to the function ($1) is the base path to start traversal
 # - See the source code (completion.{bash,zsh}) for the details.
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+    fd --hidden --follow --exclude "{.git,.DS_Store}" . "$1"
 }
 
 # Use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  fd --type d --hidden --follow --exclude "{.git,.DS_Store}" . "$1"
 }
 
 # Advanced customization of fzf options via _fzf_comprun function
@@ -62,7 +62,7 @@ _fzf_comprun() {
   shift
 
   case "$command" in
-    cd)           fzf --preview 'eza --tree --color=always {} | head -200'   "$@" ;;
+    cd)           fzf --preview 'eza --tree --level=2 --color=always {} | head -200'   "$@" ;;
     export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                   "$@" ;;
     *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
@@ -130,7 +130,10 @@ DISABLE_LS_COLORS="false"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(
+    git
+    fzf-tab
+)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -176,3 +179,6 @@ setopt HIST_IGNORE_SPACE
 source <(fzf --zsh)
 
 eval "$(zoxide init zsh)"
+
+# Destroys the fzf **<tab> feature
+# bindkey -v
