@@ -10,7 +10,7 @@ vim.keymap.set("n", "<leader>O", "mzO<Esc>`z")
 
 vim.keymap.set("n", "J", "mzJ`z")
 
-vim.keymap.set({ "x", "n", "v" }, "<leader>p", [["_dP]])
+vim.keymap.set("x", "<leader>p", [["_dP]])
 
 vim.keymap.set({ "x", "n", "v" }, "<leader>d", [["_d]])
 vim.keymap.set({ "x", "n", "v" }, "<leader>x", [["_x]])
@@ -21,8 +21,8 @@ vim.keymap.set("n", "Q", "<nop>")
 
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
-vim.keymap.set("n", '<leader>"', "<C-W>s", { desc = "Split Window Below", remap = true })
-vim.keymap.set("n", "<leader>%", "<C-W>v", { desc = "Split Window Right", remap = true })
+vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
+vim.keymap.set("n", "<leader>/", "<C-W>v", { desc = "Split Window Right", remap = true })
 
 -- change [] to öä
 local diagnostic_goto = function(next, severity)

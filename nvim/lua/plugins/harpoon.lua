@@ -18,10 +18,9 @@ return {
                 desc = "Harpoon Quick Menu",
             },
         }
-
         for i = 1, 5 do
             table.insert(keys, {
-                "<leader>" .. i + 5,
+                "<leader>" .. i,
                 function()
                     require("harpoon"):list():select(i)
                 end,
