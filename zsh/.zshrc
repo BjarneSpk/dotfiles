@@ -1,13 +1,8 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:$HOME/.local/bin:/usr/local/bin:$PATH
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
-
 # Path to your Oh My Zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
-export HISTSIZE=10000
-export EDITOR=nvim
+setopt HIST_IGNORE_SPACE
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time Oh My Zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -70,11 +65,6 @@ _fzf_comprun() {
 }
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
@@ -114,13 +104,11 @@ DISABLE_LS_COLORS="false"
 # much, much faster.
 # DISABLE_UNTRACKED_FILES_DIRTY="true"
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
 # You can set one of the optional three formats:
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -150,8 +138,6 @@ function ex() {
 }
 
 # export MANPATH="/usr/local/man:$MANPATH"
-
-export LANG=en_US.UTF-8
 
 setopt HIST_IGNORE_SPACE
 # Preferred editor for local and remote sessions
