@@ -31,6 +31,7 @@ declare -A files=(
   ["~/dotfiles/zsh/aliases.zsh"]="~/.oh-my-zsh/custom/aliases.zsh"
   ["~/dotfiles/kitty"]="~/.config/kitty"
   ["~/dotfiles/bat"]="~/.config/bat"
+  ["~/dotfiles/aerospace"]="~/.config/aerospace"
 )
 
 # Iterate through the array and create symlinks
