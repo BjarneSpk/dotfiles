@@ -1,4 +1,13 @@
 [manager]
 scrolloff = 8
+
 show_hidden = true
-sort_by = "modified"
+
+sort_by = "btime"
+sort_reverse = true
+
+linemode = "size_and_mtime"
+
+
+[preview]
+wrap = "yes"
