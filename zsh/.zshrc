@@ -161,10 +161,14 @@ setopt HIST_IGNORE_SPACE
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Some homebrew stuff 
+autoload -Uz compinit
+compinit
+
+# Destroys the fzf **<tab> feature
+# bindkey -v
 #
 source <(fzf --zsh)
 
 eval "$(zoxide init zsh)"
-
-# Destroys the fzf **<tab> feature
-# bindkey -v
