@@ -28,7 +28,6 @@ declare -A files=(
   ["~/dotfiles/nvim"]="~/.config/nvim"
   ["~/dotfiles/.tmux.conf"]="~/.tmux.conf"
   ["~/dotfiles/yazi"]="~/.config/yazi"
-  ["~/dotfiles/zsh/aliases.zsh"]="~/.oh-my-zsh/custom/aliases.zsh"
   ["~/dotfiles/kitty"]="~/.config/kitty"
   ["~/dotfiles/bat"]="~/.config/bat"
   ["~/dotfiles/aerospace"]="~/.config/aerospace"

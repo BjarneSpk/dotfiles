@@ -4,7 +4,6 @@
 
 - Install [TPM](https://github.com/tmux-plugins/tpm)
 - Install [Homebrew](https://brew.sh)
-- Install [ohmyzsh](https://github.com/ohmyzsh/ohmyzsh)
 
 ## Installation
 
