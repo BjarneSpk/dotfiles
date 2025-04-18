@@ -2,7 +2,7 @@
 
 ## Prerequisites
 
-- Install [TPM](https://github.com/tmux-plugins/tpm)
+- Install [TPM](https://github.com/tmux-plugins/tpm) to ~/.config/tmux
 - Install [Homebrew](https://brew.sh)
 
 ## Installation
