@@ -20,4 +20,4 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>s", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 vim.keymap.set("n", "<leader>-", "<C-W>s", { desc = "Split Window Below", remap = true })
-vim.keymap.set("n", "<leader>\\", "<C-W>v", { desc = "Split Window Right", remap = true })
+vim.keymap.set("n", "<leader>/", "<C-W>v", { desc = "Split Window Right", remap = true })
