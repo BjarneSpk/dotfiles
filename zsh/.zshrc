@@ -1,7 +1,6 @@
 PROMPT=' %F{#f6c177}%n%f %F{#ebbcba}%1~%f %F{#524f67}%#%f '
 
 export LS_COLORS="di=38;2;235;188;186:fi=38;2;49;116;143:ln=38;2;235;111;146:*.=38;2;156;207;216"
-export XDG_CONFIG_HOME="$HOME/.config"
 
 # Set up fzf key bindings and fuzzy completion
 # disable ctrl t
@@ -20,8 +19,7 @@ export FZF_CTRL_T_OPTS="
 
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 # Print tree structure in the preview window
-export FZF_ALT_C_OPTS="
-  --preview 'eza --tree --level=2 --color=always {} | head -200'"
+export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {} | head -200'"
 # needed for alt c to work
 bindkey "ç" fzf-cd-widget
 # CTRL-Y to copy the command into clipboard using pbcopy
@@ -52,15 +50,13 @@ _fzf_comprun() {
 
   case "$command" in
     cd)           fzf --preview 'eza --tree --level=2 --color=always {} | head -200'   "$@" ;;
-    export|unset) fzf --preview "eval 'echo \$'{}"         "$@" ;;
+    export|unset) fzf --preview "eval 'echo \${}'"         "$@" ;;
     ssh)          fzf --preview 'dig {}'                   "$@" ;;
     *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
   esac
 }
 
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-DISABLE_LS_COLORS="false"
 
 HIST_STAMPS="mm/dd/yyyy"
 
@@ -74,17 +70,11 @@ function ex() {
 	rm -f -- "$tmp"
 }
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
 setopt HIST_IGNORE_SPACE
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-#
+
 source ~/dotfiles/zsh/aliases.zsh
+
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
 # Some homebrew stuff 
 autoload -Uz compinit
