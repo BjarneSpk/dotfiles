@@ -2,7 +2,6 @@
 
 ## Prerequisites
 
-- Install [TPM](https://github.com/tmux-plugins/tpm) to ~/.config/tmux
 - Install [Homebrew](https://brew.sh)
 
 ## Installation
@@ -11,6 +10,7 @@
 
 ```sh
 git clone https://github.com/BjarneSpk/dotfiles.git
+git clone https://github.com/tmux-plugins/tmux-yank ~/.config/tmux/plugins/tmux-yank
 ```
 
 2.
