@@ -18,6 +18,9 @@ return {
                 },
             },
         },
+        explorer = {
+            replace_netrw = false,
+        },
         dashboard = {
             preset = {
                 header = [[
