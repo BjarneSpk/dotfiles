@@ -10,7 +10,6 @@
 
 ```sh
 git clone https://github.com/BjarneSpk/dotfiles.git
-git clone https://github.com/tmux-plugins/tmux-yank ~/.config/tmux/plugins/tmux-yank
 ```
 
 2.
