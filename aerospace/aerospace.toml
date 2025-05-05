@@ -27,6 +27,9 @@ run = 'layout floating'
 1 = 'built-in'  # Case insensitive regex substring
 2 = 'secondary' # Non-main monitor in case when there are only two monitors
 
+[gaps]
+    outer.bottom = -1
+
 [mode.main.binding]
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
