@@ -9,7 +9,7 @@
 1.
 
 ```sh
-git clone https://github.com/BjarneSpk/dotfiles.git
+git clone https://github.com/BjarneSpk/dotfiles.git ${HOME}
 ```
 
 2.
@@ -21,7 +21,7 @@ git clone https://github.com/BjarneSpk/dotfiles.git
 3.
 
 ```sh
-brew bundle --file ~/dotfiles/Brewfile
+brew bundle --file "${DOTFILES}/Brewfile"
 ```
 
 ## Bundle packages
