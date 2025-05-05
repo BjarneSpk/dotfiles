@@ -8,7 +8,7 @@ vim.opt.expandtab = true
 
 vim.opt.swapfile = false
 vim.opt.backup = false
-vim.opt.undodir = os.getenv("HOME") .. "/.vim/undodir"
+vim.opt.undodir = os.getenv("XDG_DATA_HOME") .. "/undodir"
 vim.opt.scrolloff = 8
 
 vim.g.snacks_animate = false
