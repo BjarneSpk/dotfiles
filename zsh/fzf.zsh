@@ -1,9 +1,6 @@
-PROMPT=' %F{#f6c177}%n%f %F{#ebbcba}%1~%f %F{#524f67}%#%f '
-
-export LS_COLORS="di=38;2;235;188;186:fi=38;2;49;116;143:ln=38;2;235;111;146:*.=38;2;156;207;216"
+#!/usr/bin/env zsh
 
 # Set up fzf key bindings and fuzzy completion
-# disable ctrl t
 export FZF_DEFAULT_OPTS="
 	--color=fg:#908caa,bg:#191724,hl:#ebbcba
 	--color=fg+:#e0def4,bg+:#26233a,hl+:#ebbcba
@@ -20,10 +17,9 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 # Print tree structure in the preview window
 export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {} | head -200'"
-# needed for alt c to work
-bindkey "ç" fzf-cd-widget
-# CTRL-Y to copy the command into clipboard using pbcopy
-#
+
+# needed for alt c to work, ugly workaround, fixed by kitty settings to use right option as alt.
+# bindkey "ç" fzf-cd-widget
 export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
@@ -47,7 +43,6 @@ _fzf_compgen_dir() {
 _fzf_comprun() {
   local command=$1
   shift
-
   case "$command" in
     cd)           fzf --preview 'eza --tree --level=2 --color=always {} | head -200'   "$@" ;;
     export|unset) fzf --preview "eval 'echo \${}'"         "$@" ;;
@@ -55,34 +50,3 @@ _fzf_comprun() {
     *)            fzf --preview 'bat -n --color=always {}' "$@" ;;
   esac
 }
-
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
-
-HIST_STAMPS="mm/dd/yyyy"
-
-# Makes Yazi change into cwd when called with 'y' and exited with 'q'
-function ex() {
-	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
-	yazi "$@" --cwd-file="$tmp"
-	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-		builtin cd -- "$cwd"
-	fi
-	rm -f -- "$tmp"
-}
-
-setopt HIST_IGNORE_SPACE
-
-source ~/dotfiles/zsh/aliases.zsh
-
-zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-# Some homebrew stuff 
-autoload -Uz compinit
-compinit
-
-# Destroys the fzf **<tab> feature
-# bindkey -v
-
-source <(fzf --zsh)
-
-eval "$(zoxide init zsh)"

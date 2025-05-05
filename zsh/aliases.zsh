@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 alias vim="nvim"
 alias py="python3"
 alias mv="mv -i"
@@ -19,6 +21,18 @@ mcd() {
 ff() {
     aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
 }
+
+
+# Makes Yazi change into cwd when called with 'y' and exited with 'q'
+function ex() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")"
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
+
 alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox,.venv,venv}'
 alias egrep='grep -E'
 alias fgrep='grep -F'
@@ -39,3 +53,6 @@ alias 8='cd -8'
 alias 9='cd -9'
 alias md='mkdir -p'
 alias rd=rmdir
+
+alias d='dirs -v'
+for index ({1..9}) alias "$index"="cd +${index}"; unset index
