@@ -1,0 +1,24 @@
+#!/usr/bin/env zsh
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
+
+export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
+
+export DOTFILES="$HOME/dotfiles"
+
+# Add cargo to PATH
+source "$HOME/.cargo/env"
+
+export JAVA_HOME=$(/usr/libexec/java_home -v 21)
+export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
+
+export EDITOR="/opt/homebrew/bin/nvim"
+export VISUAL="/opt/homebrew/bin/nvim"
+
+export LANG=en_US.UTF-8
+
+export HISTFILE="$ZDOTDIR/.zhistory"
+export HISTSIZE=10000
+export SAVEHIST=10000
