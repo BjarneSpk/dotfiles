@@ -18,6 +18,11 @@ run = 'layout floating'
 if.app-name-regex-substring = 'passwords'
 run = 'layout floating'
 
+[[on-window-detected]]
+    if.app-name-regex-substring = 'firefox'
+    if.window-title-regex-substring = 'extension'
+    run = 'layout floating'
+
 [workspace-to-monitor-force-assignment]
 1 = 'built-in'  # Case insensitive regex substring
 2 = 'secondary' # Non-main monitor in case when there are only two monitors
