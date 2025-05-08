@@ -1,3 +1,13 @@
 #!/usr/bin/env zsh
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+export LIBVA_DRIVER_NAME=iHD
+export VDPAU_DRIVER=va_gl
+export GBM_BACKEND=iris
+export __GLX_VENDOR_LIBRARY_NAME=mesa
+# export WLR_NO_HARDWARE_CURSORS=1
+# export WLR_RENDERER=vulkan
+
+if /usr/bin/uwsm check may-start; then
+    exec /usr/bin/uwsm start hyprland.desktop
+fi
+# eval "$(/opt/homebrew/bin/brew shellenv)"
