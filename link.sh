@@ -39,10 +39,9 @@ link() {
 
 source ./zsh/zshenv
 
-link "${DOTFILES}/zsh/zshrc" "${XDG_CONFIG_HOME}/zsh/.zshrc"
-link "${DOTFILES}/zsh/zprofile" "${XDG_CONFIG_HOME}/zsh/.zprofile"
+link "${DOTFILES}/zsh" "${XDG_CONFIG_HOME}/zsh"
 link "${DOTFILES}/zsh/zshenv" "${HOME}/.zshenv"
-link "${DOTFILES}/git/config" "${XDG_CONFIG_HOME}/git/config"
+link "${DOTFILES}/git" "${XDG_CONFIG_HOME}/git"
 link "${DOTFILES}/nvim" "${XDG_CONFIG_HOME}/nvim"
 link "${DOTFILES}/tmux" "${XDG_CONFIG_HOME}/tmux"
 link "${DOTFILES}/yazi" "${XDG_CONFIG_HOME}/yazi"
@@ -51,3 +50,4 @@ link "${DOTFILES}/bat" "${XDG_CONFIG_HOME}/bat"
 link "${DOTFILES}/aerospace" "${XDG_CONFIG_HOME}/aerospace"
 link "${DOTFILES}/hypr" "${XDG_CONFIG_HOME}/hypr"
 link "${DOTFILES}/uwsm" "${XDG_CONFIG_HOME}/uwsm"
+link "${DOTFILES}/waybar" "${XDG_CONFIG_HOME}/waybar"
