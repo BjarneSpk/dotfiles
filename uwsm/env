@@ -1,16 +1,23 @@
 # If using uwsm set env variables here or in ./env-hyprland (see https://wiki.hyprland.org/Useful-Utilities/Systemd-start/)
-export LIBVA_DRIVER_NAME=iHD
-export VDPAU_DRIVER=va_gl
-export GBM_BACKEND=i915
-# export GBM_BACKEND=iris
-export __GLX_VENDOR_LIBRARY_NAME=mesa
-export __NV_PRIME_RENDER_OFFLOAD=0
-export WLR_RENDERER=vulkan
+# export LIBVA_DRIVER_NAME=iHD
+# export VDPAU_DRIVER=va_gl
+# export GBM_BACKEND=i915
+# # export GBM_BACKEND=iris
+# export __GLX_VENDOR_LIBRARY_NAME=mesa
+# export __NV_PRIME_RENDER_OFFLOAD=0
+# export WLR_RENDERER=vulkan
+#
+# export MOZ_ENABLE_WAYLAND=1
+# export MOZ_DBUS_REMOTE=1
+# export MOZ_DISABLE_RDD_SANDBOX=1
+#
+# export XCURSOR_SIZE=24
+# export HYPRCURSOR_SIZE=24
 
-export MOZ_ENABLE_WAYLAND=1
-export MOZ_DBUS_REMOTE=1
-export MOZ_DISABLE_RDD_SANDBOX=1
+# vulkan config
+export ANV_VIDEO_DECODE=1
+# vaapi config
+export LIBVA_DRIVER_NAME=iHD
 
 export XCURSOR_SIZE=24
 export HYPRCURSOR_SIZE=24
-
