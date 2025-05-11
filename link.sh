@@ -14,9 +14,8 @@ link() {
     print -P "Choose an option:"
     print -P "1) Replace (backup old file to ${link}.bak)"
     print -P "2) Skip this link"
-    print -P "3) Abort operation"
     while true; do
-      read -k "choice?Your choice [1/2/3]: "
+      read -k "choice?Your choice [1/2]: "
       case $choice in
         1)
           print "\nBacking up existing file and creating new link"
@@ -27,10 +26,6 @@ link() {
         2)
           print "\nSkipping this link"
           return 0
-          ;;
-        3)
-          print "\nAborting operation"
-          return 1
           ;;
         *)
           print "\nInvalid choice, please try again"
@@ -49,7 +44,7 @@ link "${DOTFILES}/zsh/zprofile" "${XDG_CONFIG_HOME}/zsh/.zprofile"
 link "${DOTFILES}/zsh/zshenv" "${HOME}/.zshenv"
 link "${DOTFILES}/git/config" "${XDG_CONFIG_HOME}/git/config"
 link "${DOTFILES}/nvim" "${XDG_CONFIG_HOME}/nvim"
-link "${DOTFILES}/tmux.conf" "${XDG_CONFIG_HOME}/tmux/tmux.conf"
+link "${DOTFILES}/tmux" "${XDG_CONFIG_HOME}/tmux"
 link "${DOTFILES}/yazi" "${XDG_CONFIG_HOME}/yazi"
 link "${DOTFILES}/kitty" "${XDG_CONFIG_HOME}/kitty"
 link "${DOTFILES}/bat" "${XDG_CONFIG_HOME}/bat"
