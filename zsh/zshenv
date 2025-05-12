@@ -2,6 +2,7 @@
 
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$XDG_CONFIG_HOME/local/share"
+export XDG_STATE_HOME="$XDG_CONFIG_HOME/local/state"
 export XDG_CACHE_HOME="$XDG_CONFIG_HOME/cache"
 
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
@@ -16,6 +17,7 @@ export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
 
 export EDITOR="/opt/homebrew/bin/nvim"
 export VISUAL="/opt/homebrew/bin/nvim"
+export VISUAL="$EDITOR"
 
 export LANG=en_US.UTF-8
 
