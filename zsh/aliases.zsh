@@ -13,6 +13,7 @@ alias l="ls -lAH"
 alias lt="eza --tree --level=2 --long --icons --git"
 alias as="aerospace"
 alias cat="bat"
+alias top="btop"
 
 mcd() {
     mkdir "${1}" && cd "${1}"
