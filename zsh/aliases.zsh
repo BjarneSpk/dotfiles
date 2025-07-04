@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+alias lg="lazygit"
 alias vim="nvim"
 alias py="python3"
 alias mv="mv -i"
@@ -55,5 +56,6 @@ alias 9='cd -9'
 alias md='mkdir -p'
 alias rd=rmdir
 
-alias d='dirs -v'
+# alias d='dirs -v'
+alias d='dirs -v | fzf'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index

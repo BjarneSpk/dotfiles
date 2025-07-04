@@ -15,6 +15,8 @@ source "${DOTFILES}/zsh/fzf.zsh"
 HIST_STAMPS="yyyy/mm/dd"
 
 setopt HIST_IGNORE_SPACE
+setopt INC_APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
 
 source "${DOTFILES}/zsh/aliases.zsh"
 
@@ -33,4 +35,6 @@ source <(fzf --zsh)
 
 eval "$(zoxide init zsh)"
 
-fastfetch
+# if [[ -z "$TMUX" ]] && [[ -o login ]]; then
+#   fastfetch
+# fi
