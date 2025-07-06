@@ -2,3 +2,4 @@
 nvim.bak/
 .zcompdump
 .zhistory
+.zsh_history
