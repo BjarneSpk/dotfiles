@@ -33,6 +33,7 @@ source "${DOTFILES}/zsh/completions.zsh"
 
 source <(fzf --zsh)
 
+export _ZO_ECHO=1
 eval "$(zoxide init zsh)"
 
 # if [[ -z "$TMUX" ]] && [[ -o login ]]; then
