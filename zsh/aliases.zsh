@@ -15,7 +15,6 @@ alias lt="eza --tree --level=2 --long --icons --git"
 alias as="aerospace"
 alias cat="bat"
 alias top="btop"
-alias backup="rclone copy /Users/bjarne/uni proton:/uni --exclude '.venv/**' --exclude 'node_modules/**' --exclude 'target/**' --exclude 'bin/**'"
 
 mcd() {
     mkdir "${1}" && cd "${1}"
