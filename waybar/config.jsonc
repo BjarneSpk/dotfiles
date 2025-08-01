@@ -77,16 +77,23 @@
         "tooltip": false
     },
     "custom/bell": {
-        "exec": "makoctl mode | grep -q 'dnd'; printf '{\"alt\": %s}' $?",
-        "exec-on-event": false,
-        "return-type": "json",
-        "signal": 1,
+        "tooltip": false,
         "format": "{icon}",
         "format-icons": {
-            "1": "",
-            "0": ""
+            "notification": "<span foreground='red'><sup></sup></span>",
+            "none": "",
+            "dnd-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-none": "",
+            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "inhibited-none": "",
+            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
+            "dnd-inhibited-none": ""
         },
-        "on-click": "makoctl mode -t dnd; pkill -SIGRTMIN+1 waybar",
-        "tooltip": false
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
     },
 }
