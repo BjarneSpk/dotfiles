@@ -59,6 +59,10 @@
   color: @dark-gray-color;
 }
 
+#bluetooth:hover {
+  color: @dark-gray-color;
+}
+
 #pulseaudio > widget > label {
   min-width: 32px;
   padding-top: 1px;
@@ -75,6 +79,10 @@
 #battery > widget > label {
   min-width: 32px;
   padding-top: 1px;
+}
+
+#battery > widget > label:hover {
+  color: @dark-gray-color;
 }
 
 .capacity {
