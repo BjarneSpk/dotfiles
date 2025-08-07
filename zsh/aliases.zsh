@@ -15,6 +15,7 @@ alias lt="eza --tree --level=2 --long --icons --git"
 alias as="aerospace"
 alias cat="bat"
 alias top="btop"
+alias power="upower -i $(upower -e | grep BAT) | grep -oP '(percentage:\s*\K(\d*%)|state:\s*\K(.*))' | sort | tr '\n' ' ' && echo"
 
 mcd() {
     mkdir "${1}" && cd "${1}"
@@ -57,5 +58,5 @@ alias md='mkdir -p'
 alias rd=rmdir
 
 # alias d='dirs -v'
-alias d='dirs -v | fzf'
+alias d='cd ${~"$(dirs -v | fzf | awk "{print \$2}")"}'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
