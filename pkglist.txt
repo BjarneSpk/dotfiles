@@ -1,3 +1,4 @@
+7zip
 alsa-utils
 archlinux-xdg-menu
 base
@@ -8,11 +9,9 @@ bluez-deprecated-tools
 bluez-utils
 breeze
 breeze-gtk
-breeze5
 brightnessctl
 btop
 cliphist
-dmidecode
 dolphin
 efibootmgr
 eza
@@ -32,7 +31,6 @@ hyprpolkitagent
 intel-media-driver
 intel-media-sdk
 intel-ucode
-inxi
 jq
 kitty
 lazygit
@@ -40,8 +38,6 @@ libva-utils
 linux
 linux-firmware
 man-db
-materia-gtk-theme
-nautilus
 neovim
 network-manager-applet
 networkmanager
@@ -52,9 +48,8 @@ openssh
 pavucontrol
 pipewire-alsa
 pipewire-pulse
-qt5-wayland
-qt6ct
-read-edid
+qt5ct-kde
+qt6ct-kde
 ripgrep
 rofi-wayland
 sddm
@@ -64,6 +59,7 @@ sudo
 swaync
 ttf-meslo-nerd
 ufw
+unzip
 vdpauinfo
 visual-studio-code-bin
 vulkan-intel
@@ -72,12 +68,12 @@ waybar
 wireplumber
 wl-clipboard
 wlogout
-xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
-xorg-xrandr
+xdg-desktop-portal-kde
 yay
 yay-debug
 yazi
+zip
 zoxide
 zsh
 zsh-completions

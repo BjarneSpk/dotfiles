@@ -3,28 +3,19 @@
 alias lg="lazygit"
 alias vim="nvim"
 alias py="python3"
-alias mv="mv -i"
-alias cp="cp -i"
 alias c="clear"
-alias rm="trash"
 alias ls="eza --color=always"
 alias tree="eza --tree --icons --git"
 alias la="ls -AH"
 alias l="ls -lAH"
 alias lt="eza --tree --level=2 --long --icons --git"
-alias as="aerospace"
 alias cat="bat"
 alias top="btop"
-alias power="upower -i $(upower -e | grep BAT) | grep -oP '(percentage:\s*\K(\d*%)|state:\s*\K(.*))' | sort | tr '\n' ' ' && echo"
+alias pow="upower -i $(upower -e | grep BAT) | grep -oP '(percentage:\s*\K(\d*%)|state:\s*\K(.*))' | sort | tr '\n' ' ' && echo"
 
 mcd() {
     mkdir "${1}" && cd "${1}"
 }
-
-ff() {
-    aerospace list-windows --all | fzf --bind 'enter:execute(bash -c "aerospace focus --window-id {1}")+abort'
-}
-
 
 # Makes Yazi change into cwd when called with 'y' and exited with 'q'
 function ex() {
