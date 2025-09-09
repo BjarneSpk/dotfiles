@@ -12,9 +12,6 @@ export DOTFILES="$HOME/dotfiles"
 # Add cargo to PATH
 source "$HOME/.cargo/env"
 
-export JAVA_HOME=$(/usr/libexec/java_home -v 21)
-export PATH="/opt/homebrew/opt/openjdk@21/bin:$PATH"
-
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 

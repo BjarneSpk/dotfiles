@@ -39,8 +39,9 @@ link() {
 
 source ./zsh/zshenv
 
+link "${DOTFILES}/zshenv" "${HOME}/.zshenv"
+
 link "${DOTFILES}/zsh" "${XDG_CONFIG_HOME}/zsh"
-link "${DOTFILES}/zsh/zshenv" "${HOME}/.zshenv"
 link "${DOTFILES}/git" "${XDG_CONFIG_HOME}/git"
 link "${DOTFILES}/nvim" "${XDG_CONFIG_HOME}/nvim"
 link "${DOTFILES}/tmux" "${XDG_CONFIG_HOME}/tmux"
@@ -55,3 +56,14 @@ link "${DOTFILES}/wlogout" "${XDG_CONFIG_HOME}/wlogout"
 link "${DOTFILES}/btop" "${XDG_CONFIG_HOME}/btop"
 link "${DOTFILES}/rofi" "${XDG_CONFIG_HOME}/rofi"
 link "${DOTFILES}/swaync" "${XDG_CONFIG_HOME}/swaync"
+
+SRC_DIR="${DOTFILES}/theme"
+for file in "$SRC_DIR"/*; do
+    base=$(basename "$file")
+
+    if [[ "$base" == ".gtkrc-2.0" ]]; then
+        link "$file" "${HOME}/$base"
+    else
+        link "$file" "${XDG_CONFIG_HOME}/$base"
+    fi
+done
