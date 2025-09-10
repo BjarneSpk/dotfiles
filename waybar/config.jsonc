@@ -70,15 +70,15 @@
     },
     "battery": {
         "format": "{icon}",
-        "format-icons": ["", "", "", "", ""],
+        "format-icons": ["", "", "", "", ""],
         "tooltip": false,
         "states": {
             // "good": 95,
             "warning": 30,
             "critical": 15
         },
-        "format-charging": " ",
-        "format-plugged": " ",
+        "format-charging": "",
+        "format-plugged": "",
         "format-alt": "{icon}  {time}",
     },
     "battery#capacity": {
@@ -86,9 +86,9 @@
         "tooltip": false
     },
     "bluetooth": {
-        "format": "",
-        "format-disabled": "",
-        "format-off": "",
+        "format": "",
+        "format-disabled": "󰂲",
+        "format-off": "",
         "interval": 30,
         "on-click": "blueman-manager",
         "format-no-controller": ""
