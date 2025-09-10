@@ -37,8 +37,7 @@ link() {
   fi
 }
 
-source ./zsh/zshenv
-
+source ./zshenv
 link "${DOTFILES}/zshenv" "${HOME}/.zshenv"
 
 link "${DOTFILES}/zsh" "${XDG_CONFIG_HOME}/zsh"
@@ -50,7 +49,6 @@ link "${DOTFILES}/kitty" "${XDG_CONFIG_HOME}/kitty"
 link "${DOTFILES}/bat" "${XDG_CONFIG_HOME}/bat"
 link "${DOTFILES}/aerospace" "${XDG_CONFIG_HOME}/aerospace"
 link "${DOTFILES}/hypr" "${XDG_CONFIG_HOME}/hypr"
-link "${DOTFILES}/uwsm" "${XDG_CONFIG_HOME}/uwsm"
 link "${DOTFILES}/waybar" "${XDG_CONFIG_HOME}/waybar"
 link "${DOTFILES}/wlogout" "${XDG_CONFIG_HOME}/wlogout"
 link "${DOTFILES}/btop" "${XDG_CONFIG_HOME}/btop"

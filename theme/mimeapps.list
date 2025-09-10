@@ -1,0 +1,6 @@
+[Added Associations]
+text/plain=code.desktop;Neovim.desktop;code-3.desktop;code-2.desktop;
+
+[Default Applications]
+text/plain=code.desktop;
+application.pdf=firefox.desktop
