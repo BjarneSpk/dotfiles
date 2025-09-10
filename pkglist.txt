@@ -12,6 +12,7 @@ breeze-gtk
 brightnessctl
 btop
 cliphist
+dolphin
 efibootmgr
 eza
 fastfetch
@@ -30,6 +31,7 @@ hyprpolkitagent
 intel-media-driver
 intel-media-sdk
 intel-ucode
+inter-font
 jq
 kitty
 lazygit
@@ -41,7 +43,7 @@ neovim
 network-manager-applet
 networkmanager
 nm-connection-editor
-noto-fonts-cjk
+noto-fonts-emoji
 nwg-look
 openssh
 pavucontrol
@@ -50,13 +52,12 @@ pipewire-pulse
 qt5ct-kde
 qt6ct-kde
 ripgrep
-rofi-wayland
+rofi
 sddm
 sof-firmware
 spotify-launcher
 sudo
 swaync
-thunar
 ttf-meslo-nerd
 ufw
 unzip
