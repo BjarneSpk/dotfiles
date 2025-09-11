@@ -22,6 +22,7 @@ fwupd
 fzf
 gcc
 git
+grim
 grub
 hypridle
 hyprland
@@ -54,6 +55,7 @@ qt6ct-kde
 ripgrep
 rofi
 sddm
+slurp
 sof-firmware
 spotify-launcher
 sudo
