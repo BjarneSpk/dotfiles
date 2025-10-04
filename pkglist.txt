@@ -50,6 +50,8 @@ openssh
 pavucontrol
 pipewire-alsa
 pipewire-pulse
+podman
+podman-compose
 qt5ct-kde
 qt6ct-kde
 ripgrep
