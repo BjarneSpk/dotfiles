@@ -72,20 +72,6 @@
           "tooltip": "DND"
         },
         {
-          "label": "󰍜",
-          "command": "gnome-network-displays",
-          "tooltip": "Screens"
-        },
-        {
-          "label": "󰈙",
-          "command": "kitty bash -i -c 'Docs'",
-          "tooltip": "Files"
-        },
-        {
-          "label": "",
-          "command": "kitty bash -i -c 'Settings'",
-          "tooltip": "Settings"
-        },
         {
           "label": "",
           "command": "hyprlock",
