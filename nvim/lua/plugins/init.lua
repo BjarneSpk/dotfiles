@@ -7,7 +7,7 @@ return {
     "folke/flash.nvim",
     enabled = false,
   },
-{
+  {
     "mikesmithgh/kitty-scrollback.nvim",
     enabled = true,
     lazy = true,
@@ -16,38 +16,38 @@ return {
     -- version = '*', -- latest stable version, may have breaking changes if major version changed
     -- version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
     config = function()
-        require("kitty-scrollback").setup()
+      require("kitty-scrollback").setup()
     end,
-},
-{
+  },
+  {
     "christoomey/vim-tmux-navigator",
     cmd = {
-        "TmuxNavigateLeft",
-        "TmuxNavigateDown",
-        "TmuxNavigateUp",
-        "TmuxNavigateRight",
-        "TmuxNavigatePrevious",
+      "TmuxNavigateLeft",
+      "TmuxNavigateDown",
+      "TmuxNavigateUp",
+      "TmuxNavigateRight",
+      "TmuxNavigatePrevious",
     },
     keys = {
-        { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
-        { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
-        { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
-        { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
-        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
     },
-},
+  },
   {
     "folke/noice.nvim",
     opts = {
       cmdline = {
         view = "cmdline",
       },
-    }
+    },
   },
-{
+  {
     "stevearc/oil.nvim",
-    -- lazy = false,
-    event = "VeryLazy",
+    lazy = false,
+    -- event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
         default_file_explorer = true,
@@ -67,6 +67,7 @@ return {
             win_options = {
                 winblend = 0,
             },
+            border = "rounded",
         },
         keymaps = {
             ["<C-c>"] = { "actions.close", mode = "n" },
@@ -74,14 +75,14 @@ return {
         },
     },
     keys = {
-        {
-            "-",
-            "<CMD>Oil --float<CR>",
-            mode = { "n", "v" },
-            desc = "Open parent directory",
-        },
+      {
+        "-",
+        "<CMD>Oil --float<CR>",
+        mode = { "n", "v" },
+        desc = "Open parent directory",
+      },
     },
-},
+  },
   {
     "folke/snacks.nvim",
     opts = {
@@ -102,7 +103,12 @@ return {
             { icon = " ", key = "n", desc = "New File", action = ":ene | startinsert" },
             { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
             { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
-            { icon = " ", key = "c", desc = "Config", action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})" },
+            {
+              icon = " ",
+              key = "c",
+              desc = "Config",
+              action = ":lua Snacks.dashboard.pick('files', {cwd = vim.fn.stdpath('config')})",
+            },
             { icon = " ", key = "s", desc = "Restore Session", section = "session" },
             { icon = "󰒲 ", key = "l", desc = "Lazy", action = ":Lazy" },
             { icon = " ", key = "q", desc = "Quit", action = ":qa" },
@@ -201,47 +207,47 @@ return {
       colorscheme = "rose-pine",
     },
   },
-{
+  {
     "ThePrimeagen/harpoon",
     branch = "harpoon2",
     opts = {
-        menu = {
-            width = vim.api.nvim_win_get_width(0) - 4,
-        },
-        settings = {
-            save_on_toggle = true,
-        },
+      menu = {
+        width = vim.api.nvim_win_get_width(0) - 4,
+      },
+      settings = {
+        save_on_toggle = true,
+      },
     },
     keys = function()
-        local keys = {
-            {
-                "<leader>h",
-                function()
-                    require("harpoon"):list():add()
-                end,
-                desc = "Harpoon File",
-            },
-            {
-                "<leader>H",
-                function()
-                    local harpoon = require("harpoon")
-                    harpoon.ui:toggle_quick_menu(harpoon:list())
-                end,
-                desc = "Harpoon Quick Menu",
-            },
-        }
-        for i = 1, 5 do
-            table.insert(keys, {
-                "<leader>" .. i,
-                function()
-                    require("harpoon"):list():select(i)
-                end,
-                desc = "Harpoon to File " .. i,
-            })
-        end
-        return keys
+      local keys = {
+        {
+          "<leader>h",
+          function()
+            require("harpoon"):list():add()
+          end,
+          desc = "Harpoon File",
+        },
+        {
+          "<leader>H",
+          function()
+            local harpoon = require("harpoon")
+            harpoon.ui:toggle_quick_menu(harpoon:list())
+          end,
+          desc = "Harpoon Quick Menu",
+        },
+      }
+      for i = 1, 5 do
+        table.insert(keys, {
+          "<leader>" .. i,
+          function()
+            require("harpoon"):list():select(i)
+          end,
+          desc = "Harpoon to File " .. i,
+        })
+      end
+      return keys
     end,
-},
+  },
 
   {
     "kylechui/nvim-surround",
