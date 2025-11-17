@@ -37,25 +37,31 @@ link() {
   fi
 }
 
-source ./zshenv
-link "${DOTFILES}/zshenv" "${HOME}/.zshenv"
+source ./dots/.zshenv
+link "${DOTFILES}/dots/.zshenv" "${HOME}/.zshenv"
 
-link "${DOTFILES}/zsh" "${XDG_CONFIG_HOME}/zsh"
-link "${DOTFILES}/git" "${XDG_CONFIG_HOME}/git"
-link "${DOTFILES}/nvim" "${XDG_CONFIG_HOME}/nvim"
-link "${DOTFILES}/tmux" "${XDG_CONFIG_HOME}/tmux"
-link "${DOTFILES}/yazi" "${XDG_CONFIG_HOME}/yazi"
-link "${DOTFILES}/kitty" "${XDG_CONFIG_HOME}/kitty"
-link "${DOTFILES}/bat" "${XDG_CONFIG_HOME}/bat"
-link "${DOTFILES}/aerospace" "${XDG_CONFIG_HOME}/aerospace"
-link "${DOTFILES}/hypr" "${XDG_CONFIG_HOME}/hypr"
-link "${DOTFILES}/waybar" "${XDG_CONFIG_HOME}/waybar"
-link "${DOTFILES}/wlogout" "${XDG_CONFIG_HOME}/wlogout"
-link "${DOTFILES}/btop" "${XDG_CONFIG_HOME}/btop"
-link "${DOTFILES}/rofi" "${XDG_CONFIG_HOME}/rofi"
-link "${DOTFILES}/swaync" "${XDG_CONFIG_HOME}/swaync"
+link "${DOTFILES}/dots/.config/zsh" "${XDG_CONFIG_HOME}/zsh"
+link "${DOTFILES}/dots/.config/git" "${XDG_CONFIG_HOME}/git"
+link "${DOTFILES}/dots/.config/nvim" "${XDG_CONFIG_HOME}/nvim"
+link "${DOTFILES}/dots/.config/tmux" "${XDG_CONFIG_HOME}/tmux"
+link "${DOTFILES}/dots/.config/yazi" "${XDG_CONFIG_HOME}/yazi"
+link "${DOTFILES}/dots/.config/kitty" "${XDG_CONFIG_HOME}/kitty"
+link "${DOTFILES}/dots/.config/bat" "${XDG_CONFIG_HOME}/bat"
+# link "${DOTFILES}/dots/.config/aerospace" "${XDG_CONFIG_HOME}/aerospace"
+link "${DOTFILES}/dots/.config/hypr" "${XDG_CONFIG_HOME}/hypr"
+link "${DOTFILES}/dots/.config/waybar" "${XDG_CONFIG_HOME}/waybar"
+link "${DOTFILES}/dots/.config/wlogout" "${XDG_CONFIG_HOME}/wlogout"
+link "${DOTFILES}/dots/.config/btop" "${XDG_CONFIG_HOME}/btop"
+link "${DOTFILES}/dots/.config/rofi" "${XDG_CONFIG_HOME}/rofi"
+link "${DOTFILES}/dots/.config/swaync" "${XDG_CONFIG_HOME}/swaync"
+link "${DOTFILES}/dots/.config/xdg-desktop-portal" "${XDG_CONFIG_HOME}/xdg-desktop-portal"
+link "${DOTFILES}/dots/.config/fontconfig" "${XDG_CONFIG_HOME}/fontconfig"
+link "${DOTFILES}/dots/.config/qt5ct" "${XDG_CONFIG_HOME}/qt5ct"
+link "${DOTFILES}/dots/.config/qt6ct" "${XDG_CONFIG_HOME}/qt6ct"
+link "${DOTFILES}/dots/.config/kdeglobals" "${XDG_CONFIG_HOME}/kdeglobals"
+link "${DOTFILES}/dots/.config/code-flags.conf" "${XDG_CONFIG_HOME}/code-flags.conf"
 
-SRC_DIR="${DOTFILES}/theme"
+SRC_DIR="${DOTFILES}/dots/.config/theme"
 for file in "$SRC_DIR"/*; do
     base=$(basename "$file")
 

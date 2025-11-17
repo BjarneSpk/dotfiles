@@ -8,7 +8,7 @@ PROMPT=' %F{#f6c177}%n%f %F{#ebbcba}%1~%f %F{#908caa}%#%f '
 
 export LS_COLORS="di=38;2;235;188;186:fi=38;2;49;116;143:ln=38;2;235;111;146:*.=38;2;156;207;216"
 
-source "${DOTFILES}/zsh/fzf.zsh"
+source "${DOTFILES}/dots/.config/zsh/fzf.zsh"
 
 # export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 
@@ -18,18 +18,21 @@ setopt HIST_IGNORE_SPACE
 setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 
-source "${DOTFILES}/zsh/aliases.zsh"
+source "${DOTFILES}/dots/.config/zsh/aliases.zsh"
 
 # Destroys the fzf **<tab> feature
 bindkey -v
 export KEYTIMEOUT=1
-source "${DOTFILES}/zsh/cursor_mode.zsh"
+source "${DOTFILES}/dots/.config/zsh/cursor_mode.zsh"
+
+bindkey '^H' backward-kill-word 
+bindkey '^Z' undo
 
 # Emacs bindings
 # bindkey -e
 
 # completions
-source "${DOTFILES}/zsh/completions.zsh"
+source "${DOTFILES}/dots/.config/zsh/completions.zsh"
 
 source <(fzf --zsh)
 
