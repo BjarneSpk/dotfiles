@@ -15,7 +15,6 @@ brightnessctl
 btop
 cliphist
 discord
-docker-compose
 dolphin
 efibootmgr
 eza
@@ -94,6 +93,7 @@ texlive-plaingeneric
 texlive-pstricks
 texlive-publishers
 texlive-xetex
+tmux
 ttf-meslo-nerd
 ufw
 unzip
