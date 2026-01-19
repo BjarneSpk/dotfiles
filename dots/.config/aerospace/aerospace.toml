@@ -45,8 +45,8 @@ alt-tab = 'workspace-back-and-forth'
 alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
 
 # See: https://nikitabobko.github.io/AeroSpace/goodies#open-a-new-window-with-applescript
-alt-enter = 'exec-and-forget open -a /Applications/kitty.app/'
-alt-b = 'exec-and-forget open -a /Applications/Firefox.app/'
+alt-enter = 'exec-and-forget open -na /Applications/kitty.app/'
+alt-b = 'exec-and-forget open -na /Applications/Firefox.app/'
 
 # i3 wraps focus by default
 alt-h = 'focus --boundaries-action wrap-around-the-workspace left'
