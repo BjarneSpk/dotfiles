@@ -33,6 +33,7 @@ bindkey '^Z' undo
 
 # completions
 source "${DOTFILES}/dots/.config/zsh/completions.zsh"
+source "${DOTFILES}/dots/.config/zsh/netbird_completions.zsh"
 
 source <(fzf --zsh)
 
