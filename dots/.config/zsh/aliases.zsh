@@ -6,8 +6,8 @@ alias py="python3"
 alias c="clear"
 alias ls="eza --color=always"
 alias tree="eza --tree --icons --git"
-alias la="ls -AH"
-alias l="ls -lAH"
+alias la="ls --sort=time -AH"
+alias l="ls --sort=time -lAH"
 alias lt="eza --tree --level=2 --long --icons --git"
 alias cat="bat"
 alias top="btop"
@@ -15,6 +15,7 @@ alias pow="upower -i $(upower -e | grep BAT) | grep -oP '(percentage:\s*\K(\d*%)
 alias pac-browse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias open="xdg-open"
 alias infvpn="sudo openconnect --protocol=anyconnect vpn.informatik.uni-stuttgart.de --cafile ~/Downloads/infcacert.crt"
+alias matrix="cmatrix -a -s -b"
 
 mcd() {
     mkdir "${1}" && cd "${1}"
