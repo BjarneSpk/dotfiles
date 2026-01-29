@@ -1,10 +1,12 @@
-@define-color bg-color rgba(40, 40, 40, 0.9);
-@define-color fg-color rgb(235, 219, 178);
-@define-color dark-gray-color rgb(146, 131, 116);
+/* @define-color bg-color rgba(40, 40, 40, 0.9); */
+/* @define-color fg-color rgb(235, 219, 178); */
+/* @define-color dark-gray-color rgb(146, 131, 116); */
+
+@import './colors.css';
 
 * {
   all: unset;
-  color: @fg-color;
+  color: @primary;
   font: 16px "Inter", "Symbols Nerd Font Mono";
   min-width: 0;
   min-height: 0;
@@ -19,7 +21,7 @@
 #waybar > box {
   min-height: 32px;
   padding: 0px 8px;
-  background-color: @bg-color;
+  background-color: @surface;
 }
 
 #custom-logo {
@@ -28,7 +30,7 @@
 }
 
 #custom-logo:hover {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
 
 #workspaces > button > box {
@@ -36,12 +38,12 @@
 }
 
 #workspaces > button > box > label {
-  color: @dark-gray-color;
+  color: @on_surface;
   font-size: 8px;
 }
 
 #workspaces > button.active > box > label {
-  color: @fg-color;
+  color: @primary;
 }
 
 #network {
@@ -52,15 +54,15 @@
 #network.linked,
 #network.disabled,
 #network.disconnected {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
 
 #network:hover {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
 
 #bluetooth:hover {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
 
 #pulseaudio > widget > label {
@@ -69,7 +71,7 @@
 }
 
 #pulseaudio > widget > label:hover {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
 
 .volume {
@@ -82,7 +84,7 @@
 }
 
 #battery > widget > label:hover {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
 
 .capacity {
@@ -95,5 +97,5 @@
 }
 
 #custom-bell:hover {
-  color: @dark-gray-color;
+  color: @on_surface;
 }
