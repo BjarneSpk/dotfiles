@@ -60,6 +60,7 @@ link "${DOTFILES}/dots/.config/qt5ct" "${XDG_CONFIG_HOME}/qt5ct"
 link "${DOTFILES}/dots/.config/qt6ct" "${XDG_CONFIG_HOME}/qt6ct"
 link "${DOTFILES}/dots/.config/kdeglobals" "${XDG_CONFIG_HOME}/kdeglobals"
 link "${DOTFILES}/dots/.config/code-flags.conf" "${XDG_CONFIG_HOME}/code-flags.conf"
+link "${DOTFILES}/dots/.config/matugen" "${XDG_CONFIG_HOME}/matugen"
 
 SRC_DIR="${DOTFILES}/dots/.config/theme"
 for file in "$SRC_DIR"/*; do
@@ -71,3 +72,5 @@ for file in "$SRC_DIR"/*; do
         link "$file" "${XDG_CONFIG_HOME}/$base"
     fi
 done
+
+matugen image "${DOTFILES}/dots/.config/hypr/wall.jpg" --mode dark
