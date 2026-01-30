@@ -8,6 +8,7 @@ post_hook = 'hyprctl reload'
 [templates.swaync]
 input_path = '~/.config/matugen/templates/colors.css'
 output_path = '~/.config/swaync/colors.css'
+post_hook = 'pkill swaync'
 
 [templates.rofi]
 input_path = '~/.config/matugen/templates/rofi-colors.rasi'
@@ -16,3 +17,4 @@ output_path = '~/.config/rofi/colors.rasi'
 [templates.waybar]
 input_path = '~/.config/matugen/templates/colors.css'
 output_path = '~/.config/waybar/colors.css'
+post_hook = 'pkill waybar && waybar &'
