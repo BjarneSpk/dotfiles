@@ -2,7 +2,8 @@
 
 set -e
 
-HYPERPAPER_CONF="$HOME/dotfiles/dots/.config/hypr/hyprpaper.conf"
+HYPRPAPER_CONF="$HOME/dotfiles/dots/.config/hypr/hyprpaper.conf"
+HYPRLOCK_WALLPAPER_CONF="$HOME/dotfiles/dots/.config/hypr/hyprlock_wallpaper.conf"
 ROFI_BLUR_CONF="$HOME/.config/rofi/blurred_wall.rasi"
 
 if [[ -z "$1" ]]; then
@@ -21,13 +22,25 @@ IMAGE_DIR="$(dirname "$IMAGE_PATH")"
 IMAGE_NAME="$(basename "$IMAGE_PATH")"
 BLURRED_IMAGE="$IMAGE_DIR/blurred_$IMAGE_NAME"
 
-cat >"$HYPERPAPER_CONF" <<EOF
+cat >"$HYPRPAPER_CONF" <<EOF
 wallpaper {
     monitor =
     path = $IMAGE_PATH
     fit_mode = cover
 }
 splash = false
+EOF
+
+cat >"$HYPRLOCK_WALLPAPER_CONF" <<EOF
+background {
+    monitor =
+    path = $IMAGE_PATH
+    blur_passes = 2
+    contrast = 1
+    brightness = 0.5
+    vibrancy = 0.2
+    vibrancy_darkness = 0.2
+}
 EOF
 
 magick "$IMAGE_PATH" -resize 50% "$BLURRED_IMAGE"
