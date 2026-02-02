@@ -62,5 +62,12 @@ fi
 
 hyprctl hyprpaper wallpaper ",$IMAGE_PATH"
 
-sudo cp "$IMAGE_PATH" "/usr/share/sddm/themes/sequoia/backgrounds/$IMAGE_NAME"
-sudo mv "/usr/share/sddm/themes/sequoia/backgrounds/$IMAGE_NAME" "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
+if read -q "REPLY?Update SDDM background as well? (requires sudo) [y/N] "; then
+    echo
+    sudo -v || exit 1
+    sudo install -m 0644 "$IMAGE_PATH" \
+        "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
+else
+    echo
+    echo "Skipping SDDM background update."
+fi
