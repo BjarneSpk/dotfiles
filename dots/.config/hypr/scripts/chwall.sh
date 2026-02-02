@@ -67,7 +67,7 @@ BLURRED_IMAGE="$CACHE_DIR/${IMAGE_HASH}.jpg"
 
 # generate only if missing
 if [[ ! -f "$BLURRED_IMAGE" ]]; then
-    ffmpeg -v error -y -i "$IMAGE_PATH" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$BLURRED_IMAGE" &
+    ffmpeg -v error -y -i "$IMAGE_PATH" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$BLURRED_IMAGE"
 fi
 
 echo "* { current-image: url(\"$BLURRED_IMAGE\", height); }" >"$ROFI_BLUR_CONF"
@@ -78,13 +78,13 @@ if ! hyprctl monitors -j 2>/dev/null | grep -q '"name": *"eDP-1"'; then
     BUILTIN_WAS_DISABLED=true
 fi
 
-matugen image "$IMAGE_PATH" --mode dark >/dev/null
-
-if [[ "$BUILTIN_WAS_DISABLED" == true ]]; then
-    hyprctl keyword monitor "eDP-1,disable"
-fi
+matugen --quiet image "$IMAGE_PATH" --mode dark
 
 hyprctl hyprpaper wallpaper ",$IMAGE_PATH"
+
+if [[ "$BUILTIN_WAS_DISABLED" == true ]]; then
+    hyprctl keyword monitor "eDP-1,disable" &>/dev/null
+fi
 
 if read -q "REPLY?Update SDDM background as well? (requires sudo) [y/N] "; then
     echo
@@ -94,5 +94,3 @@ else
     echo
     echo "Skipping SDDM background update."
 fi
-
-wait
