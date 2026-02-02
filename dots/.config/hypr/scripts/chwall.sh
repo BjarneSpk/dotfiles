@@ -44,7 +44,7 @@ background {
 EOF
 
 magick "$IMAGE_PATH" -resize 50% "$BLURRED_IMAGE"
-magick "$BLURRED_IMAGE" -blur "50x30" "$BLURRED_IMAGE"
+magick mogrify -blur "50x30" "$BLURRED_IMAGE"
 
 echo "* { current-image: url(\"$BLURRED_IMAGE\", height); }" >"$ROFI_BLUR_CONF"
 
@@ -61,3 +61,6 @@ if [[ "$BUILTIN_WAS_DISABLED" == true ]]; then
 fi
 
 hyprctl hyprpaper wallpaper ",$IMAGE_PATH"
+
+sudo cp "$IMAGE_PATH" "/usr/share/sddm/themes/sequoia/backgrounds/$IMAGE_NAME"
+sudo mv "/usr/share/sddm/themes/sequoia/backgrounds/$IMAGE_NAME" "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
