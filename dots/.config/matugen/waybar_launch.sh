@@ -13,7 +13,7 @@ flock -n 200 || exit 0
 
 killall waybar || true
 pkill waybar || true
-sleep 0.5
+# sleep 0.5
 
 # Check if waybar-disabled file exists
 HYPRLAND_SIGNATURE=$(hyprctl instances -j | jq -r '.[0].instance')

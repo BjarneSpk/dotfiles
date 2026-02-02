@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 set -euo pipefail
+trap '' USR1
 
 for cmd in ffmpeg matugen hyprctl realpath; do
     command -v "$cmd" >/dev/null || { echo "$cmd missing"; exit 1; }
