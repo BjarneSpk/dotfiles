@@ -26,6 +26,7 @@ firefox
 fwupd
 fzf
 gcc
+gimp
 git
 grim
 grub
@@ -34,6 +35,7 @@ hypridle
 hyprland
 hyprlock
 hyprpaper
+hyprpicker
 hyprpolkitagent
 imagemagick
 intel-media-driver
@@ -45,6 +47,7 @@ jq
 kitty
 lazygit
 ldns
+libreoffice-fresh
 libva-utils
 linux
 linux-firmware
@@ -52,6 +55,7 @@ man-db
 matugen
 mtr
 neovim
+network-manager-applet
 networkmanager
 networkmanager-openconnect
 nm-connection-editor
@@ -63,6 +67,7 @@ nwg-look
 openconnect
 openssh
 openvpn
+otf-font-awesome
 pacman-contrib
 pavucontrol
 pipewire-alsa
@@ -70,6 +75,7 @@ pipewire-pulse
 podman
 podman-compose
 proton-vpn-gtk-app
+protonmail-bridge
 qt5ct-kde
 qt6ct-kde
 resvg
@@ -103,8 +109,10 @@ texlive-plaingeneric
 texlive-pstricks
 texlive-publishers
 texlive-xetex
+thunderbird
 tldr
 tmux
+ttf-fira-sans
 ttf-meslo-nerd
 ufw
 unzip
@@ -119,6 +127,7 @@ wireguard-tools
 wireplumber
 wl-clipboard
 wlogout
+woff2-font-awesome
 xdg-desktop-portal-hyprland
 xdg-desktop-portal-kde
 yay
