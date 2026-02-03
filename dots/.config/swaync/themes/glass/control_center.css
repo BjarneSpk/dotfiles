@@ -117,11 +117,12 @@
 }
 
 .widget-volume label {
-  font-size: 14px;
+  font-size: 15px;
 }
 
 .widget-backlight label {
   font-size: 20px;
+  padding-right: 6px;
 }
 
 /* === Music Player === */
