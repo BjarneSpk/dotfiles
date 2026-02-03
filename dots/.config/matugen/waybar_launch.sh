@@ -11,8 +11,8 @@ flock -n 200 || exit 0
 # Quit all running waybar instances
 # -----------------------------------------------------
 
-killall waybar || true
-pkill waybar || true
+killall -e waybar || true
+pkill -x waybar || true
 # sleep 0.5
 
 # Check if waybar-disabled file exists
