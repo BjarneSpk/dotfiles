@@ -29,6 +29,7 @@ gcc
 gimp
 git
 grim
+grimblast-git
 grub
 gvfs
 hypridle
@@ -70,6 +71,7 @@ openvpn
 otf-font-awesome
 pacman-contrib
 pavucontrol
+pinta
 pipewire-alsa
 pipewire-pulse
 podman
