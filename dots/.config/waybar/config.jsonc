@@ -1,116 +1,34 @@
 {
+    "on-sigusr1": "hide",
+    "on-sigusr2": "show",
     "layer": "top",
-    "position": "top",
+    "margin-top": 0,
+    "margin-bottom": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 0,
+    "include": [
+        "~/.config/waybar/modules.json"
+    ],
     "modules-left": [
-        "custom/logo",
+        "custom/appmenu",
+        "hyprland/window",
+        "custom/empty"
+    ],
+    "modules-center": [
         "hyprland/workspaces"
     ],
-    "modules-center": ["clock"],
     "modules-right": [
+        "pulseaudio",
+        // "backlight",
         "bluetooth",
         "network",
-        "group/pulseaudio",
-        "group/battery",
-        "custom/bell"
-    ],
-    "custom/logo": {
-        "format": "󰣇",
-        "on-click": "rofi -show drun",
-        "tooltip": false
-    },
-    "hyprland/workspaces": {
-        "format": "",
-        "persistent-only": true,
-        "persistent-workspaces": {
-            "*": 5
-        }
-    },
-    "clock": {
-        "format": "{:%a %b %d  %R}",
-        "tooltip": false
-    },
-    "network": {
-        "format": "",
-        "on-click": "nm-connection-editor",
-        "tooltip": false
-    },
-    "group/pulseaudio": {
-        "orientation": "horizontal",
-        "modules": [
-            "pulseaudio",
-            "pulseaudio#volume"
-        ],
-        "drawer": {
-            "transition-duration": 250,
-            "transition-left-to-right": false
-        }
-    },
-    "pulseaudio": {
-        "format": "{icon}",
-        "format-muted": "",
-        "format-icons": ["", "", ""],
-        "scroll-step": 5,
-        "on-click": "pavucontrol",
-        "tooltip": false
-    },
-    "pulseaudio#volume": {
-        "format": "{volume}%",
-        "tooltip": false
-    },
-    "group/battery": {
-        "orientation": "horizontal",
-        "modules": [
-            "battery",
-            "battery#capacity"
-        ],
-        "drawer": {
-            "transition-duration": 250,
-            "transition-left-to-right": false
-        }
-    },
-    "battery": {
-        "format": "{icon}",
-        "format-icons": ["", "", "", "", ""],
-        "tooltip": false,
-        "states": {
-            // "good": 95,
-            "warning": 30,
-            "critical": 15
-        },
-        "format-charging": "",
-        "format-plugged": "",
-        "format-alt": "{icon}  {time}",
-    },
-    "battery#capacity": {
-        "format": "{capacity}%",
-        "tooltip": false
-    },
-    "bluetooth": {
-        "format": "",
-        "format-disabled": "󰂲",
-        "format-off": "",
-        "interval": 30,
-        "on-click": "blueman-manager",
-        "format-no-controller": ""
-    },
-    "custom/bell": {
-        "tooltip": false,
-        "format": "{icon}",
-        "format-icons": {
-            "notification": "<span foreground='red'><sup></sup></span>",
-            "none": "",
-            "dnd-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-none": "",
-            "inhibited-notification": "<span foreground='red'><sup></sup></span>",
-            "inhibited-none": "",
-            "dnd-inhibited-notification": "<span foreground='red'><sup></sup></span>",
-            "dnd-inhibited-none": ""
-        },
-        "return-type": "json",
-        "exec-if": "which swaync-client",
-        "exec": "swaync-client -swb",
-        "on-click": "swaync-client -t -sw",
-        "on-click-right": "swaync-client -d -sw",
-        "escape": true
-    },
+        "battery",
+        // "group/hardware",
+        // "group/tools",
+        // "tray",
+        "custom/notification",
+        "custom/exit",
+        "clock"
+    ]
 }
