@@ -17,7 +17,6 @@ cliphist
 cmatrix
 discord
 dns-over-https
-dolphin
 efibootmgr
 eza
 fastfetch
@@ -28,6 +27,7 @@ fzf
 gcc
 gimp
 git
+github-cli
 grim
 grimblast-git
 grub
@@ -55,7 +55,9 @@ linux-firmware
 man-db
 matugen
 mtr
+nautilus
 neovim
+netbird
 network-manager-applet
 networkmanager
 networkmanager-openconnect
@@ -131,7 +133,6 @@ wl-clipboard
 wlogout
 woff2-font-awesome
 xdg-desktop-portal-hyprland
-xdg-desktop-portal-kde
 yay
 yazi
 zathura-pdf-poppler
