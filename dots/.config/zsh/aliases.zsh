@@ -21,7 +21,12 @@ mcd() {
     mkdir "${1}" && cd "${1}"
 }
 
-# Makes Yazi change into cwd when called with 'y' and exited with 'q'
+# used to reload colors with matugen
+TRAPUSR1() {
+  source "$DOTFILES/dots/.config/zsh/colors.zsh"
+}
+
+# Makes Yazi change into cwd when called with 'ex' and exited with 'q'
 function ex() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
 	yazi "$@" --cwd-file="$tmp"

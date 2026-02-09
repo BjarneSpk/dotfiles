@@ -31,11 +31,6 @@ source "${DOTFILES}/dots/.config/zsh/netbird_completions.zsh"
 
 source <(fzf --zsh)
 
-# used to reload colors with matugen
-TRAPUSR1() {
-  source "$DOTFILES/dots/.config/zsh/colors.zsh"
-}
-
 source "$DOTFILES/dots/.config/zsh/colors.zsh"
 
 export _ZO_ECHO=1
