@@ -15,6 +15,7 @@ brightnessctl
 btop
 cliphist
 cmatrix
+ddcutil
 discord
 dns-over-https
 efibootmgr
