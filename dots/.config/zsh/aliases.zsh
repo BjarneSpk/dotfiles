@@ -53,9 +53,33 @@ alias 6='cd -6'
 alias 7='cd -7'
 alias 8='cd -8'
 alias 9='cd -9'
-alias md='mkdir -p'
-alias rd=rmdir
 
 # alias d='dirs -v'
 alias d='cd ${~"$(dirs -v | fzf | awk "{print \$2}")"}'
 for index ({1..9}) alias "$index"="cd +${index}"; unset index
+
+function uniprint() {
+# Set the print location based on the second argument
+  if [ "$2" = "oben" ]; then
+    standort="duesentrieb"
+  else
+    standort="zarquon"
+  fi
+
+  # Check if the first argument is a directory
+  if [ -d "$1" ]; then
+    # Loop through all PDF files in the directory
+    for elem in "$1"/*.pdf; do
+      # Check if any PDF files exist
+      if [ -f "$elem" ]; then
+        # Copy the file to the remote server and print it
+        scp "$elem" "uni:~/Documents/$(basename "$elem")"
+        ssh uni "lpr -P $standort ~/Documents/$(basename "$elem")"
+      fi
+    done
+  else
+    # If it's a file, copy and print it
+    scp "$1" "uni:~/Documents/$(basename "$1")"
+    ssh uni "lpr -P $standort ~/Documents/$(basename "$1")"
+  fi
+}
