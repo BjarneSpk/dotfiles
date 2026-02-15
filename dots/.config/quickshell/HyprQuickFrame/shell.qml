@@ -122,7 +122,7 @@ FreezeScreen {
         const picturesBase = Quickshell.env("XDG_PICTURES_DIR") || (Quickshell.env("HOME") + "/Pictures");
         const picturesDir = picturesBase + "/Screenshots";
         const now = new Date();
-        const timestamp = Qt.formatDateTime(now, "yyyy-MM-dd_hh-mm-ss");
+        const timestamp = Qt.formatDateTime(now, "yyyyMMdd_hhmmss");
         const outputPath = `${picturesDir}/screenshot-${timestamp}.png`;
         const tempSnip = Quickshell.cachePath(`snip-${timestamp}.png`);
         const ePicturesDir = shellEscape(picturesDir);
