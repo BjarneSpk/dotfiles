@@ -2,7 +2,9 @@
 
 STATE_DIR="/tmp/ext_monitor_brightness"
 MON_FILE="$STATE_DIR/monitors"
-mkdir -p "$STATE_DIR"
+
+mkdir -p "$STATE_DIR/current/"
+mkdir -p "$STATE_DIR/restore/"
 
 clamp() {
     local val=$1
@@ -49,7 +51,7 @@ set_external_all() {
         current=$(get_external_brightness "$disp")
         [[ -z "$current" ]] && continue
 
-        echo "$target" > "$STATE_DIR/$disp"
+        echo "$current" > "$STATE_DIR/restore/$disp"
 
         # Fast write (no readback verification)
         ddcutil -d "$disp" setvcp 10 "$target" --noverify >/dev/null
@@ -60,7 +62,7 @@ adjust_external() {
     local delta=$1
 
     for disp in $(get_monitors); do
-        file="$STATE_DIR/$disp"
+        file="$STATE_DIR/current/$disp"
 
         if [[ -f "$file" ]]; then
             current=$(cat "$file")
@@ -78,7 +80,7 @@ adjust_external() {
 }
 
 restore_external() {
-    for file in "$STATE_DIR"/*; do
+    for file in "$STATE_DIR"/restore/*; do
         [[ -f "$file" ]] || continue
         disp=$(basename "$file")
         val=$(cat "$file")
