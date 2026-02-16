@@ -14,7 +14,6 @@ breeze-gtk
 brightnessctl
 btop
 cliphist
-cmatrix
 ddcutil
 discord
 dns-over-https
@@ -42,7 +41,6 @@ intel-media-driver
 intel-media-sdk
 intel-ucode
 inter-font
-iperf3
 jq
 kitty
 lazygit
@@ -63,7 +61,6 @@ networkmanager-openconnect
 nm-connection-editor
 nmap
 nodejs
-nodejs-mapscii
 noto-fonts-emoji
 nwg-look
 openconnect
@@ -87,7 +84,6 @@ rofi
 satty
 sddm
 sof-firmware
-speedtest-cli
 spotify-launcher
 sudo
 swaync
@@ -113,8 +109,6 @@ texlive-pstricks
 texlive-publishers
 texlive-xetex
 thunderbird
-tldr
-tmux
 ttf-fira-sans
 ttf-meslo-nerd
 ufw
@@ -130,11 +124,9 @@ wireguard-tools
 wireplumber
 wl-clipboard
 wlogout
-woff2-font-awesome
 xdg-desktop-portal-hyprland
 yay
 yazi
-zathura-pdf-poppler
 zig
 zip
 zoxide
