@@ -64,7 +64,9 @@ CACHE_DIR="$XDG_CACHE_HOME/wallpaper_blur"
 mkdir -p "$CACHE_DIR"
 
 IMAGE_HASH=$(sha1sum "$IMAGE_PATH" | cut -d' ' -f1)
-BLURRED_IMAGE="$CACHE_DIR/${IMAGE_HASH}.jpg"
+EXT="${IMAGE_PATH##*.}"
+EXT="${EXT:l}"
+BLURRED_IMAGE="$CACHE_DIR/${IMAGE_HASH}.${EXT}"
 
 # generate only if missing
 if [[ ! -f "$BLURRED_IMAGE" ]]; then
