@@ -9,7 +9,7 @@ done
 
 HYPRPAPER_CONF="$DOTFILES/dots/.config/hypr/hyprpaper.conf"
 HYPRLOCK_WALLPAPER_CONF="$DOTFILES/dots/.config/hypr/hyprlock_wallpaper.conf"
-ROFI_BLUR_CONF="$XDG_CONFIG_HOME/rofi/blurred_wall.rasi"
+rasifile="$XDG_CONFIG_HOME/rofi/blurred_wall.rasi"
 
 if [[ -z "${1:-}" ]]; then
     echo "usage: $0 /path/to/image" >&2
@@ -73,7 +73,10 @@ if [[ ! -f "$BLURRED_IMAGE" ]]; then
     ffmpeg -v error -y -i "$IMAGE_PATH" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$BLURRED_IMAGE"
 fi
 
-echo "* { current-image: url(\"$BLURRED_IMAGE\", height); }" >"$ROFI_BLUR_CONF"
+if [[ ! -f $rasifile ]]; then
+    touch $rasifile
+fi
+echo "* { current-image: url(\"$BLURRED_IMAGE\", height); }" >"$rasifile"
 
 # turn off monitor after the script if disabled, as matugen calls hyprctl reload
 BUILTIN_WAS_DISABLED=false
