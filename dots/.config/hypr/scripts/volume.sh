@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+hint="string:x-canonical-private-synchronous:sys-notify"
+source $SCRIPTS/notification-handler.sh
+
 # Get Volume
 get_volume() {
     volume=$(wpctl get-volume @DEFAULT_AUDIO_SINK@ | awk '{print int($2*100)}')
@@ -21,28 +24,28 @@ get_icon() {
 }
 
 # Notify
-notify_user() {
-    notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume : $(get_volume) %"
+notify_volume() {
+    notify_user -h "$hint" -u low -i "$(get_icon)" -a "Volume" -m "$(get_volume) %"
 }
 
 # Increase Volume
 inc_volume() {
-    wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && notify_user
+    wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+ && notify_volume
 }
 
 # Decrease Volume
 dec_volume() {
-    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && notify_user
+    wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%- && notify_volume
 }
 
 # Toggle Mute
 toggle_mute() {
     if wpctl get-volume @DEFAULT_AUDIO_SINK@ | grep -q MUTED; then
         wpctl set-mute @DEFAULT_AUDIO_SINK@ 0
-        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_icon)" "Volume Switched ON"
+        notify_user -h "$hint" -u low -i "$(get_icon)" -a "Volume" -m "Volume Switched ON"
     else
         wpctl set-mute @DEFAULT_AUDIO_SINK@ 1
-        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "audio-volume-muted-symbolic" "Volume Switched OFF"
+        notify_user -h "$hint" -u low -i "audio-volume-muted-symbolic" -a "Volume" -m "Volume Switched OFF"
     fi
 }
 
@@ -50,10 +53,10 @@ toggle_mute() {
 toggle_mic() {
     if wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | grep -q MUTED; then
         wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 0
-        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "microphone-sensitivity-high-symbolic" "Microphone Switched ON"
+        notify_user -h "$hint" -u low -i "microphone-sensitivity-high-symbolic" -a "Microphone" -m "Microphone Switched ON"
     else
         wpctl set-mute @DEFAULT_AUDIO_SOURCE@ 1
-        notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "microphone-sensitivity-muted-symbolic" "Microphone Switched OFF"
+        notify_user -h "$hint" -u low -i "microphone-sensitivity-muted-symbolic" -a "Microphone" -m "Microphone Switched OFF"
     fi
 }
 # Get icons
@@ -70,20 +73,20 @@ get_mic_icon() {
     fi
 }
 # Notify
-notify_mic_user() {
-    notify-send -h string:x-canonical-private-synchronous:sys-notify -u low -i "$(get_mic_icon)" "Mic-Level : $(pamixer --default-source --get-volume) %"
+nofify_mic() {
+    notify_user -h "$hint" -u low -i "$(get_mic_icon)" -a "Microphone" -m "$(wpctl get-volume @DEFAULT_AUDIO_SOURCE@ | awk '{print int($2*100)}') %"
 }
 
 # Increase MIC Volume
 inc_mic_volume() {
     wpctl set-volume @DEFAULT_AUDIO_SOURCE@ 5%+
-    notify_mic_user
+    nofify_mic
 }
 
 # Decrease MIC Volume
 dec_mic_volume() {
     wpctl set-volume @DEFAULT_AUDIO_SOURCE 5%-
-    notify_mic_user
+    nofify_mic
 }
 
 # Execute accordingly

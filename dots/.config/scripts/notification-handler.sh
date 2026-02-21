@@ -9,6 +9,7 @@ notify_user() {
     local app=""
     local summary=""
     local message=""
+    local hint=""
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
@@ -39,6 +40,11 @@ notify_user() {
         --extra|--e|-e)
             # split string into words
             read -r -a extra <<< "$2"
+            shift 2
+            ;;
+        --hint|--h|-h)
+            # split string into words
+            hint="$2"
             shift 2
             ;;
         *)
@@ -74,6 +80,10 @@ notify_user() {
         -i "$icon"
         -a "$app"
     )
+
+    if [[ ! -z $hint ]]; then
+        notify_args+=(-h "$hint")
+    fi
 
     # Uses expiry time if informed
     [[ -n "$time" ]] && notify_args+=(-t "$time")
