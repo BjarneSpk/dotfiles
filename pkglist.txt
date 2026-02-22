@@ -17,12 +17,13 @@ brightnessctl
 btop
 cliphist
 ddcutil
-dns-over-https
+dnscrypt-proxy
 efibootmgr
 eza
 fastfetch
 fd
 firefox
+fprintd
 fwupd
 fzf
 gcc
@@ -90,8 +91,9 @@ spotify-launcher
 sudo
 swaync
 thunderbird
+tlp
+tlpui
 ttf-meslo-nerd
-ufw
 unzip
 vdpauinfo
 vscodium
