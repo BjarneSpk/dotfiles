@@ -15,6 +15,7 @@ breeze
 breeze-gtk
 brightnessctl
 btop
+chafa
 cliphist
 ddcutil
 dnscrypt-proxy
@@ -70,6 +71,7 @@ openvpn
 otf-font-awesome
 pacman-contrib
 pavucontrol
+perl-image-exiftool
 pipewire-alsa
 pipewire-pulse
 podman
