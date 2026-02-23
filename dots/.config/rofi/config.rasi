@@ -49,8 +49,9 @@ configuration {
 /* ---- Load colors ---- */
 @theme "~/.config/rofi/colors.rasi"
 
-/* ---- Load wallpaper ---- */
-@import "~/.config/rofi/blurred_wall.rasi"
+* {
+    current-image: url("~/.cache/arch-rice/wallpaper/current_blurred.jpg", height);
+}
 
 // Main //
 window {

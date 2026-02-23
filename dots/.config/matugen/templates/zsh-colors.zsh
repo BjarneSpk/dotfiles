@@ -5,4 +5,8 @@ export FZF_DEFAULT_OPTS="
     --color=fg+:{{colors.on_surface_variant.default.hex}},hl+:{{colors.primary_container.default.hex}}
     --color=border:{{colors.outline.default.hex}},header:{{colors.secondary.default.hex}},gutter:{{colors.surface_dim.default.hex}}
     --color=spinner:{{colors.tertiary.default.hex}},info:{{colors.secondary_container.default.hex}}
-    --color=pointer:{{colors.primary_fixed.default.hex}},marker:{{colors.error.default.hex}},prompt:{{colors.on_background.default.hex}}"
+    --color=pointer:{{colors.primary_fixed.default.hex}},marker:{{colors.error.default.hex}},prompt:{{colors.on_background.default.hex}}
+    --height=50%
+    --layout=reverse
+    --border
+"
