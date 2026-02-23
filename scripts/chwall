@@ -1,0 +1,74 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+trap '' USR1
+
+for cmd in magick ffmpeg matugen hyprctl realpath; do
+    command -v "$cmd" >/dev/null || { echo "$cmd missing"; exit 1; }
+done
+
+if [[ -z "${1:-}" ]]; then
+    echo "usage: $0 /path/to/image" >&2
+    exit 1
+fi
+IMAGE_PATH="$(realpath "$1")"
+
+if [[ ! -f "$IMAGE_PATH" ]]; then
+    echo "error: file does not exist -> $IMAGE_PATH"
+    exit 1
+fi
+
+CACHE_DIR="$XDG_CACHE_HOME/arch-rice/wallpaper"
+mkdir -p "$CACHE_DIR"
+
+if [[ -f $CACHE_DIR/current.txt ]]; then
+  CURRENT=$(cat $CACHE_DIR/current.txt)
+  if [[ "$CURRENT" == "$IMAGE_PATH" ]]; then
+      echo "Wallpaper already active."
+      exit 0
+  fi
+fi
+
+echo $IMAGE_PATH > $CACHE_DIR/current.txt
+
+EXT="${IMAGE_PATH##*.}"
+EXT="${EXT:l}"
+
+if [[ $EXT != jpg ]]; then
+  magick $IMAGE_PATH $CACHE_DIR/current.jpg
+else
+  cp -f $IMAGE_PATH $CACHE_DIR/current.jpg
+fi
+
+IMAGE_HASH=$(sha1sum "$IMAGE_PATH" | cut -d' ' -f1)
+BLURRED_IMAGE="$CACHE_DIR/${IMAGE_HASH}.jpg"
+
+# generate only if missing
+if [[ ! -f "$BLURRED_IMAGE" ]]; then
+    ffmpeg -v error -y -i "$IMAGE_PATH" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$BLURRED_IMAGE"
+fi
+
+ln -sf $BLURRED_IMAGE $CACHE_DIR/current_blurred.jpg
+
+# turn off monitor after the script if disabled, as matugen calls hyprctl reload
+BUILTIN_WAS_DISABLED=false
+if ! hyprctl monitors -j 2>/dev/null | grep -q '"name": *"eDP-1"'; then
+    BUILTIN_WAS_DISABLED=true
+fi
+
+matugen --quiet image "$CACHE_DIR/current.jpg" --mode dark
+
+hyprctl hyprpaper wallpaper ",$CACHE_DIR/current.jpg"
+
+if [[ "$BUILTIN_WAS_DISABLED" == true ]]; then
+    hyprctl keyword monitor "eDP-1,disable" &>/dev/null
+fi
+
+if read -q "REPLY?Update SDDM background as well? (requires sudo) [y/N] "; then
+    echo
+    sudo -v || exit 1
+    sudo install -Dm0644 "$CACHE_DIR/current.jpg" "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
+else
+    echo
+    echo "Skipping SDDM background update."
+fi
