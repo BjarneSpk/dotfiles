@@ -11,3 +11,6 @@ linemode = "size_and_mtime"
 
 [preview]
 wrap = "yes"
+# Change them to your desired values
+max_width  = 1000
+max_height = 1000
