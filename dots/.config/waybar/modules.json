@@ -108,7 +108,7 @@
   "custom/wallpaper": {
     "format": "",
     "on-click": "bash -c waypaper &",
-    "on-click-right": "~/.config/hypr/scripts/wallpaper-effects.sh",
+    "on-click-right": "wallpaper-effects.sh",
     "tooltip-format": "Left: Select a wallpaper\nRight: Select wallpaper effect"
   },
   // Waybar Themes
@@ -126,7 +126,7 @@
   // Keybindings
   "custom/keybindings": {
     "format": "",
-    "on-click": "~/.config/hypr/scripts/keybindings.sh",
+    "on-click": "keybindings.sh",
     "tooltip": false
   },
   // Calculator
@@ -141,14 +141,14 @@
     "format": "󰣇",
     // END APPS LABEL
     "on-click": "rofi -show drun -replace -i",
-    "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
+    "on-click-right": "keybindings.sh",
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
   },
   // Rofi Application Launcher
   "custom/appmenuicon": {
     "format": "",
     "on-click": "sleep 0.2;rofi -show drun -replace",
-    "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
+    "on-click-right": "keybindings.sh",
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
   },
   // Power Menu
@@ -183,8 +183,8 @@
   "custom/hyprshade": {
     "format": "",
     "tooltip-format": "Toggle Screen Shader",
-    "on-click": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh",
-    "on-click-right": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh rofi",
+    "on-click": "sleep 0.5; hyprshade.sh",
+    "on-click-right": "sleep 0.5; hyprshade.sh rofi",
     "on-scroll-up": "true",
     "on-scroll-down": "true"
   },
@@ -195,8 +195,8 @@
     "escape": true,
     "exec-on-event": true,
     "interval": 60,
-    "exec": "~/.config/hypr/scripts/hypridle.sh status",
-    "on-click": "~/.config/hypr/scripts/hypridle.sh toggle",
+    "exec": "hypridle.sh status",
+    "on-click": "hypridle.sh toggle",
     "on-scroll-up": "true",
     "on-scroll-down": "true"
   },
@@ -325,7 +325,7 @@
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
     "on-click": "kitty --class dotfiles-floating -e nmtui",
-    "on-click-right": "~/.config/scripts/nm-applet.sh toggle",
+    "on-click-right": "nm-applet.sh toggle",
   },
   // Battery
   "battery": {
