@@ -1,8 +1,0 @@
-font-family = MesloLGS Nerd Font
-font-size = 14
-theme = rose-pine
-cursor-style = block
-mouse-hide-while-typing = true
-window-decoration = false
-keybind = ctrl+a>v = write_scrollback_file:paste
-macos-option-as-alt = right
