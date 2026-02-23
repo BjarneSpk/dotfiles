@@ -1,18 +1,27 @@
 #!/usr/bin/env zsh
 
 # Set up fzf key bindings and fuzzy completion
-# export FZF_DEFAULT_OPTS="
-# 	--color=fg:#908caa,bg:#191724,hl:#ebbcba
-# 	--color=fg+:#e0def4,bg+:#26233a,hl+:#ebbcba
-# 	--color=border:#403d52,header:#31748f,gutter:#191724
-# 	--color=spinner:#f6c177,info:#9ccfd8
-# 	--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
 export FZF_DEFAULT_COMMAND='fd --hidden --strip-cwd-prefix --exclude "{.git,.DS_Store}"'
 
 export FZF_CTRL_T_COMMAND=$FZF_DEFAULT_COMMAND
 # Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
-  --preview 'bat -n --color=always {}'"
+  --preview '"$XDG_CONFIG_HOME"/zsh/fzf-preview.sh {}'
+  --preview-window right:60%
+  --height 50%
+  --layout reverse
+  --border
+  --bind 'ctrl-/:change-preview-window(50%|hidden|)'
+  --prompt 'Files> '
+  --header 'CTRL-T: Switch between Files/Directories'
+  --bind 'ctrl-t:transform:
+    if [[ ! \$FZF_PROMPT =~ Files ]]; then
+      echo change-prompt\(Files\>\ \)+reload\(fd --type file --hidden --strip-cwd-prefix --exclude .git\)
+    else
+      echo change-prompt\(Directories\>\ \)+reload\(fd --type directory --hidden --strip-cwd-prefix --exclude .git\)
+    fi'
+  --info inline
+"
 
 export FZF_ALT_C_COMMAND="$FZF_DEFAULT_COMMAND --type d"
 # Print tree structure in the preview window
@@ -23,7 +32,9 @@ export FZF_ALT_C_OPTS="--preview 'eza --tree --level=2 --color=always {} | head 
 export FZF_CTRL_R_OPTS="
   --bind 'ctrl-y:execute-silent(echo -n {2..} | wl-copy)+abort'
   --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
+  --header 'CTRL-Y: Copy command into clipboard'
+  --scheme history
+"
 
 # Use fd (https://github.com/sharkdp/fd) for listing path candidates.
 # - The first argument to the function ($1) is the base path to start traversal

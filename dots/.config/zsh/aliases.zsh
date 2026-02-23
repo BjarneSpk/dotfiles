@@ -37,6 +37,56 @@ alias grep='grep --color=auto --exclude-dir={.bzr,CVS,.git,.hg,.svn,.idea,.tox,.
 alias egrep='grep -E'
 alias fgrep='grep -F'
 
+rfv() {
+  # Two-phase filtering with Ripgrep and fzf
+  #
+  # 1. Search for text in files using Ripgrep
+  # 2. Interactively restart Ripgrep with reload action
+  #   * Switch between Ripgrep mode and fzf filtering mode (CTRL-T)
+  # 3. Open the file in Neovim
+  rm -f /tmp/rg-fzf-{r,f}
+  RG_PREFIX="rg --column --line-number --no-heading --color=always --smart-case "
+  INITIAL_QUERY="${*:-}"
+  fzf --ansi --disabled --query "$INITIAL_QUERY" \
+      --bind "start:reload:$RG_PREFIX {q}" \
+      --bind "change:reload:sleep 0.1; $RG_PREFIX {q} || true" \
+      --bind 'ctrl-t:transform:[[ ! $FZF_PROMPT =~ ripgrep ]] &&
+        echo "rebind(change)+change-prompt(1. ripgrep> )+disable-search+transform-query:echo \{q} > /tmp/rg-fzf-f; cat /tmp/rg-fzf-r" ||
+        echo "unbind(change)+change-prompt(2. fzf> )+enable-search+transform-query:echo \{q} > /tmp/rg-fzf-r; cat /tmp/rg-fzf-f"' \
+      --color "hl:-1:underline,hl+:-1:underline:reverse" \
+      --prompt '1. ripgrep> ' \
+      --delimiter : \
+      --header 'CTRL-T: Switch between ripgrep/fzf' \
+      --preview 'bat --color=always {1} --highlight-line {2}' \
+      --preview-window 'up,60%,border-bottom,+{2}+3/3,~3' \
+      --bind 'enter:become(vim {1} +{2})'
+}
+
+rfi() {
+  export TEMP=$(mktemp -u)
+  trap 'rm -f "$TEMP"' EXIT
+
+  INITIAL_QUERY="${*:-}"
+  TRANSFORMER='
+    rg_pat={q:1}      # The first word is passed to ripgrep
+    fzf_pat={q:2..}   # The rest are passed to fzf
+
+    if ! [[ -r "$TEMP" ]] || [[ $rg_pat != $(cat "$TEMP") ]]; then
+      echo "$rg_pat" > "$TEMP"
+      printf "reload:sleep 0.1; rg --column --line-number --no-heading --color=always --smart-case %q || true" "$rg_pat"
+    fi
+    echo "+search:$fzf_pat"
+  '
+  fzf --ansi --disabled --query "$INITIAL_QUERY" \
+      --with-shell 'bash -c' \
+      --bind "start,change:transform:$TRANSFORMER" \
+      --color "hl:-1:underline,hl+:-1:underline:reverse" \
+      --delimiter : \
+      --preview 'bat --color=always {1} --highlight-line {2}' \
+      --preview-window 'up,60%,border-line,+{2}+3/3,~3' \
+      --bind 'enter:become(vim {1} +{2})'
+}
+
 alias -g ...='../..'
 alias -g ....='../../..'
 alias -g .....='../../../..'

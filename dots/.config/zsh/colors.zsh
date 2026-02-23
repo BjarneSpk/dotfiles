@@ -1,8 +1,12 @@
-export PROMPT=' %F{#b2c5ff}%n%f %F{#c0c6dd}%1~%f %F{#e3e2e9}%#%f '
-export FZF_DEFAULT_OPTS="
+export PROMPT=' %F{#ffb77a}%n%f %F{#cb905d}%1~%f %F{#efe0d6}%#%f '
+export FZF_DEFAULT_OPTS='
     --style=full
-    --color=fg:#e3e2e9,bg:#121318,hl:#b2c5ff
-    --color=fg+:#c5c6d0,bg+:#1e1f25,hl+:#314578
-    --color=border:#8f909a,header:#c0c6dd,gutter:#121318
-    --color=spinner:#e1bbdc,info:#404659
-    --color=pointer:#dae2ff,marker:#ffb4ab,prompt:#e3e2e9"
+    --color=fg:#efe0d6,hl:#ffb77a
+    --color=fg+:#d6c3b6,hl+:#6b3b05
+    --color=border:#9e8e82,header:#e3c0a5,gutter:#19120c
+    --color=spinner:#c4cb97,info:#5a422e
+    --color=pointer:#ffdcc2,marker:#ffb4ab,prompt:#efe0d6
+    --height=50%
+    --layout=reverse
+    --border
+'
