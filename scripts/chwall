@@ -3,7 +3,7 @@
 set -euo pipefail
 trap '' USR1
 
-for cmd in magick ffmpeg matugen hyprctl realpath; do
+for cmd in magick ffmpeg matugen hyprctl; do
     command -v "$cmd" >/dev/null || { echo "$cmd missing"; exit 1; }
 done
 
@@ -11,63 +11,66 @@ if [[ -z "${1:-}" ]]; then
     echo "usage: $0 /path/to/image" >&2
     exit 1
 fi
-IMAGE_PATH="$(realpath "$1")"
 
-if [[ ! -f "$IMAGE_PATH" ]]; then
-    echo "error: file does not exist -> $IMAGE_PATH"
+img_path="$(realpath "$1")"
+
+if [[ ! -f "$img_path" ]]; then
+    echo "error: file does not exist -> $img_path"
+    exit 1
+fi
+if ! magick identify "$img_path" >/dev/null 2>&1; then
+    echo "error: not a valid image"
     exit 1
 fi
 
-CACHE_DIR="$XDG_CACHE_HOME/arch-rice/wallpaper"
-mkdir -p "$CACHE_DIR"
+: "${XDG_CACHE_HOME:=$HOME/.cache}"
+cache_dir="$XDG_CACHE_HOME/arch-rice/wallpaper"
+mkdir -p "$cache_dir"
 
-if [[ -f $CACHE_DIR/current.txt ]]; then
-  CURRENT=$(cat $CACHE_DIR/current.txt)
-  if [[ "$CURRENT" == "$IMAGE_PATH" ]]; then
-      echo "Wallpaper already active."
-      exit 0
-  fi
+if [[ -f "$cache_dir/current.txt" && "$(<"$cache_dir/current.txt")" == "$img_path" ]]; then
+    echo "Wallpaper already active."
+    exit 0
 fi
 
-echo $IMAGE_PATH > $CACHE_DIR/current.txt
+echo "$img_path" > "$cache_dir/current.txt"
 
-EXT="${IMAGE_PATH##*.}"
-EXT="${EXT:l}"
+img_ext="${img_path##*.}"
+img_ext="${img_ext:l}"
 
-if [[ $EXT != jpg ]]; then
-  magick $IMAGE_PATH $CACHE_DIR/current.jpg
+if [[ "$img_ext" != jpg ]]; then
+  magick "$img_path" "$cache_dir/current.jpg"
 else
-  cp -f $IMAGE_PATH $CACHE_DIR/current.jpg
+  cp -f -- "$img_path" "$cache_dir/current.jpg"
 fi
 
-IMAGE_HASH=$(sha1sum "$IMAGE_PATH" | cut -d' ' -f1)
-BLURRED_IMAGE="$CACHE_DIR/${IMAGE_HASH}.jpg"
+img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
+img_blurred="$cache_dir/$img_hash.jpg"
 
 # generate only if missing
-if [[ ! -f "$BLURRED_IMAGE" ]]; then
-    ffmpeg -v error -y -i "$IMAGE_PATH" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$BLURRED_IMAGE"
+if [[ ! -f "$img_blurred" ]]; then
+    ffmpeg -v error -y -i "$img_path" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$img_blurred"
 fi
 
-ln -sf $BLURRED_IMAGE $CACHE_DIR/current_blurred.jpg
+ln -sf "$img_blurred" "$cache_dir/current_blurred.jpg"
 
 # turn off monitor after the script if disabled, as matugen calls hyprctl reload
-BUILTIN_WAS_DISABLED=false
+builtin_off=false
 if ! hyprctl monitors -j 2>/dev/null | grep -q '"name": *"eDP-1"'; then
-    BUILTIN_WAS_DISABLED=true
+    builtin_off=true
 fi
 
-matugen --quiet image "$CACHE_DIR/current.jpg" --mode dark
+matugen --quiet image "$cache_dir/current.jpg" --mode dark
 
-hyprctl hyprpaper wallpaper ",$CACHE_DIR/current.jpg"
+hyprctl hyprpaper wallpaper ",$cache_dir/current.jpg"
 
-if [[ "$BUILTIN_WAS_DISABLED" == true ]]; then
+if [[ "$builtin_off" == true ]]; then
     hyprctl keyword monitor "eDP-1,disable" &>/dev/null
 fi
 
 if read -q "REPLY?Update SDDM background as well? (requires sudo) [y/N] "; then
     echo
     sudo -v || exit 1
-    sudo install -Dm0644 "$CACHE_DIR/current.jpg" "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
+    sudo install -Dm0644 "$cache_dir/current.jpg" "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
 else
     echo
     echo "Skipping SDDM background update."
