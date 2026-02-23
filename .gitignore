@@ -3,3 +3,10 @@ nvim.bak/
 .zcompdump
 .zhistory
 .zsh_history
+/dots/.config/gtk-3.0/gtk.css
+/dots/.config/gtk-4.0/gtk.css
+/dots/.config/rofi/colors.rasi
+/dots/.config/swaync/colors.css
+/dots/.config/zsh/colors.zsh
+/dots/.config/waybar/colors.css
+/dots/.config/hypr/conf.d/30-colors.conf
