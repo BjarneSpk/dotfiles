@@ -71,29 +71,9 @@ fi
 
 ln -sf "$img_blurred" "$cache_dir/current_blurred"
 
-current_ws=$(hyprctl activeworkspace -j 2>/dev/null | grep -oP 'id": *\K[^,]*')
-
-# turn off monitor after the script if disabled, as matugen calls hyprctl reload
-builtin_off=false
-if ! hyprctl monitors -j 2>/dev/null | grep -q '"name": *"eDP-1"'; then
-    builtin_off=true
-fi
-
 matugen --quiet image "$img_path" --mode dark
 
-sleep 0.25
-
 hyprctl hyprpaper wallpaper ",$cache_dir/current"
-
-sleep 0.25
-
-if [[ "$builtin_off" == true ]]; then
-    hyprctl keyword monitor "eDP-1,disable" &>/dev/null
-fi
-
-sleep 0.25
-
-hyprctl dispatch workspace "$current_ws" &>/dev/null
 
 if [[ "$update_sddm" == true ]]; then
     echo "Updating SDDM background..."
