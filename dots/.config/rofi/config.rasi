@@ -13,7 +13,7 @@
 configuration {
     modi:                       "drun,filebrowser,window,run";
     file-browser-command: "kitty -e /usr/bin/nvim '{file}'";
-    font:                       "Fira Sans 11";
+    font:                       "Inter 11";
     show-icons:                 true;
     display-drun:                " ";
     display-run:                 " ";
@@ -50,7 +50,7 @@ configuration {
 @theme "~/.config/rofi/colors.rasi"
 
 * {
-    current-image: url("~/.cache/arch-rice/wallpaper/current_blurred.jpg", height);
+    current-image: url("~/.cache/arch-rice/wallpaper/current_blurred", height);
 }
 
 // Main //

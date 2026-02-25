@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+# Don't react on USR1, as it is used by matugen to signal zsh to reload color theme.
 trap '' USR1
 
 update_sddm=false
@@ -22,7 +23,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-for cmd in magick ffmpeg matugen hyprctl; do
+for cmd in ffmpeg matugen hyprctl; do
     command -v "$cmd" >/dev/null || { echo "$cmd missing"; exit 1; }
 done
 
@@ -37,7 +38,7 @@ if [[ ! -f "$img_path" ]]; then
     echo "error: file does not exist -> $img_path"
     exit 1
 fi
-if ! magick identify "$img_path" >/dev/null 2>&1; then
+if ! file --mime-type -b "$img_path" | grep -q '^image/'; then
     echo "error: not a valid image"
     exit 1
 fi
@@ -56,14 +57,10 @@ echo "$img_path" > "$cache_dir/current.txt"
 img_ext="${img_path##*.}"
 img_ext="${img_ext,,}"
 
-if [[ "$img_ext" != "jpg" ]]; then
-  magick "$img_path" "$cache_dir/current.jpg"
-else
-  cp -f -- "$img_path" "$cache_dir/current.jpg"
-fi
+ln -sf "$img_path" "$cache_dir/current"
 
 img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
-img_blurred="$cache_dir/$img_hash.jpg"
+img_blurred="$cache_dir/$img_hash.$img_ext"
 
 # generate only if missing
 if [[ ! -f "$img_blurred" ]]; then
@@ -72,7 +69,7 @@ if [[ ! -f "$img_blurred" ]]; then
         "$img_blurred"
 fi
 
-ln -sf "$img_blurred" "$cache_dir/current_blurred.jpg"
+ln -sf "$img_blurred" "$cache_dir/current_blurred"
 
 # turn off monitor after the script if disabled, as matugen calls hyprctl reload
 builtin_off=false
@@ -80,20 +77,26 @@ if ! hyprctl monitors -j 2>/dev/null | grep -q '"name": *"eDP-1"'; then
     builtin_off=true
 fi
 
-matugen --quiet image "$cache_dir/current.jpg" --mode dark
+matugen --quiet image "$img_path" --mode dark
 
-hyprctl hyprpaper wallpaper ",$cache_dir/current.jpg"
+sleep 0.25
+
+hyprctl hyprpaper wallpaper ",$cache_dir/current"
+
+sleep 0.25
 
 if [[ "$builtin_off" == true ]]; then
     hyprctl keyword monitor "eDP-1,disable" &>/dev/null
 fi
 
+sleep 0.25
+
 if [[ "$update_sddm" == true ]]; then
     echo "Updating SDDM background..."
     sudo -v || exit 1
     sudo install -Dm0644 \
-        "$cache_dir/current.jpg" \
-        "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
+        "$img_path" \
+        "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper"
 else
     echo "Skipping SDDM background update."
 fi
