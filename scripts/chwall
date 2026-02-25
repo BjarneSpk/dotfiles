@@ -1,18 +1,37 @@
-#!/usr/bin/env zsh
+#!/usr/bin/env bash
 
 set -euo pipefail
 trap '' USR1
+
+update_sddm=false
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -s|--sddm)
+            update_sddm=true
+            shift
+            ;;
+        -h|--help)
+            echo "Usage: $0 [--sddm] /path/to/image"
+            exit 0
+            ;;
+        *)
+            img_arg="$1"
+            shift
+            ;;
+    esac
+done
 
 for cmd in magick ffmpeg matugen hyprctl; do
     command -v "$cmd" >/dev/null || { echo "$cmd missing"; exit 1; }
 done
 
-if [[ -z "${1:-}" ]]; then
-    echo "usage: $0 /path/to/image" >&2
+if [[ -z "${img_arg:-}" ]]; then
+    echo "usage: $0 [--sddm] /path/to/image" >&2
     exit 1
 fi
 
-img_path="$(realpath "$1")"
+img_path="$(realpath "$img_arg")"
 
 if [[ ! -f "$img_path" ]]; then
     echo "error: file does not exist -> $img_path"
@@ -35,9 +54,9 @@ fi
 echo "$img_path" > "$cache_dir/current.txt"
 
 img_ext="${img_path##*.}"
-img_ext="${img_ext:l}"
+img_ext="${img_ext,,}"
 
-if [[ "$img_ext" != jpg ]]; then
+if [[ "$img_ext" != "jpg" ]]; then
   magick "$img_path" "$cache_dir/current.jpg"
 else
   cp -f -- "$img_path" "$cache_dir/current.jpg"
@@ -48,7 +67,9 @@ img_blurred="$cache_dir/$img_hash.jpg"
 
 # generate only if missing
 if [[ ! -f "$img_blurred" ]]; then
-    ffmpeg -v error -y -i "$img_path" -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" "$img_blurred"
+    ffmpeg -v error -y -i "$img_path" \
+        -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" \
+        "$img_blurred"
 fi
 
 ln -sf "$img_blurred" "$cache_dir/current_blurred.jpg"
@@ -67,11 +88,12 @@ if [[ "$builtin_off" == true ]]; then
     hyprctl keyword monitor "eDP-1,disable" &>/dev/null
 fi
 
-if read -q "REPLY?Update SDDM background as well? (requires sudo) [y/N] "; then
-    echo
+if [[ "$update_sddm" == true ]]; then
+    echo "Updating SDDM background..."
     sudo -v || exit 1
-    sudo install -Dm0644 "$cache_dir/current.jpg" "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
+    sudo install -Dm0644 \
+        "$cache_dir/current.jpg" \
+        "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper.jpg"
 else
-    echo
     echo "Skipping SDDM background update."
 fi
