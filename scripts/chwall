@@ -28,8 +28,13 @@ for cmd in ffmpeg matugen hyprctl; do
 done
 
 if [[ -z "${img_arg:-}" ]]; then
-    echo "usage: $0 [--sddm] /path/to/image" >&2
-    exit 1
+    if [[ ! -t 0 ]]; then
+        read -r img_arg
+    else
+        echo "Error: No image path provided."
+        echo "Usage: $0 [--sddm] /path/to/image"
+        exit 1
+    fi
 fi
 
 img_path="$(realpath "$img_arg")"
