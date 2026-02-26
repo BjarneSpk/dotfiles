@@ -85,7 +85,7 @@ restore_external() {
         disp=$(basename "$file")
         val=$(cat "$file")
 
-        ddcutil -d "$disp" setvcp 10 "$val" --noverify >/dev/null
+        ddcutil -d "$disp" setvcp 10 "$val" --verify >/dev/null
     done
 }
 

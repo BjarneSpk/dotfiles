@@ -6,30 +6,33 @@ ROFI_CONFIG="${XDG_CONFIG_HOME:=$HOME/.config}/rofi/config-wallpaper.rasi"
 
 THEME_DIR=$HOME/Pictures/Wallpapers
 
-RANDOM_WALL="$(find "$THEME_DIR" -maxdepth 1 -type f \
+RANDOM_WALL="$(find "$THEME_DIR" -type f \
   \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" \) | shuf -n 1)"
 
-SELECTED_WALL=$(
+mapfile -t WALLS < <(
+  find "$THEME_DIR" -type f \
+    \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" \) \
+    -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2-
+)
+
+SELECTED_INDEX=$(
   {
     printf "󰒺  Random Wallpaper\0icon\x1f%s\n" "$RANDOM_WALL"
 
-    find "$THEME_DIR" -maxdepth 1 -type f \
-      \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" \) \
-      -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2- |
-    while read -r img; do
-      name="$(basename "$img")"
+    for img in "${WALLS[@]}"; do
+      name="${img#$THEME_DIR/}"
       printf "%s\0icon\x1f%s\n" "$name" "$img"
     done
   } |
-  rofi -dmenu -i -p "Select Wallpaper" -show-icons -config "$ROFI_CONFIG"
+  rofi -dmenu -i -p "Select Wallpaper" -show-icons -config "$ROFI_CONFIG" -format 'i'
 )
 
-[ -z "$SELECTED_WALL" ] && exit 0
+[ -z "$SELECTED_INDEX" ] && exit 0
 
-if [[ "$SELECTED_WALL" == *Random* ]]; then
-    SELECTED_PATH="$RANDOM_WALL"
+if [ "$SELECTED_INDEX" -eq 0 ]; then
+  SELECTED_PATH="$RANDOM_WALL"
 else
-    SELECTED_PATH="$THEME_DIR/$SELECTED_WALL"
+  SELECTED_PATH="${WALLS[$((SELECTED_INDEX-1))]}"
 fi
 
-chwall $SELECTED_PATH
+chwall "$SELECTED_PATH"
