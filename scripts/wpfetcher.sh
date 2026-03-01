@@ -1,69 +1,162 @@
 #!/usr/bin/env bash
-
 set -euo pipefail
 
 DEST="$HOME/Pictures/Wallpapers/wallhaven"
 CACHE_DIR="$XDG_CACHE_HOME/arch-rice/wallpaper/wallhaven"
 KEY_FILE="$XDG_CONFIG_HOME/wallhaven/api_key"
 
-mkdir -p "$CACHE_DIR"
-mkdir -p "$DEST"
-
 categories="110"
 purity="100"
 query=""
+download_all=false
 
-while getopts "c:p:q:" opt; do
-  case $opt in
-    c) categories="$OPTARG" ;;
-    p) purity="$OPTARG" ;;
-    q) query="$OPTARG" ;;
-    *) echo "Usage: $0 [-c categories] [-p purity] [-q query]"
-       exit 1 ;;
-  esac
-done
+init_dirs() {
+  mkdir -p "$CACHE_DIR" "$DEST"
+}
 
-API_URL="https://wallhaven.cc/api/v1/search?categories=$categories&purity=$purity&sorting=toplist&topRange=1y&ratios=landscape&order=desc"
+parse_args() {
+  while getopts "c:p:q:a" opt; do
+    case $opt in
+      c) categories="$OPTARG" ;;
+      p) purity="$OPTARG" ;;
+      q) query="$OPTARG" ;;
+      a) download_all=true ;;
+      *) echo "Usage: $0 [-c categories] [-p purity] [-q query] [-a]"
+         exit 1 ;;
+    esac
+  done
+}
 
-if [ -n "$query" ]; then
-  API_URL="$API_URL&q=$(printf '%s' "$query" | jq -sRr @uri)"
-fi
+build_api_url() {
+  local url="https://wallhaven.cc/api/v1/search"
+  url+="?categories=$categories"
+  url+="&purity=$purity"
+  url+="&sorting=toplist&topRange=1y"
+  url+="&ratios=landscape&order=desc"
 
-cache_key=$(printf "%s" "$categories$purity$query" | sha1sum | cut -d' ' -f1)
-cache_file="$CACHE_DIR/$cache_key"
+  if [[ -n "$query" ]]; then
+    local encoded=$(printf '%s' "$query" | jq -sRr @uri)
+    url+="&q=$encoded"
+  fi
 
-if [[ -f "$cache_file" ]]; then
-  cached_last_page=$(<"$cache_file")
-  page=$(( (RANDOM % cached_last_page) + 1 ))
-else
-  page=1
-fi
+  printf '%s\n' "$url"
+}
 
-apikey_param=""
-[ -f "$KEY_FILE" ] && apikey_param="&apikey=$(<"$KEY_FILE")"
+read_api_key_param() {
+  [[ -f "$KEY_FILE" ]] && printf '&apikey=%s' "$(<"$KEY_FILE")"
+}
 
-json=$(curl -fsSL "$API_URL&page=$page$apikey_param")
+fetch_json() {
+  curl -fsSL "$1"
+}
 
-last_page=$(echo "$json" | jq '.meta.last_page')
-if [[ "$last_page" =~ ^[0-9]+$ && "$last_page" -gt 0 ]]; then
+download_if_needed() {
+  local image_url="$1"
+
+  local filename
+  filename=$(basename "$image_url")
+  local filepath="$DEST/$filename"
+
+  if [[ ! -f "$filepath" ]]; then
+    curl -fsSL "$image_url" -o "$filepath"
+  fi
+
+  printf '%s\n' "$filepath"
+}
+
+download_all_pages() {
+  local api_url="$1"
+  local apikey="$2"
+
+  echo "Fetching first page to determine total pages..."
+  local first_json
+  first_json=$(fetch_json "$api_url&page=1$apikey")
+
+  local last_page
+  last_page=$(jq '.meta.last_page' <<<"$first_json")
+
+  for ((page=1; page<=last_page; page++)); do
+    echo "Processing page $page / $last_page"
+
+    local json
+    if [[ "$page" -eq 1 ]]; then
+      json="$first_json"
+    else
+      json=$(fetch_json "$api_url&page=$page$apikey")
+    fi
+
+    jq -r '.data[].path' <<<"$json" | while read -r url; do
+      download_if_needed "$url"
+      sleep 2
+    done
+  done
+}
+
+extract_random_image_url() {
+  local json="$1"
+
+  local count
+  count=$(jq '.data | length' <<<"$json")
+
+  if [[ "$count" -eq 0 ]]; then
+    notify-send "WPFetcher" "No wallpapers found"
+    exit 1
+  fi
+
+  local index=$((RANDOM % count))
+  jq -r ".data[$index].path" <<<"$json"
+}
+
+cache_file_for_query() {
+  local key=$(printf "%s" "$categories$purity$query" | sha1sum | cut -d' ' -f1)
+  printf '%s/%s\n' "$CACHE_DIR" "$key"
+}
+
+pick_page() {
+  local cache_file="$1"
+
+  if [[ -f "$cache_file" ]]; then
+    local last_page=$(<"$cache_file")
+    printf '%d\n' $(( (RANDOM % last_page) + 1 ))
+  else
+    printf '1\n'
+  fi
+}
+
+update_cache() {
+  local cache_file="$1"
+  local json="$2"
+
+  local last_page=$(jq '.meta.last_page' <<<"$json")
+
+  if [[ "$last_page" =~ ^[0-9]+$ && "$last_page" -gt 0 ]]; then
     echo "$last_page" > "$cache_file"
-fi
+  fi
+}
 
-count=$(echo "$json" | jq '.data | length')
+main() {
+  init_dirs
+  parse_args "$@"
 
-if [ "$count" -eq 0 ]; then
-  echo "No wallpapers found"
-  exit 1
-fi
+  local api_url=$(build_api_url)
 
-rand_index=$((RANDOM % count))
-image_url=$(echo "$json" | jq -r ".data[$rand_index].path")
+  local apikey=$(read_api_key_param)
 
-filename=$(basename "$image_url")
-filepath="$DEST/$filename"
+  if $download_all; then
+    download_all_pages "$api_url" "$apikey"
+  else
+    # Original behavior (download one random wallpaper)
+    local cache_file=$(cache_file_for_query)
+    local page=$(pick_page "$cache_file")
 
-if [ ! -f "$filepath" ]; then
-  curl -fsSL "$image_url" -o "$filepath"
-fi
+    local json=$(fetch_json "$api_url&page=$page$apikey")
 
-echo $filepath
+    update_cache "$cache_file" "$json"
+
+    local image_url=$(extract_random_image_url "$json")
+
+    download_if_needed "$image_url"
+  fi
+}
+
+main "$@"

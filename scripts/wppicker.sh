@@ -4,7 +4,7 @@ set -euo pipefail
 
 ROFI_CONFIG="${XDG_CONFIG_HOME:=$HOME/.config}/rofi/config-wallpaper.rasi"
 
-THEME_DIR=$HOME/Pictures/Wallpapers
+THEME_DIR=$1
 
 RANDOM_WALL="$(find "$THEME_DIR" \
   \( -path "$THEME_DIR/too_small" -o -path "$THEME_DIR/wallhaven" \) -prune -o \
@@ -14,7 +14,7 @@ mapfile -t WALLS < <(
   find "$THEME_DIR" \
     \( -path "$THEME_DIR/too_small" -o -path "$THEME_DIR/wallhaven" \) -prune -o \
     -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" \) \
-    -printf "%T@ %p\n" | sort -nr | cut -d' ' -f2-
+    -printf "%T@ %p\n" | cut -d' ' -f2-
 )
 
 SELECTED_INDEX=$(
