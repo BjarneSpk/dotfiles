@@ -35,4 +35,4 @@ else
   SELECTED_PATH="${WALLS[$((SELECTED_INDEX-1))]}"
 fi
 
-chwall "$SELECTED_PATH"
+echo "$SELECTED_PATH"
