@@ -3,6 +3,7 @@
 set -euo pipefail
 # Don't react on USR1, as it is used by matugen to signal zsh to reload color theme.
 trap '' USR1
+source $SCRIPTS/notification_handler.sh
 
 update_sddm=false
 
@@ -53,7 +54,7 @@ cache_dir="$XDG_CACHE_HOME/arch-rice/wallpaper"
 mkdir -p "$cache_dir"
 
 if [[ -f "$cache_dir/current.txt" && "$(<"$cache_dir/current.txt")" == "$img_path" ]]; then
-    echo "Wallpaper already active."
+    notify_user -a "WPChanger" -m "Wallpaper already active."
     exit 0
 fi
 
@@ -89,3 +90,5 @@ if [[ "$update_sddm" == true ]]; then
 else
     echo "Skipping SDDM background update."
 fi
+
+notify_user -a "WPChanger" -m "Wallpaper changed to $(basename $img_path)."

@@ -23,7 +23,7 @@ eval screenshot_folder="$SAVE_DIR"
 eval NAME="$SAVE_FILENAME"
 
 # Notifications
-source "$HOME/.config/scripts/notification-handler.sh"
+source "$SCRIPTS/notification-handler.sh"
 APP_NAME="Screen Capture"
 NOTIFICATION_ICON="camera-photo-symbolic"
 
