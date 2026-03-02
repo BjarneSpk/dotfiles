@@ -65,6 +65,8 @@ img_ext="${img_ext,,}"
 
 ln -sf "$img_path" "$cache_dir/current"
 
+awww img -t none "$cache_dir/current"
+
 img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
 img_blurred="$cache_dir/$img_hash.$img_ext"
 
@@ -78,8 +80,6 @@ fi
 ln -sf "$img_blurred" "$cache_dir/current_blurred"
 
 matugen --quiet image "$img_path" --mode dark
-
-awww img -t none "$cache_dir/current"
 
 if [[ "$update_sddm" == true ]]; then
     echo "Updating SDDM background..."
