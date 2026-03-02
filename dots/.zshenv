@@ -7,19 +7,4 @@ export XDG_CACHE_HOME="$HOME/.cache"
 
 export ZDOTDIR="$XDG_CONFIG_HOME/zsh"
 
-export DOTFILES="$HOME/dotfiles"
-export PATH="$DOTFILES/scripts:$PATH"
-
-# Add cargo to PATH
-if [[ -f "$HOME/.cargo/env" ]]; then
-  source "$HOME/.cargo/env"
-fi
-
-export EDITOR="nvim"
-export VISUAL="$EDITOR"
-
 export LANG=en_US.UTF-8
-
-export HISTFILE="$ZDOTDIR/.zhistory"
-export HISTSIZE=10000
-export SAVEHIST=10000
