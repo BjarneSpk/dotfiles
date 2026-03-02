@@ -11,7 +11,7 @@
 
 /* ---- Configuration ---- */
 configuration {
-    modi:                       "drun,cliphist:roficliphist.sh,window,run";
+    modi:                       "drun,roficliphist,window,run";
     file-browser-command: "kitty -e /usr/bin/nvim '{file}'";
     font:                       "Inter 11";
     show-icons:                 true;
@@ -19,7 +19,7 @@ configuration {
     display-run:                 " ";
     display-filebrowser:         "";
     display-window:              "";
-    display-cliphist:            "";
+    display-roficliphist:            "";
 	  drun-display-format:        "{name}";
     hover-select:               false;
     scroll-method:              1;
