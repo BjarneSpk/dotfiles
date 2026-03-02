@@ -79,7 +79,7 @@ ln -sf "$img_blurred" "$cache_dir/current_blurred"
 
 matugen --quiet image "$img_path" --mode dark
 
-hyprctl hyprpaper wallpaper ",$cache_dir/current"
+awww img -t none "$cache_dir/current"
 
 if [[ "$update_sddm" == true ]]; then
     echo "Updating SDDM background..."

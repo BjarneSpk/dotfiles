@@ -4,6 +4,7 @@ adwaita-qt5-git
 adwaita-qt6-git
 alsa-utils
 archlinux-xdg-menu
+awww-bin
 base
 base-devel
 bat
@@ -37,7 +38,6 @@ gvfs
 hypridle
 hyprland
 hyprlock
-hyprpaper
 hyprpolkitagent
 imagemagick
 intel-media-driver
