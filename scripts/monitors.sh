@@ -2,7 +2,7 @@
 
 handle() {
   case $1 in
-    monitoradded\>* | monitorremoved\>*) ~/.config/scripts/brightness.sh redetect ;;
+    monitoradded\>* | monitorremoved\>*) brightness.sh redetect ;;
   esac
 }
 

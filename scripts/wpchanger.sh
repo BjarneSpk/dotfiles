@@ -82,13 +82,10 @@ ln -sf "$img_blurred" "$cache_dir/current_blurred"
 matugen --quiet image "$img_path" --mode dark
 
 if [[ "$update_sddm" == true ]]; then
-    echo "Updating SDDM background..."
     sudo -v || exit 1
     sudo install -Dm0644 \
         "$img_path" \
         "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper"
-else
-    echo "Skipping SDDM background update."
 fi
 
 notify_user -a "WPChanger" -m "Wallpaper changed to $(basename $img_path)."

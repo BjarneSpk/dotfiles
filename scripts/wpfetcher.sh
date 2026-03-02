@@ -52,6 +52,7 @@ fetch_json() {
 
 download_if_needed() {
   local image_url="$1"
+  local do_sleep="${2:-0}"
 
   local filename
   filename=$(basename "$image_url")
@@ -59,6 +60,7 @@ download_if_needed() {
 
   if [[ ! -f "$filepath" ]]; then
     curl -fsSL "$image_url" -o "$filepath"
+    (( do_sleep )) && sleep 1
   fi
 
   printf '%s\n' "$filepath"
@@ -86,8 +88,7 @@ download_all_pages() {
     fi
 
     jq -r '.data[].path' <<<"$json" | while read -r url; do
-      download_if_needed "$url"
-      sleep 2
+      download_if_needed "$url" 1
     done
   done
 }
