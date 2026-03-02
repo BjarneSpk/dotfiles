@@ -10,3 +10,4 @@ nvim.bak/
 /dots/.config/zsh/colors.zsh
 /dots/.config/waybar/colors.css
 /dots/.config/hypr/conf.d/30-colors.conf
+/dots/.config/quickshell/HyprQuickFrame/theme.toml
