@@ -11,8 +11,8 @@ FloatingWindow {
     // WINDOW CONFIG
     // -------------------------------------------------------------------------
     title: "wallpaper-picker"
-    width: Screen.width
-    height: Math.round(Screen.height * 0.46)
+    implicitWidth: Screen.width
+    implicitHeight: Math.round(Screen.height * 0.46)
     color: "transparent"
 
     // -------------------------------------------------------------------------
@@ -35,7 +35,7 @@ FloatingWindow {
     readonly property int itemWidth: Math.round(Screen.width * 0.156)
     readonly property int itemHeight: Math.round(height * 0.84)
     readonly property int borderWidth: 3
-    readonly property int spacing: 0 
+    readonly property int spacing: 0
     readonly property real skewFactor: -0.35
 
     property string searchText: ""
@@ -93,6 +93,19 @@ FloatingWindow {
 
         focus: true
 
+        Timer {
+            id: previewTimer
+            interval: 300
+            repeat: false
+            onTriggered: {
+                if (!view.currentItem) return
+                var p = view.currentItem.sourcePath.replace(/'/g, "'\\''")
+                Quickshell.execDetached(["bash", "-c", "awww img -t none '" + p + "'"])
+            }
+        }
+
+        onCurrentIndexChanged: previewTimer.restart()
+
         // --- NEW: Snap to active wallpaper on load ---
         property bool initialFocusSet: false
         onCountChanged: {
@@ -118,7 +131,8 @@ FloatingWindow {
                     window.searchText = ""
                 } else {
                     if (window.originalWallpaper.length > 0)
-                        Quickshell.execDetached(["bash", "-c", "awww img -t none '" + window.originalWallpaper + "'"])
+                        var restorePath = window.originalWallpaper.replace(/'/g, "'\\''")
+                        Quickshell.execDetached(["bash", "-c", "awww img -t none '" + restorePath + "'"])
                     Qt.quit()
                 }
                 event.accepted = true
@@ -150,15 +164,6 @@ FloatingWindow {
                 if (cleanName.startsWith("000_")) cleanName = cleanName.substring(4)
                 return window.srcDir + "/" + cleanName.split("%").join("/")
             }
-            // The skewed visual bleeds one slot to the right of the logical hit-area,
-            // so compensate by previewing the item one position to the left.
-            readonly property string hoverSourcePath: {
-                var idx = Math.max(0, index)
-                var entry = visualModel.items.get(idx)
-                var fname = entry ? entry.model.fileName : fileName
-                var clean = fname.startsWith("000_") ? fname.substring(4) : fname
-                return window.srcDir + "/" + clean.split("%").join("/")
-            }
 
             z: isCurrent ? 10 : 1
 
@@ -182,23 +187,13 @@ FloatingWindow {
                 Qt.quit()
             }
 
-            Timer {
-                id: hoverTimer
-                interval: 500
-                repeat: false
-                onTriggered: Quickshell.execDetached(["bash", "-c", "awww img -t none '" + delegateRoot.hoverSourcePath + "'"])
-            }
-
-            MouseArea {
-                anchors.fill: parent
-                hoverEnabled: true
-                onEntered: hoverTimer.restart()
-                onExited: hoverTimer.stop()
-                onClicked: {
-                    view.currentIndex = index
-                    delegateRoot.pickWallpaper()
-                }
-            }
+            // MouseArea {
+            //     anchors.fill: parent
+            //     onClicked: {
+            //         view.currentIndex = index
+            //         delegateRoot.pickWallpaper()
+            //     }
+            // }
 
             // PARALLELOGRAM CONTAINER
             Item {
