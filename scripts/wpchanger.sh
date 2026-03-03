@@ -65,7 +65,7 @@ img_ext="${img_ext,,}"
 
 ln -sf "$img_path" "$cache_dir/current"
 
-awww img -t none "$cache_dir/current"
+awww img "$cache_dir/current" -t random --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 1
 
 img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
 img_blurred="$cache_dir/$img_hash.$img_ext"
