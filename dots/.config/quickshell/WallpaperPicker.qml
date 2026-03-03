@@ -38,7 +38,37 @@ FloatingWindow {
     readonly property int spacing: 0 
     readonly property real skewFactor: -0.35
 
-    Shortcut { sequence: "Escape"; onActivated: Qt.quit() }
+    property string searchText: ""
+
+    // -------------------------------------------------------------------------
+    // FILTER MODEL
+    // -------------------------------------------------------------------------
+    DelegateModel {
+        id: visualModel
+        model: FolderListModel {
+            id: folderModel
+            folder: window.thumbDir
+            nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif", "*.mp4", "*.mkv", "*.mov", "*.webm"]
+            showDirs: false
+            sortField: FolderListModel.Name
+        }
+        filterOnGroup: "filtered"
+        groups: DelegateModelGroup { name: "filtered"; includeByDefault: true }
+
+        // Re-apply filter whenever the underlying model changes (initial load)
+        items.onChanged: refilter(window.searchText)
+
+        function refilter(query) {
+            if (items.count === 0) return
+            query = (query || "").toLowerCase()
+            for (var i = 0; i < items.count; i++) {
+                var entry = items.get(i)
+                entry.inFiltered = !query || entry.model.fileName.toLowerCase().indexOf(query) !== -1
+            }
+        }
+    }
+
+    onSearchTextChanged: visualModel.refilter(searchText)
 
     // -------------------------------------------------------------------------
     // CONTENT
@@ -76,23 +106,30 @@ FloatingWindow {
             }
         }
 
-        model: FolderListModel {
-            id: folderModel
-            folder: window.thumbDir
-            nameFilters: ["*.jpg", "*.jpeg", "*.png", "*.webp", "*.gif", "*.mp4", "*.mkv", "*.mov", "*.webm"]
-            showDirs: false
-            sortField: FolderListModel.Name
-        }
+        model: visualModel
 
         Keys.onReturnPressed: {
             if (currentItem) currentItem.pickWallpaper()
         }
         Keys.onPressed: (event) => {
-            if (event.key === Qt.Key_N && (event.modifiers & Qt.ControlModifier)) {
+            if (event.key === Qt.Key_Escape) {
+                if (window.searchText.length > 0) {
+                    window.searchText = ""
+                } else {
+                    Qt.quit()
+                }
+                event.accepted = true
+            } else if (event.key === Qt.Key_Backspace) {
+                window.searchText = window.searchText.slice(0, -1)
+                event.accepted = true
+            } else if ((event.key === Qt.Key_N && (event.modifiers & Qt.ControlModifier)) || event.key === Qt.Key_L) {
                 incrementCurrentIndex()
                 event.accepted = true
-            } else if (event.key === Qt.Key_P && (event.modifiers & Qt.ControlModifier)) {
+            } else if ((event.key === Qt.Key_P && (event.modifiers & Qt.ControlModifier)) || event.key === Qt.Key_H) {
                 decrementCurrentIndex()
+                event.accepted = true
+            } else if (event.text.length > 0 && !(event.modifiers & Qt.ControlModifier)) {
+                window.searchText += event.text
                 event.accepted = true
             }
         }
@@ -172,7 +209,7 @@ FloatingWindow {
 
                     Image {
                         anchors.centerIn: parent
-                        anchors.horizontalCenterOffset: -35 
+                        anchors.horizontalCenterOffset: -parent.height * Math.abs(window.skewFactor) / 2
 
                         width: parent.width + (parent.height * Math.abs(window.skewFactor)) + 50
                         height: parent.height
@@ -219,6 +256,40 @@ FloatingWindow {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    // -------------------------------------------------------------------------
+    // SEARCH BAR OVERLAY
+    // -------------------------------------------------------------------------
+    Rectangle {
+        visible: window.searchText.length > 0
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.top: parent.top
+        anchors.topMargin: 12
+
+        width: searchLabel.implicitWidth + 48
+        height: 36
+        radius: 8
+        color: "#CC000000"
+
+        Row {
+            anchors.centerIn: parent
+            spacing: 8
+
+            Text {
+                text: "󰍉"
+                color: "#AAFFFFFF"
+                font.pixelSize: 16
+                anchors.verticalCenter: parent.verticalCenter
+            }
+            Text {
+                id: searchLabel
+                text: window.searchText
+                color: "white"
+                font.pixelSize: 16
+                anchors.verticalCenter: parent.verticalCenter
             }
         }
     }
