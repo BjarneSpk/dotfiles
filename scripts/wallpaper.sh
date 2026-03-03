@@ -62,22 +62,9 @@ mkdir -p "$THUMB_DIR"
     #   -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" \) -print)
 ) &
 
-# 3. Launch Quickshell
 # 3. Detect Active Wallpaper & Calculate Index
 TARGET_INDEX=0
-CURRENT_SRC=""
-
-# Try to find running mpvpaper file
-if pgrep -a "mpvpaper" > /dev/null; then
-    # Extract filename from running mpvpaper process args
-    CURRENT_SRC=$(pgrep -a mpvpaper | grep -o "$SRC_DIR/[^' ]*" | head -n1)
-fi
-
-# If no mpvpaper found, try awww
-if [ -z "$CURRENT_SRC" ] && command -v awww >/dev/null; then
-    # awww query output: "DP-1: /path/to/image.jpg ..."
-    CURRENT_SRC=$(awww query 2>/dev/null | grep -o "$SRC_DIR/.*" | head -n1)
-fi
+CURRENT_SRC=$(cat "$XDG_CACHE_HOME/arch-rice/wallpaper/current.txt" 2>/dev/null)
 
 if [ -n "$CURRENT_SRC" ]; then
     # Encode relative path (with / → %) to match thumbnail naming
@@ -99,9 +86,13 @@ if [ -n "$CURRENT_SRC" ]; then
     if [ -n "$MATCH_LINE" ]; then
         TARGET_INDEX=$((MATCH_LINE - 1))
     fi
+else
+  echo "wallpaper not set in current.txt"
+  exit 1
 fi
 
 export WALLPAPER_INDEX="$TARGET_INDEX"
+export CURRENT_WALLPAPER="$CURRENT_SRC"
 
 # 4. Launch Quickshell
 quickshell -p "$QML_PATH" &
