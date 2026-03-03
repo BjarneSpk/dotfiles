@@ -29,5 +29,5 @@ source "${DOTFILES}/dots/.config/zsh/netbird_completions.zsh"
 source <(fzf --zsh)
 source "${DOTFILES}/dots/.config/zsh/fzf.zsh"
 
-_ZO_ECHO=1
+export _ZO_ECHO=1
 eval "$(zoxide init zsh)"

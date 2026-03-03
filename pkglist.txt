@@ -64,6 +64,7 @@ networkmanager-openconnect
 nm-connection-editor
 nmap
 nodejs
+noto-fonts-emoji
 nwg-look
 openconnect
 openssh
