@@ -31,35 +31,35 @@ mkdir -p "$THUMB_DIR"
     done
 
     # # --- GENERATE: Create thumbnails for new or renamed wallpapers ---
-    # while IFS= read -r img; do
-    #     [ -e "$img" ] || continue
-    #     # Use relative path with / replaced by % to support subfolders without collisions
-    #     rel_path=$(realpath --relative-to="$SRC_DIR" "$img")
-    #     filename="${rel_path//\//%}"
-    #     extension="${filename##*.}"
-    #
-    #     # Determine if video to apply sorting prefix
-    #     if [[ "${extension,,}" =~ ^(mp4|mkv|mov|webm)$ ]]; then
-    #         # Prefix video thumbs with 000_ so they appear first in the list
-    #         thumb="$THUMB_DIR/000_$filename"
-    #
-    #         # Ensure we don't have a non-prefixed old version lying around
-    #         [ -f "$THUMB_DIR/$filename" ] && rm "$THUMB_DIR/$filename"
-    #
-    #         if [ ! -f "$thumb" ]; then
-    #              ffmpeg -y -ss 00:00:05 -i "$img" -vframes 1 -f image2 -q:v 2 "$thumb" > /dev/null 2>&1
-    #         fi
-    #     else
-    #         # Standard images
-    #         thumb="$THUMB_DIR/$filename"
-    #         if [ ! -f "$thumb" ]; then
-    #             # Escape % as %% so ImageMagick doesn't treat it as a format specifier
-    #             magick "$img" -resize x420 -quality 70 "${thumb//\%/%%}"
-    #         fi
-    #     fi
-    # done < <(find "$SRC_DIR" \
-    #   \( -path "$SRC_DIR/too_small" -o -path "$SRC_DIR/wallhaven" \) -prune -o \
-    #   -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" \) -print)
+    while IFS= read -r img; do
+        [ -e "$img" ] || continue
+        # Use relative path with / replaced by % to support subfolders without collisions
+        rel_path=$(realpath --relative-to="$SRC_DIR" "$img")
+        filename="${rel_path//\//%}"
+        extension="${filename##*.}"
+
+        # Determine if video to apply sorting prefix
+        if [[ "${extension,,}" =~ ^(mp4|mkv|mov|webm)$ ]]; then
+            # Prefix video thumbs with 000_ so they appear first in the list
+            thumb="$THUMB_DIR/000_$filename"
+
+            # Ensure we don't have a non-prefixed old version lying around
+            [ -f "$THUMB_DIR/$filename" ] && rm "$THUMB_DIR/$filename"
+
+            if [ ! -f "$thumb" ]; then
+                 ffmpeg -y -ss 00:00:05 -i "$img" -vframes 1 -f image2 -q:v 2 "$thumb" > /dev/null 2>&1
+            fi
+        else
+            # Standard images
+            thumb="$THUMB_DIR/$filename"
+            if [ ! -f "$thumb" ]; then
+                # Escape % as %% so ImageMagick doesn't treat it as a format specifier
+                magick "$img" -resize x420 -quality 70 "${thumb//\%/%%}"
+            fi
+        fi
+    done < <(find "$SRC_DIR" \
+      \( -path "$SRC_DIR/too_small" -o -path "$SRC_DIR/wallhaven" \) -prune -o \
+      -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" -o -iname "*.gif" -o -iname "*.webp" \) -print)
 ) &
 
 # 3. Detect Active Wallpaper & Calculate Index
@@ -82,7 +82,7 @@ if [ -n "$CURRENT_SRC" ]; then
     # Find index in the thumb dir (sorted alphabetically to match FolderListModel)
     # LC_ALL=C ensures byte-order sort, matching Qt's FolderListModel.Name sort on Linux
     MATCH_LINE=$(LC_ALL=C ls -1 "$THUMB_DIR" | grep -nxF "$TARGET_THUMB" | cut -d: -f1)
-    
+
     if [ -n "$MATCH_LINE" ]; then
         TARGET_INDEX=$((MATCH_LINE - 1))
     fi

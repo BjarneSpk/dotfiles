@@ -9,16 +9,16 @@ setopt INC_APPEND_HISTORY
 setopt HIST_IGNORE_DUPS
 
 export HISTFILE="$ZDOTDIR/.zhistory"
-HIST_STAMPS="yyyy/mm/dd"
-HISTSIZE=10000
-SAVEHIST=10000
+export HIST_STAMPS="yyyy/mm/dd"
+export HISTSIZE=10000
+export SAVEHIST=10000
 
 source "$DOTFILES/dots/.config/zsh/colors.zsh"
 
 source "${DOTFILES}/dots/.config/zsh/aliases.zsh"
 
 bindkey -v
-KEYTIMEOUT=1
+export KEYTIMEOUT=1
 
 source "${DOTFILES}/dots/.config/zsh/cursor_mode.zsh"
 

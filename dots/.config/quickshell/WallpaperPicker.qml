@@ -1,5 +1,4 @@
 import QtQuick
-import QtQuick.Layouts
 import Qt.labs.folderlistmodel
 import QtQuick.Window
 import Quickshell
@@ -31,7 +30,6 @@ FloatingWindow {
     // --no-audio: Prevents audio processing (Saves CPU)
     readonly property string mpvCommand: "pkill mpvpaper; mpvpaper -o 'loop --hwdec=auto --no-audio' '*' '%1'"
 
-    // List of available swww transitions to randomize from
     readonly property int itemWidth: Math.round(Screen.width * 0.156)
     readonly property int itemHeight: Math.round(height * 0.84)
     readonly property int borderWidth: 3
@@ -93,19 +91,6 @@ FloatingWindow {
 
         focus: true
 
-        Timer {
-            id: previewTimer
-            interval: 300
-            repeat: false
-            onTriggered: {
-                if (!view.currentItem) return
-                var p = view.currentItem.sourcePath.replace(/'/g, "'\\''")
-                Quickshell.execDetached(["bash", "-c", "awww img -t none '" + p + "'"])
-            }
-        }
-
-        onCurrentIndexChanged: previewTimer.restart()
-
         // --- NEW: Snap to active wallpaper on load ---
         property bool initialFocusSet: false
         onCountChanged: {
@@ -139,10 +124,16 @@ FloatingWindow {
             } else if (event.key === Qt.Key_Backspace) {
                 window.searchText = window.searchText.slice(0, -1)
                 event.accepted = true
-            } else if ((event.key === Qt.Key_N && (event.modifiers & Qt.ControlModifier)) || event.key === Qt.Key_L) {
+            } else if (event.key === Qt.Key_S && (event.modifiers & Qt.ControlModifier)) {
+                if (view.currentItem) {
+                    var p = view.currentItem.sourcePath.replace(/'/g, "'\\''")
+                    Quickshell.execDetached(["bash", "-c", "awww img -t none '" + p + "'"])
+                }
+                event.accepted = true
+            } else if (event.key === Qt.Key_N && (event.modifiers & Qt.ControlModifier)) {
                 incrementCurrentIndex()
                 event.accepted = true
-            } else if ((event.key === Qt.Key_P && (event.modifiers & Qt.ControlModifier)) || event.key === Qt.Key_H) {
+            } else if (event.key === Qt.Key_P && (event.modifiers & Qt.ControlModifier)) {
                 decrementCurrentIndex()
                 event.accepted = true
             } else if (event.text.length > 0 && !(event.modifiers & Qt.ControlModifier)) {
@@ -187,14 +178,6 @@ FloatingWindow {
                 Qt.quit()
             }
 
-            // MouseArea {
-            //     anchors.fill: parent
-            //     onClicked: {
-            //         view.currentIndex = index
-            //         delegateRoot.pickWallpaper()
-            //     }
-            // }
-
             // PARALLELOGRAM CONTAINER
             Item {
                 anchors.centerIn: parent
@@ -218,7 +201,6 @@ FloatingWindow {
                     source: fileUrl
                     sourceSize: Qt.size(1, 1)
                     fillMode: Image.Stretch
-                    visible: true 
                 }
 
                 // 2. THE IMAGE (Inset Layer)
