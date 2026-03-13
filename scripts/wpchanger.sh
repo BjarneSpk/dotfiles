@@ -67,19 +67,17 @@ ln -sf "$img_path" "$cache_dir/current"
 
 awww img "$cache_dir/current" -t random --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 1
 
+matugen --quiet image "$(readlink -f "$img_path")" --mode dark --source-color-index 0
+
 img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
 img_blurred="$cache_dir/$img_hash.$img_ext"
 
 # generate only if missing
 if [[ ! -f "$img_blurred" ]]; then
-    ffmpeg -v error -y -i "$img_path" \
-        -vf "scale=iw/2:ih/2,gblur=sigma=15,gblur=sigma=15,gblur=sigma=15" \
-        "$img_blurred"
+    magick $img_path -resize 50% -blur 50x30 "$img_blurred"
 fi
 
 ln -sf "$img_blurred" "$cache_dir/current_blurred"
-
-matugen --quiet image "$img_path" --mode dark
 
 if [[ "$update_sddm" == true ]]; then
     sudo -v || exit 1
