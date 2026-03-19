@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 hint="string:x-canonical-private-synchronous:sys-notify"
-source $SCRIPTS/notification-handler.sh
+source $SCRIPTS/notification_handler.sh
 
 # Get Volume
 get_volume() {
