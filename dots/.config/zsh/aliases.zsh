@@ -24,6 +24,37 @@ TRAPUSR1() {
   source "$DOTFILES/dots/.config/zsh/colors.zsh"
 }
 
+_ps1_setup() {
+  setopt PROMPT_SUBST
+  autoload -Uz add-zsh-hook
+  _ps1() {
+    local ret=$? pipes=("${pipestatus[@]}")
+    local esc=$'\e' z='%{%f%b%}'
+    local m r h w
+    local saved=$(stty -g)
+    stty -echo
+    printf '\e[6n'
+    local raw col
+    IFS=';' read -d 'R' -rs raw col < /dev/tty
+    stty "$saved"
+    col=$(( ${col:-0} + 0 ))
+    (( col > 1 )) && m="%{${esc}[;45m%} ${z}"$'\n'
+    (( ret )) && r="%F{red}${(j:|:)pipes}%f "
+    [[ -n $SSH_CONNECTION ]] && h="@%m"
+    local cur="%1~"
+    local w="${PWD/#$HOME/~}"
+    if [[ $w != "~" && $w != "/" ]]; then
+      w=$(abbr "$w")
+      [[ $w == "/" ]] && w=""
+    else
+      cur=""
+    fi
+    PROMPT=" ${m}${r}%F{${THEME_USER:-blue}}%n${h}%f %F{${THEME_PATH:-cyan}}${w}${cur}%f %F{${THEME_SYMBOL:-white}}%#%f "
+  }
+  add-zsh-hook precmd _ps1
+}
+_ps1_setup
+
 # Makes Yazi change into cwd when called with 'ex' and exited with 'q'
 function ex() {
 	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
