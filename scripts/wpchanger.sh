@@ -67,7 +67,7 @@ ln -sf "$img_path" "$cache_dir/current"
 
 awww img "$cache_dir/current" -t random --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 1
 
-matugen --quiet image "$(readlink -f "$img_path")" --mode dark --source-color-index 0
+matugen --quiet image "$(readlink -f "$img_path")" --mode dark --source-color-index 0 &
 
 img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
 img_blurred="$cache_dir/$img_hash.$img_ext"
@@ -86,4 +86,5 @@ if [[ "$update_sddm" == true ]]; then
         "/usr/share/sddm/themes/sequoia/backgrounds/current_wallpaper"
 fi
 
+wait
 notify_user -a "WPChanger" -m "Wallpaper changed to $(basename $img_path)."
