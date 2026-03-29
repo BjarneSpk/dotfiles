@@ -32,6 +32,7 @@ gcc
 gimp
 git
 github-cli
+gnome-keyring
 grim
 grub
 gvfs
@@ -63,7 +64,6 @@ networkmanager
 networkmanager-openconnect
 nm-connection-editor
 nmap
-nodejs
 noto-fonts-emoji
 nwg-look
 openconnect
@@ -71,13 +71,13 @@ openssh
 openvpn
 otf-font-awesome
 pacman-contrib
+parallel
 pavucontrol
 perl-image-exiftool
 pipewire-alsa
 pipewire-pulse
 podman
 podman-compose
-proton-vpn-gtk-app
 protonmail-bridge
 qt5-wayland
 qt5ct
@@ -99,7 +99,7 @@ tlpui
 ttf-meslo-nerd
 unzip
 vdpauinfo
-vscodium
+vscodium-bin
 vscodium-marketplace
 vulkan-intel
 vulkan-tools

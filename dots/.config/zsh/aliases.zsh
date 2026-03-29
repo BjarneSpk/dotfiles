@@ -2,6 +2,7 @@
 
 alias lg="lazygit"
 alias vim="nvim"
+alias vi="nvim"
 alias c="clear"
 alias ls="eza --color"
 alias tree="eza --tree --color --icons --git"
@@ -14,6 +15,25 @@ alias top="btop"
 alias pacbrowse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias open="xdg-open"
 alias infvpn="sudo openconnect --protocol=anyconnect vpn.informatik.uni-stuttgart.de --cafile ~/Downloads/infcacert.crt"
+
+# condense help output, usage: h <cmd>
+h() {
+  { $@ --help 2>&1 || true; } | awk '/\S/;/gnu\.org/{exit}' | bat -Ppl help;
+}
+
+# opts() just the flags from --help
+opts() {
+  { $@ --help 2>&1 || true; } | rg '^\s*-' | bat -Ppl help | fzf
+}
+
+bigx() {
+  du -xhd2 -t10M "${@:2}" | sort -h | tail -n "$1"
+}
+
+# abbr() — shorten path for prompt: /home/joe/.config/foo -> /h/.c/
+abbr() {
+  sed -E "s|(/\.?[^/])[^/]+|\1|g;s|[^/]*$||" <<< "$1"
+}
 
 mcd() {
     mkdir "${1}" && cd "${1}"
@@ -73,16 +93,7 @@ alias -g ....='../../..'
 alias -g .....='../../../..'
 alias -g ......='../../../../..'
 alias -- -='cd -'
-alias 1='cd -1'
-alias 2='cd -2'
-alias 3='cd -3'
-alias 4='cd -4'
-alias 5='cd -5'
-alias 6='cd -6'
-alias 7='cd -7'
-alias 8='cd -8'
-alias 9='cd -9'
 
 # alias d='dirs -v'
 alias d='cd ${~"$(dirs -v | fzf | awk "{print \$2}")"}'
-for index ({1..9}) alias "$index"="cd +${index}"; unset index
+for index ({1..9}) alias "$index"="cd +${index}"
