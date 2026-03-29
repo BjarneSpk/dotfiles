@@ -30,11 +30,6 @@ bigx() {
   du -xhd2 -t10M "${@:2}" | sort -h | tail -n "$1"
 }
 
-# abbr() — shorten path for prompt: /home/joe/.config/foo -> /h/.c/
-abbr() {
-  sed -E "s|(/\.?[^/])[^/]+|\1|g;s|[^/]*$||" <<< "$1"
-}
-
 mcd() {
     mkdir "${1}" && cd "${1}"
 }
@@ -47,30 +42,30 @@ TRAPUSR1() {
 _ps1_setup() {
   setopt PROMPT_SUBST
   autoload -Uz add-zsh-hook
+
   _ps1() {
     local ret=$? pipes=("${pipestatus[@]}")
-    local esc=$'\e' z='%{%f%b%}'
     local m r h w
-    local saved=$(stty -g)
+
+    # insert colored marker and newline if previous output didn't print newline
+    local saved col
+    saved=$(stty -g)
     stty -echo
     printf '\e[6n'
-    local raw col
-    IFS=';' read -d 'R' -rs raw col < /dev/tty
+    IFS=';' read -d 'R' -rs _ col < /dev/tty
     stty "$saved"
-    col=$(( ${col:-0} + 0 ))
-    (( col > 1 )) && m="%{${esc}[;45m%} ${z}"$'\n'
+    col=$(( ${col:-0} ))
+    (( col > 1 )) && m="%{\e[;45m%} %{%f%b%}\n"
+
     (( ret )) && r="%F{red}${(j:|:)pipes}%f "
+
     [[ -n $SSH_CONNECTION ]] && h="@%m"
-    local cur="%1~"
-    local w="${PWD/#$HOME/~}"
-    if [[ $w != "~" && $w != "/" ]]; then
-      w=$(abbr "$w")
-      [[ $w == "/" ]] && w=""
-    else
-      cur=""
-    fi
-    PROMPT=" ${m}${r}%F{${THEME_USER:-blue}}%n${h}%f %F{${THEME_PATH:-cyan}}${w}${cur}%f %F{${THEME_SYMBOL:-white}}%#%f "
+
+    w=$(sed -E 's|(/\.?[^/])[^/]+/|\1/|g' <<< "${PWD/#$HOME/~}")
+
+    PROMPT=" ${m}${r}%F{${THEME_USER:-blue}}%n${h}%f %F{${THEME_PATH:-cyan}}${w}%f %F{${THEME_SYMBOL:-white}}%#%f "
   }
+
   add-zsh-hook precmd _ps1
 }
 _ps1_setup
