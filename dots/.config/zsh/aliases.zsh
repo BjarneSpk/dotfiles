@@ -41,13 +41,15 @@ TRAPUSR1() {
 
 _ps1_setup() {
   setopt PROMPT_SUBST
+  unsetopt PROMPT_SP  # Disable default % marker for incomplete lines
   autoload -Uz add-zsh-hook
 
   _ps1() {
     local ret=$? pipes=("${pipestatus[@]}")
-    local m r h w
+    local r h w
 
-    # insert colored marker and newline if previous output didn't print newline
+    # Insert colored marker and newline if previous output didn't print newline
+    # Alternative to zsh-default marker
     local saved col
     saved=$(stty -g)
     stty -echo
@@ -55,15 +57,15 @@ _ps1_setup() {
     IFS=';' read -d 'R' -rs _ col < /dev/tty
     stty "$saved"
     col=$(( ${col:-0} ))
-    (( col > 1 )) && m="%{\e[;45m%} %{%f%b%}\n"
+    (( col > 1 )) && print -nP $'\e[45m \e[0m\n'
 
     (( ret )) && r="%F{red}${(j:|:)pipes}%f "
 
     [[ -n $SSH_CONNECTION ]] && h="@%m"
 
-    w=$(sed -E 's|(/\.?[^/])[^/]+/|\1/|g' <<< "${PWD/#$HOME/~}")
+    w=$(sed -E 's|(\.?[^/])[^/]*/|\1/|g' <<< "${PWD/#$HOME/~}")
 
-    PROMPT=" ${m}${r}%F{${THEME_USER:-blue}}%n${h}%f %F{${THEME_PATH:-cyan}}${w}%f %F{${THEME_SYMBOL:-white}}%#%f "
+    PROMPT=" ${r}%F{${THEME_USER:-blue}}%n${h}%f %F{${THEME_PATH:-cyan}}${w}%f %F{${THEME_SYMBOL:-white}}%#%f "
   }
 
   add-zsh-hook precmd _ps1
