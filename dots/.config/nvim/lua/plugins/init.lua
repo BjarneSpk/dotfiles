@@ -8,6 +8,10 @@ return {
     },
   },
   {
+    "folke/persistence.nvim",
+    enabled = false,
+  },
+  {
     "akinsho/bufferline.nvim",
     enabled = false,
   },
@@ -21,6 +25,14 @@ return {
   },
   {
     "catppuccin/nvim",
+    enabled = false,
+  },
+  {
+    "folke/todo-comments.nvim",
+    enabled = false,
+  },
+  {
+    "windwp/nvim-ts-autotag",
     enabled = false,
   },
   {
