@@ -7,44 +7,18 @@ return {
       },
     },
   },
-  {
-    "folke/persistence.nvim",
-    enabled = false,
-  },
-  {
-    "akinsho/bufferline.nvim",
-    enabled = false,
-  },
-  {
-    "folke/flash.nvim",
-    enabled = false,
-  },
-  {
-    "folke/tokyonight.nvim",
-    enabled = false,
-  },
-  {
-    "catppuccin/nvim",
-    enabled = false,
-  },
-  {
-    "folke/todo-comments.nvim",
-    enabled = false,
-  },
-  {
-    "windwp/nvim-ts-autotag",
-    enabled = false,
-  },
+  { "folke/persistence.nvim", enabled = false },
+  { "akinsho/bufferline.nvim", enabled = false },
+  { "folke/flash.nvim", enabled = false },
+  { "folke/tokyonight.nvim", enabled = false },
+  { "catppuccin/nvim", enabled = false },
+  { "folke/todo-comments.nvim", enabled = false },
+  { "windwp/nvim-ts-autotag", enabled = false },
   {
     "mikesmithgh/kitty-scrollback.nvim",
     lazy = true,
     cmd = { "KittyScrollbackGenerateKittens", "KittyScrollbackCheckHealth" },
     event = { "User KittyScrollbackLaunch" },
-    -- version = '*', -- latest stable version, may have breaking changes if major version changed
-    -- version = '^6.0.0', -- pin major version, include fixes and features that do not have breaking changes
-    config = function()
-      require("kitty-scrollback").setup()
-    end,
   },
   -- {
   --   "christoomey/vim-tmux-navigator",
@@ -74,7 +48,7 @@ return {
   },
   {
     "stevearc/oil.nvim",
-    lazy = false,
+    lazy = true,
     -- event = "VeryLazy",
     dependencies = { "nvim-tree/nvim-web-devicons" },
     opts = {
@@ -197,35 +171,6 @@ return {
           h5 = "pine",
           h6 = "foam",
         },
-
-        palette = {
-          -- Override the builtin palette per variant
-          -- moon = {
-          --     base = '#18191a',
-          --     overlay = '#363738',
-          -- },
-        },
-
-        -- NOTE: Highlight groups are extended (merged) by default. Disable this
-        -- per group via `inherit = false`
-        highlight_groups = {
-          -- Comment = { fg = "foam" },
-          -- StatusLine = { fg = "love", bg = "love", blend = 15 },
-          -- VertSplit = { fg = "muted", bg = "muted" },
-          -- Visual = { fg = "base", bg = "text", inherit = false },
-        },
-
-        before_highlight = function(group, highlight, palette)
-          -- Disable all undercurls
-          -- if highlight.undercurl then
-          --     highlight.undercurl = false
-          -- end
-          --
-          -- Change palette colour
-          -- if highlight.fg == palette.pine then
-          --     highlight.fg = palette.foam
-          -- end
-        end,
       })
     end,
   },
@@ -276,15 +221,8 @@ return {
       return keys
     end,
   },
-
   {
     "kylechui/nvim-surround",
-    version = "^3.0.0", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
-    config = function()
-      require("nvim-surround").setup({
-        -- Configuration here, or leave empty to use defaults
-      })
-    end,
   },
 }
