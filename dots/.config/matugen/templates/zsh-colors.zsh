@@ -3,6 +3,10 @@ export THEME_USER="{{colors.primary.default.hex}}"
 export THEME_PATH="{{colors.tertiary.default.hex}}"
 export THEME_SYMBOL="{{colors.on_surface.default.hex}}"
 
+<* for name, value in colors *>
+export theme_{{name}}="{{value.default.hex}}"
+<* endfor *>
+
 export FZF_DEFAULT_OPTS="
     --style=full
     --color=fg:{{colors.on_surface.default.hex}},fg+:{{colors.on_surface_variant.default.hex}}

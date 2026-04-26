@@ -1,5 +1,6 @@
 #!/usr/bin/env zsh
 
+alias cd="z"
 alias lg="lazygit"
 alias vim="nvim"
 alias vi="nvim"
@@ -31,7 +32,7 @@ bigx() {
 }
 
 mcd() {
-    mkdir "${1}" && cd "${1}"
+  mkdir "$@" && cd "${@[-1]}"
 }
 
 # used to reload colors with matugen
@@ -41,31 +42,39 @@ TRAPUSR1() {
 
 _ps1_setup() {
   setopt PROMPT_SUBST
-  unsetopt PROMPT_SP  # Disable default % marker for incomplete lines
-  autoload -Uz add-zsh-hook
+  unsetopt PROMPT_SP
+  autoload -Uz add-zsh-hook vcs_info
+
+  zstyle ':vcs_info:git:*' formats '%b%u%c'
+  zstyle ':vcs_info:git:*' actionformats '%b|%a%u%c'
+  zstyle ':vcs_info:*' enable git
+  zstyle ':vcs_info:git:*' check-for-changes yes
+  zstyle ':vcs_info:git:*' unstagedstr '*'
+  zstyle ':vcs_info:git:*' stagedstr '+'
 
   _ps1() {
     local ret=$? pipes=("${pipestatus[@]}")
     local r h w
 
-    # Insert colored marker and newline if previous output didn't print newline
-    # Alternative to zsh-default marker
+    # Incomplete line marker
     local saved col
     saved=$(stty -g)
     stty -echo
     printf '\e[6n'
     IFS=';' read -d 'R' -rs _ col < /dev/tty
     stty "$saved"
-    col=$(( ${col:-0} ))
-    (( col > 1 )) && print -nP $'\e[45m \e[0m\n'
+    (( ${col:-0} > 1 )) && print -nP $'\e[45m \e[0m\n'
 
-    (( ret )) && r="%F{red}${(j:|:)pipes}%f "
-
+    (( ret )) && r="%F{${theme_error:-red}}${(j:|:)pipes}%f "
     [[ -n $SSH_CONNECTION ]] && h="@%m"
-
     w=$(sed -E 's|(\.?[^/])[^/]*/|\1/|g' <<< "${PWD/#$HOME/~}")
 
-    PROMPT=" ${r}%F{${THEME_USER:-blue}}%n${h}%f %F{${THEME_PATH:-cyan}}${w}%f %F{${THEME_SYMBOL:-white}}%#%f "
+    vcs_info
+    local git=${vcs_info_msg_0_:+"%F{${THEME_GIT:-magenta}}${vcs_info_msg_0_}%f"}
+
+    local p=$'\u276f'
+    PROMPT=" ${r}%F{${theme_primary:-blue}}%n${h}%f %F{${theme_secondary:-cyan}}${w}%f %F{${theme_tertiary:-white}}$p%f "
+    RPROMPT="%F{${theme_secondary:-cyan}}${${VIRTUAL_ENV_PROMPT}:+${${VIRTUAL_ENV_PROMPT}} }$f${git}"
   }
 
   add-zsh-hook precmd _ps1
