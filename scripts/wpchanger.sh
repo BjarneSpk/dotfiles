@@ -67,6 +67,12 @@ ln -sf "$img_path" "$cache_dir/current"
 
 awww img "$cache_dir/current" -t random --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 1
 
+template_file=$(find "$XDG_CACHE_HOME/awww" -name "$(awww query | awk '{print $2}' | tr -d ':')")
+for name in "$(ls /sys/class/drm/ | grep -oP 'card\d+-\K.*' | awk '{print $1}')"; do
+    [ "$name" = "$(basename $template_file)" ] && continue
+    cp "$template_file" "$name"
+done
+
 matugen --quiet image "$(readlink -f "$img_path")" --mode dark --source-color-index 0 &
 
 img_hash=$(sha1sum "$img_path" | cut -d' ' -f1)
