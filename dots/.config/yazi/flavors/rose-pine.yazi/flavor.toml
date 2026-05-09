@@ -215,16 +215,16 @@ rules = [
 	# { mime = "inode/empty", fg = "#eb6f92" },
 
 	# Special files
-	{ name = "*", is = "orphan", fg = "#191724", bg = "#eb6f92" },
-	{ name = "*", is = "exec"  , fg = "#9ccfd8" },
+	{ mime = "*", is = "orphan", fg = "#191724", bg = "#eb6f92" },
+	{ mime = "*", is = "exec"  , fg = "#9ccfd8" },
 
 	# Dummy files
-	{ name = "*", is = "dummy",  fg = "#191724", bg = "#eb6f92" },
-	{ name = "*/", is = "dummy", fg = "#191724", bg = "#eb6f92" },
+	{ mime = "*", is = "dummy",  fg = "#191724", bg = "#eb6f92" },
+	{ mime = "*/", is = "dummy", fg = "#191724", bg = "#eb6f92" },
 
 	# Fallback
-	{ name = "*",  fg = "#e0def4" },
-	{ name = "*/", fg = "#31748f" }
+	{ mime = "*",  fg = "#e0def4" },
+	{ mime = "*/", fg = "#31748f" }
 ]
 
 # : }}}
