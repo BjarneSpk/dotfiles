@@ -1,5 +1,6 @@
 local G = require("conf.globals")
 local monitors = require("conf.util.monitors")
+local windows = require("conf.util.windows")
 
 hl.bind(G.main_mod .. " + C", hl.dsp.window.close())
 hl.bind(G.main_mod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
@@ -48,7 +49,9 @@ for i = 1, 10 do
 	local key = i % 10
 	hl.bind(G.main_mod .. " + " .. key, hl.dsp.focus({ workspace = i }))
 	hl.bind(G.main_mod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = i }))
-	hl.bind(G.main_mod .. " + CTRL + " .. key, hl.dsp.exec_cmd("movealltoworkspace.sh " .. i))
+	hl.bind(G.main_mod .. " + CTRL + " .. key, function()
+		windows.move_all_to(i)
+	end)
 end
 
 hl.bind(G.main_mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
