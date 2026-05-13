@@ -1,4 +1,5 @@
 local G = require("conf.globals")
+local monitors = require("conf.util.monitors")
 
 hl.bind(G.main_mod .. " + C", hl.dsp.window.close())
 hl.bind(G.main_mod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun"))
@@ -17,7 +18,9 @@ hl.bind(G.main_mod .. " + S", hl.dsp.exec_cmd("screenshot.sh --instant"))
 hl.bind(G.main_mod .. " + SHIFT + S", hl.dsp.exec_cmd("quickshell -c HyprQuickFrame -n"))
 
 hl.bind(G.main_mod .. " + W", hl.dsp.exec_cmd("toggle-waybar.sh"))
-hl.bind(G.main_mod .. " + D", hl.dsp.exec_cmd(G.scripts .. "toggle-edp.sh"))
+hl.bind(G.main_mod .. " + D", function()
+	monitors.toggle("eDP-1")
+end)
 
 hl.bind(G.main_mod .. " + P", hl.dsp.window.pseudo())
 hl.bind(G.main_mod .. " + T", hl.dsp.layout("togglesplit"))
@@ -91,5 +94,9 @@ hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = tr
 hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
 hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })
 
-hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd(G.scripts .. "toggle-edp.sh off"), { locked = true })
-hl.bind("switch:off:Lid Switch", hl.dsp.exec_cmd(G.scripts .. "toggle-edp.sh on"), { locked = true })
+hl.bind("switch:on:Lid Switch", function()
+	monitors.enable("eDP-1")
+end, { locked = true })
+hl.bind("switch:off:Lid Switch", function()
+	monitors.disable("eDP-1")
+end, { locked = true })
