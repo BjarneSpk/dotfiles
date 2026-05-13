@@ -13,5 +13,3 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("hyprsunset")
     hl.exec_cmd("gnome-keyring-daemon --start --components=secrets")
 end)
-
-hl.exec_cmd("grep -q closed /proc/acpi/button/lid/*/state 2>/dev/null && " .. G.scripts .. "toggle-edp.sh off")

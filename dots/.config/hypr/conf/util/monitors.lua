@@ -1,19 +1,12 @@
 local M = {}
 
 function M.is_on(monitor)
-	-- for _, m in ipairs(hl.get_monitors()) do
-	-- 	if m.name == monitor then
-	-- 		return true
-	-- 	end
-	-- end
-	-- return false
-	local status = os.execute(
-		string.format(
-			"hyprctl monitors all -j | jq -e --arg m '%s' 'first(.[] | select((.name // \"\") == $m)) | ((.disabled // false) | not)'",
-			monitor
-		)
-	)
-	return status == 0
+	for _, m in ipairs(hl.get_monitors()) do
+		if m.name == monitor then
+			return true
+		end
+	end
+	return false
 end
 
 function M.disable(monitor)
@@ -33,6 +26,13 @@ function M.toggle(monitor)
 	else
 		M.enable(monitor)
 	end
+end
+
+function M.lid_is_closed()
+    local handle = assert(io.popen("cat /proc/acpi/button/lid/*/state 2>/dev/null"), "couldn't read Lid Switch file")
+    local result = handle:read("*a")
+    handle:close()
+    return result:find("closed") ~= nil
 end
 
 return M
