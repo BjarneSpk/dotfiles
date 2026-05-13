@@ -1,7 +1,3 @@
 return {
-  <* for name, value in colors *>
-
-  {{name}} = "{{value.default.rgba}}",
-
-  <* endfor *>
+  <* for name, value in colors *>{{name}} = "{{value.default.rgba}}",<* endfor *>
 }

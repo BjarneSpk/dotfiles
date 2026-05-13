@@ -20,7 +20,7 @@ hl.config({
             range = 30,
             offset = { 0, 2 },
             render_power = 4,
-            color = "rgba(00000010)",
+            color = colors.shadow,
         },
         blur = {
             enabled = true,
