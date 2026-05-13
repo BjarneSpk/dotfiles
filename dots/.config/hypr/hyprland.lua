@@ -1,0 +1,7 @@
+require("conf.env")
+require("conf.autostart")
+require("conf.general")
+require("conf.look")
+require("conf.rules")
+require("conf.keybindings")
+require("conf.input")

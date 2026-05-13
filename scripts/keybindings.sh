@@ -9,7 +9,7 @@
 # -----------------------------------------------------
 # Get keybindings location based on variation
 # -----------------------------------------------------
-config_file=~/.config/hypr/conf.d/70-keybindings.conf
+config_file=~/.config/hypr/conf/keybindings.lua
 
 # -----------------------------------------------------
 # Path to keybindings config file

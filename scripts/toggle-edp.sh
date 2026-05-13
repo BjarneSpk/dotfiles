@@ -1,22 +1,35 @@
 #!/usr/bin/env bash
 
 MONITOR="eDP-1"
-MODE="1920x1080@60"
-POS="0x0"
-SCALE="1"
 
-case "$1" in
+monitor_is_on() {
+    hyprctl monitors all -j | jq -e --arg monitor "$MONITOR" '
+        first(.[] | select((.name // .output // "") == $monitor))
+        | ((.disabled // false) | not)
+        and (.dpmsStatus // true)
+    ' >/dev/null
+}
+
+disable_monitor() {
+    hyprctl eval "hl.monitor({ output = \"$MONITOR\", disabled = true })"
+}
+
+enable_monitor() {
+    hyprctl eval "hl.monitor({ output = \"$MONITOR\", mode = \"preferred\", position = \"auto\", scale = 1 })"
+}
+
+case "${1:-toggle}" in
     off)
-        hyprctl keyword monitor "$MONITOR, disable"
+        disable_monitor
         ;;
     on)
-        hyprctl keyword monitor "$MONITOR, $MODE, $POS, $SCALE"
+        enable_monitor
         ;;
     *)
-        if hyprctl monitors | grep -q "^Monitor $MONITOR"; then
-            hyprctl keyword monitor "$MONITOR, disable"
+        if monitor_is_on; then
+            disable_monitor
         else
-            hyprctl keyword monitor "$MONITOR, $MODE, $POS, $SCALE"
+            enable_monitor
         fi
         ;;
 esac
