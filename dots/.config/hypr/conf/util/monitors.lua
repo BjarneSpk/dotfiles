@@ -35,4 +35,36 @@ function M.lid_is_closed()
     return result:find("closed") ~= nil
 end
 
+local function is_valid_scale(width, height, scale)
+    local function is_int(n)
+        return math.abs(n - math.floor(n)) < 0.001
+    end
+    return is_int(width / scale) and is_int(height / scale)
+end
+
+local function find_next_valid(current, step)
+    local m = assert(hl.get_active_monitor(), "no active monitor")
+    for i = 1, 200 do
+        local candidate = math.floor((current + step * i) * 100 + 0.5) / 100
+        if is_valid_scale(m.width, m.height, candidate) then
+            return candidate
+        end
+    end
+    return nil
+end
+
+function M.scale_up()
+    local m = assert(hl.get_active_monitor(), "no active monitor")
+    local new_scale = find_next_valid(m.scale, 0.01)
+    if not new_scale then return end
+    hl.monitor({ output = m.name, mode = "preferred", position = "auto", scale = new_scale })
+end
+
+function M.scale_down()
+    local m = assert(hl.get_active_monitor(), "no active monitor")
+    local new_scale = find_next_valid(m.scale, -0.01)
+    if not new_scale then return end
+    hl.monitor({ output = m.name, mode = "preferred", position = "auto", scale = new_scale })
+end
+
 return M
