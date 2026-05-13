@@ -1,8 +1,12 @@
 local M = {}
 
-function M.is_on(monitor)
-	for _, m in ipairs(hl.get_monitors()) do
-		if m.name == monitor then
+function M.get_active()
+  return assert(hl.get_active_monitor(), "no active monitor")
+end
+
+function M.is_on(target_monitor)
+	for _, monitor in ipairs(hl.get_monitors()) do
+		if monitor.name == target_monitor then
 			return true
 		end
 	end
@@ -43,10 +47,10 @@ local function is_valid_scale(width, height, scale)
 end
 
 local function find_next_valid(current, step)
-    local m = assert(hl.get_active_monitor(), "no active monitor")
+    local monitor = M.get_active()
     for i = 1, 200 do
         local candidate = math.floor((current + step * i) * 100 + 0.5) / 100
-        if is_valid_scale(m.width, m.height, candidate) then
+        if is_valid_scale(monitor.width, monitor.height, candidate) then
             return candidate
         end
     end
@@ -54,17 +58,17 @@ local function find_next_valid(current, step)
 end
 
 function M.scale_up()
-    local m = assert(hl.get_active_monitor(), "no active monitor")
-    local new_scale = find_next_valid(m.scale, 0.01)
+    local monitor = M.get_active()
+    local new_scale = find_next_valid(monitor.scale, 0.01)
     if not new_scale then return end
-    hl.monitor({ output = m.name, mode = "preferred", position = "auto", scale = new_scale })
+    hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
 end
 
 function M.scale_down()
-    local m = assert(hl.get_active_monitor(), "no active monitor")
-    local new_scale = find_next_valid(m.scale, -0.01)
+    local monitor = assert(hl.get_active_monitor(), "no active monitor")
+    local new_scale = find_next_valid(monitor.scale, -0.01)
     if not new_scale then return end
-    hl.monitor({ output = m.name, mode = "preferred", position = "auto", scale = new_scale })
+    hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
 end
 
 return M
