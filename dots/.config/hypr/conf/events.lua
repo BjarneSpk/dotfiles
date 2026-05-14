@@ -7,15 +7,8 @@ end
 hl.on("monitor.added", redetect_brightness)
 hl.on("monitor.removed", redetect_brightness)
 
-local timeout = 0
-
 hl.on("window.title", function(window)
 	if window.title ~= nil and window.title:find("%(Bitwarden Password Manager%) %- Bitwarden") then
-		if os.time() < timeout then
-			return
-		end
-		timeout = os.time() + 1
-
 		local monitor = monitors.get_active()
 		local width = math.floor(monitor.width * 0.20)
 		local height = math.floor(monitor.height * 0.54)
