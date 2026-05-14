@@ -57,22 +57,21 @@ local function find_next_valid(current, step)
 	return nil
 end
 
-function M.scale_up()
+local function apply_scale(step)
 	local monitor = M.get_active()
-	local new_scale = find_next_valid(monitor.scale, 0.01)
+	local new_scale = find_next_valid(monitor, step)
 	if not new_scale then
 		return
 	end
 	hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
 end
 
+function M.scale_up()
+	apply_scale(0.01)
+end
+
 function M.scale_down()
-	local monitor = assert(hl.get_active_monitor(), "no active monitor")
-	local new_scale = find_next_valid(monitor.scale, -0.01)
-	if not new_scale then
-		return
-	end
-	hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
+	apply_scale(-0.01)
 end
 
 return M
