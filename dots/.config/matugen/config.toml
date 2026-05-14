@@ -2,7 +2,7 @@
 
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland-colors.lua'
-output_path = '~/.config/hypr/conf/colors.lua'
+output_path = '~/.config/hypr/conf/look/colors.lua'
 post_hook = 'hyprctl reload config-only &>/dev/null'
 
 [templates.swaync]

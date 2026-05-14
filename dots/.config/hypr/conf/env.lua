@@ -1,6 +1,12 @@
 local G = require("conf.globals")
 
-return {
+local function register_env(vars)
+	for _, e in ipairs(vars) do
+		hl.env(e[1], e[2])
+	end
+end
+
+register_env({
 	{ "QT_QPA_PLATFORMTHEME", "qt6ct" },
 	{ "QT_AUTO_SCREEN_SCALE_FACTOR", "1" },
 	{ "QT_WAYLAND_DISABLE_WINDOWDECORATION", "1" },
@@ -18,4 +24,4 @@ return {
 	{ "DOCKER_HOST", "unix:///run/user/1000/podman/podman.sock" },
 	{ "SCRIPTS", G.scripts },
 	{ "CACHE", G.cache },
-}
+})
