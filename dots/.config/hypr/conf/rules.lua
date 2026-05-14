@@ -1,68 +1,15 @@
-hl.window_rule({
-	name = "suppress-maximize-events",
-	match = { class = ".*" },
-	suppress_event = "maximize",
-})
+local window_rules = require("conf.window_rules")
+local layer_rules = require("conf.layer_rules")
+local workspace_rules = require("conf.workspace_rules")
 
-hl.window_rule({
-	name = "fix-xwayland-drags",
-	match = {
-		class = "^$",
-		title = "^$",
-		xwayland = true,
-		float = true,
-		fullscreen = false,
-		pin = false,
-	},
-	no_focus = true,
-})
+for _, window_rule in ipairs(window_rules) do
+	hl.window_rule(window_rule)
+end
 
-hl.layer_rule({
-	match = { namespace = "swaync-control-center" },
-	blur = true,
-})
+for _, layer_rule in ipairs(layer_rules) do
+	hl.layer_rule(layer_rule)
+end
 
-hl.layer_rule({
-	match = { namespace = "swaync-notification-window" },
-	ignore_alpha = 0.21,
-})
-
-hl.layer_rule({
-	match = { namespace = "swaync-control-center" },
-	animation = "slide right",
-})
-
-hl.layer_rule({
-	match = { namespace = "swaync-control-center" },
-	ignore_alpha = 0.21,
-})
-
-hl.layer_rule({
-	match = { namespace = "rofi" },
-	no_anim = true,
-})
-
-hl.workspace_rule({
-	workspace = "m[DP-2]",
-	gaps_in = 6,
-	gaps_out = 8,
-	border_size = 2,
-})
-
-hl.window_rule({
-	name = "wppicker",
-	match = { title = "wallpaper-picker" },
-	float = true,
-	size = { "monitor_w", "(monitor_h*0.46)" },
-	border_size = 0,
-	no_blur = true,
-	no_shadow = true,
-})
-
-hl.window_rule({
-	name = "popup-floating",
-	match = { class = "dotfiles-floating|org.pulseaudio.pavucontrol|blueman-manager" },
-	size = { "(monitor_w*0.5)", "(monitor_h*0.5)" },
-	float = true,
-	center = true,
-})
+for _, workspace_rule in ipairs(workspace_rules) do
+	hl.workspace_rule(workspace_rule)
+end
