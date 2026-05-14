@@ -10,8 +10,8 @@ hl.on("monitor.removed", redetect_brightness)
 hl.on("window.title", function(window)
 	if window.title ~= nil and window.title:find("%(Bitwarden Password Manager%) %- Bitwarden") then
 		local monitor = monitors.get_active()
-		local width = math.floor(monitor.width * 0.20)
-		local height = math.floor(monitor.height * 0.54)
+		local width = math.floor(monitor.width * 0.15)
+		local height = math.floor(monitor.height * 0.35)
 
 		hl.dispatch(hl.dsp.window.float({ action = "toggle", window = window }))
 		hl.dispatch(hl.dsp.window.resize({ window = window, x = width, y = height }))
