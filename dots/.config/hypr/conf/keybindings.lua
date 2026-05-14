@@ -35,8 +35,12 @@ hl.bind(G.main_mod .. " + M", hl.dsp.layout("movetoroot"))
 hl.bind(G.main_mod .. " + TAB", hl.dsp.focus({ monitor = "+1" }))
 hl.bind(G.main_mod .. " + SHIFT + TAB", hl.dsp.workspace.move({ monitor = "+1" }))
 
-hl.bind(G.main_mod .. " + equal", function() monitors.scale_up() end)
-hl.bind(G.main_mod .. " + minus", function() monitors.scale_down() end)
+hl.bind(G.main_mod .. " + equal", function()
+	monitors.scale_up()
+end)
+hl.bind(G.main_mod .. " + minus", function()
+	monitors.scale_down()
+end)
 
 local dirs = { H = "l", L = "r", K = "u", J = "d" }
 

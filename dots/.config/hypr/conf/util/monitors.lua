@@ -1,7 +1,7 @@
 local M = {}
 
 function M.get_active()
-  return assert(hl.get_active_monitor(), "no active monitor")
+	return assert(hl.get_active_monitor(), "no active monitor")
 end
 
 function M.is_on(target_monitor)
@@ -33,42 +33,46 @@ function M.toggle(monitor)
 end
 
 function M.lid_is_closed()
-    local handle = assert(io.popen("cat /proc/acpi/button/lid/*/state 2>/dev/null"), "couldn't read Lid Switch file")
-    local result = handle:read("*a")
-    handle:close()
-    return result:find("closed") ~= nil
+	local handle = assert(io.popen("cat /proc/acpi/button/lid/*/state 2>/dev/null"), "couldn't read Lid Switch file")
+	local result = handle:read("*a")
+	handle:close()
+	return result:find("closed") ~= nil
 end
 
 local function is_valid_scale(width, height, scale)
-    local function is_int(n)
-        return math.abs(n - math.floor(n)) < 0.001
-    end
-    return is_int(width / scale) and is_int(height / scale)
+	local function is_int(n)
+		return math.abs(n - math.floor(n)) < 0.001
+	end
+	return is_int(width / scale) and is_int(height / scale)
 end
 
 local function find_next_valid(current, step)
-    local monitor = M.get_active()
-    for i = 1, 200 do
-        local candidate = math.floor((current + step * i) * 100 + 0.5) / 100
-        if is_valid_scale(monitor.width, monitor.height, candidate) then
-            return candidate
-        end
-    end
-    return nil
+	local monitor = M.get_active()
+	for i = 1, 200 do
+		local candidate = math.floor((current + step * i) * 100 + 0.5) / 100
+		if is_valid_scale(monitor.width, monitor.height, candidate) then
+			return candidate
+		end
+	end
+	return nil
 end
 
 function M.scale_up()
-    local monitor = M.get_active()
-    local new_scale = find_next_valid(monitor.scale, 0.01)
-    if not new_scale then return end
-    hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
+	local monitor = M.get_active()
+	local new_scale = find_next_valid(monitor.scale, 0.01)
+	if not new_scale then
+		return
+	end
+	hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
 end
 
 function M.scale_down()
-    local monitor = assert(hl.get_active_monitor(), "no active monitor")
-    local new_scale = find_next_valid(monitor.scale, -0.01)
-    if not new_scale then return end
-    hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
+	local monitor = assert(hl.get_active_monitor(), "no active monitor")
+	local new_scale = find_next_valid(monitor.scale, -0.01)
+	if not new_scale then
+		return
+	end
+	hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
 end
 
 return M

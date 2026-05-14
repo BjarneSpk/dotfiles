@@ -39,7 +39,7 @@ hl.permission({ binary = "/usr/(lib|libexec|lib64)/xdg-desktop-portal-hyprland",
 if monitor.lid_is_closed() then
 	monitor.disable("eDP-1")
 else
-  hl.monitor({ output = "eDP-1", mode = "preferred", position = "auto", scale = 1 })
+	hl.monitor({ output = "eDP-1", mode = "preferred", position = "auto", scale = 1 })
 end
 
 hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = 1 })

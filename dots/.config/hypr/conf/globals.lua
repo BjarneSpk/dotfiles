@@ -1,12 +1,12 @@
 return {
-  scripts = os.getenv("HOME") .. "/dotfiles/scripts/",
-  cache = os.getenv("HOME") .. "/.cache/arch-rice",
+	scripts = os.getenv("HOME") .. "/dotfiles/scripts/",
+	cache = os.getenv("HOME") .. "/.cache/arch-rice",
 
-  terminal = "kitty",
-  browser = "firefox",
-  file_manager = "nautilus",
-  lock_screen = "hyprlock",
-  logout = "wlogout",
+	terminal = "kitty",
+	browser = "firefox",
+	file_manager = "nautilus",
+	lock_screen = "hyprlock",
+	logout = "wlogout",
 
-  main_mod = "SUPER",
+	main_mod = "SUPER",
 }
