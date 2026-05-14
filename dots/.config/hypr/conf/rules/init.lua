@@ -1,6 +1,6 @@
-local window_rules = require("conf.window_rules")
-local layer_rules = require("conf.layer_rules")
-local workspace_rules = require("conf.workspace_rules")
+local window_rules = require("conf.rules.window")
+local layer_rules = require("conf.rules.layer")
+local workspace_rules = require("conf.rules.workspace")
 
 for _, window_rule in ipairs(window_rules) do
 	hl.window_rule(window_rule)
