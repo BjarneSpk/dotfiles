@@ -1,0 +1,20 @@
+local G = require("conf.globals")
+
+return {
+	{ G.main_mod .. " + C", hl.dsp.window.close() },
+	{ G.main_mod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun") },
+	{ G.main_mod .. " + RETURN", hl.dsp.exec_cmd(G.terminal) },
+	{ G.main_mod .. " + B", hl.dsp.exec_cmd(G.browser) },
+	{ G.main_mod .. " + E", hl.dsp.exec_cmd(G.file_manager) },
+	{ G.main_mod .. " + SHIFT + Q", hl.dsp.exec_cmd(G.logout) },
+	{ G.main_mod .. " + Q", hl.dsp.exec_cmd(G.lock_screen) },
+	{ G.main_mod .. " + W", hl.dsp.exec_cmd("toggle-waybar.sh") },
+	{ G.main_mod .. " + SHIFT + W", hl.dsp.exec_cmd("wallpaper.sh") },
+	{
+		G.main_mod .. " + Z",
+		hl.dsp.exec_cmd("wpchanger.sh ~/Pictures/Wallpapers/windows-7-official-3840x2160-13944.jpg"),
+	},
+	{ G.main_mod .. " + S", hl.dsp.exec_cmd("screenshot.sh --instant") },
+	{ G.main_mod .. " + SHIFT + S", hl.dsp.exec_cmd("quickshell -c HyprQuickFrame -n") },
+	{ "XF86NotificationCenter", hl.dsp.exec_cmd("swaync-client -t -sw") },
+}
