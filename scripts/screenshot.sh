@@ -1,29 +1,13 @@
 #!/usr/bin/env bash
-#                                 __        __ 
-#   ___ ___________ ___ ___  ___ / /  ___  / /_
-#  (_-</ __/ __/ -_) -_) _ \(_-</ _ \/ _ \/ __/
-# /___/\__/_/  \__/\__/_//_/___/_//_/\___/\__/ 
-#                                              
-# Based on https://github.com/hyprwm/contrib/blob/main/grimblast/screenshot.sh
-
-# -----------------------------------------------------
-
-# Screenshots will be stored in $HOME by default.
-# The screenshot will be moved into the screenshot directory
-
-# Add this to ~/.config/user-dirs.dirs to save screenshots in a custom folder:
-# XDG_SCREENSHOTS_DIR="$HOME/Screenshots"
 
 prompt='Screenshot'
 mesg="DIR: ~/Screenshots"
 
-SAVE_DIR=~/Pictures/Screenshots
-SAVE_FILENAME=screenshot_$(date +%Y%m%d_%H%M%S).jpg
-eval screenshot_folder="$SAVE_DIR"
-eval NAME="$SAVE_FILENAME"
+SAVE_DIR=$HOME/Pictures/Screenshots
+NAME=screenshot_$(date +%Y%m%d_%H%M%S).png
 
 # Notifications
-source "$SCRIPTS/notification-handler.sh"
+source "$SCRIPTS/notification_handler.sh"
 APP_NAME="Screen Capture"
 NOTIFICATION_ICON="camera-photo-symbolic"
 
@@ -38,14 +22,15 @@ export GRIMBLAST_EDITOR="pinta"
 
 # Quick instant mode: full screen
 take_instant_full() {
-    grim "$NAME" && notify_user \
-        --a "${APP_NAME}" \
-        --i "${NOTIFICATION_ICON}" \
-        --s "Screenshot saved" \
-        --m "$screenshot_folder/$NAME" \
-        --t 1000
+  [[ -d "$SAVE_DIR" && -w "$SAVE_DIR" ]] && grim -l 1 "$SAVE_DIR/$NAME" && wl-copy --type image/png <"$SAVE_DIR/$NAME"
 
-    [[ -f "$HOME/$NAME" && -d "$screenshot_folder" && -w "$screenshot_folder" ]] && mv "$HOME/$NAME" "$screenshot_folder/"
+  [[ -f "$SAVE_DIR/$NAME" ]] && notify_user \
+    -a "${APP_NAME}" \
+    -i "$SAVE_DIR/$NAME" \
+    -s "Screenshot saved" \
+    -m "$SAVE_DIR/$NAME" \
+    -t 3000
+
 }
 
 # Quick instant mode: area selection

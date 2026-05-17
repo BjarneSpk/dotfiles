@@ -24,7 +24,7 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-for cmd in ffmpeg matugen hyprctl; do
+for cmd in awww magick matugen; do
     command -v "$cmd" >/dev/null || { echo "$cmd missing"; exit 1; }
 done
 
