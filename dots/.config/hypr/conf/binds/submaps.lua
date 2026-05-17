@@ -1,8 +1,8 @@
-local G = require("conf.globals")
+local main_mod = require("conf.globals").main_mod
 
 return {
 	{
-		trigger = G.main_mod .. " + R",
+		trigger = main_mod .. " + R",
 		name = "resize",
 		binds = {
 			{ "SHIFT + L", hl.dsp.window.resize({ x = 40, y = 0, relative = true }), { repeating = true } },

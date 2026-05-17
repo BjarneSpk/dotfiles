@@ -9,8 +9,6 @@ function M.move_all_to(target_workspace)
 	for _, w in ipairs(windows) do
 		hl.dispatch(hl.dsp.window.move({ workspace = target_workspace, window = w }))
 	end
-
-	hl.dispatch(hl.dsp.focus({ workspace = target_workspace }))
 end
 
 return M
