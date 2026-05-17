@@ -6,7 +6,7 @@ end
 
 function M.is_on(target_monitor)
   local monitor = hl.get_monitor(target_monitor)
-  return monitor ~= nil and not monitor.disabled
+  return monitor and not monitor.disabled
 end
 
 function M.disable(monitor)
