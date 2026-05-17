@@ -5,12 +5,8 @@ function M.get_active()
 end
 
 function M.is_on(target_monitor)
-	for _, monitor in ipairs(hl.get_monitors()) do
-		if monitor.name == target_monitor then
-			return true
-		end
-	end
-	return false
+  local monitor = hl.get_monitor(target_monitor)
+  return monitor ~= nil and not monitor.disabled
 end
 
 function M.disable(monitor)
@@ -21,7 +17,7 @@ function M.enable(monitor, mode, position, scale)
 	mode = mode or "preferred"
 	position = position or "auto"
 	scale = scale or 1
-	hl.monitor({ output = monitor, mode = mode, position = position, scale = scale })
+	hl.monitor({ output = monitor, disabled = false, mode = mode, position = position, scale = scale })
 end
 
 function M.toggle(monitor)

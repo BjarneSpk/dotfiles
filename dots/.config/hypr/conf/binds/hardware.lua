@@ -18,14 +18,14 @@ return {
 	{
 		"switch:on:Lid Switch",
 		function()
-			monitors.enable("eDP-1")
+			monitors.disable("eDP-1")
 		end,
 		{ locked = true },
 	},
 	{
 		"switch:off:Lid Switch",
 		function()
-			monitors.disable("eDP-1")
+			monitors.enable("eDP-1")
 		end,
 		{ locked = true },
 	},
