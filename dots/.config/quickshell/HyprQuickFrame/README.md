@@ -1,7 +1,7 @@
 # HyprQuickFrame
 
-A polished, native screenshot utility for Hyprland built with **Quickshell**. 
-Features a modern overlay UI with shader-based dimming, "juicy" bouncy animations, and intelligent window snapping.
+A polished, native screenshot utility for Hyprland built with **Quickshell**.
+Features a modern overlay UI with shader-based dimming, bouncy animations, and intelligent window snapping.
 
 ![License](https://img.shields.io/badge/License-MIT-blue.svg)
 ![Wayland](https://img.shields.io/badge/Wayland-Native-green.svg)
@@ -11,57 +11,84 @@ Features a modern overlay UI with shader-based dimming, "juicy" bouncy animation
 
 ## ✨ Features
 
-*   **Three Modes**:
-    *   **Region**: Drag to select an area. **Left-click** automatically captures the full screen, and **Right-click** resets your selection.
-    *   **Window**: Hovering over a window highlights it—click to capture.
-    *   **Temp**: A "clipboard-only" mode. Great for quick sharing when you don't want to clutter your disk.
-*   **KDE Connect**: Push screenshots (and your clipboard) directly to your phone.
-*   **Fast**: It launches instantly. No waiting.
-*   **Editor Support**: If you have `satty` installed, you can annotate right after capturing.
+* **Capture Modes:** Region (drag to select), Window (hover to select), and Temp (clipboard-only).
+* **KDE Connect** Push screenshots directly to your phone.
+* **Editor Support:** Integrates with `satty` or `gradia` for immediate post-capture annotation.
+
+## 🎥 Demo
+
+<details>
+<summary>Click to watch the demo</summary>
+<video src="https://github.com/user-attachments/assets/1c15ba34-3571-4f62-8dc2-4d1997ce41e2" controls="controls"> </video>
+<video src="https://github.com/user-attachments/assets/904066a7-3a67-4795-8353-0461219386a7" controls="controls"> </video>
+</details>
 
 ## ⌨️ Shortcuts
 
-*   `r`: Region Mode
-*   `w`: Window Mode
-*   `s`: Full Screen Capture
-*   `t`: Toggle Temp Mode
-*   `k`: Toggle KDE Share
-*   `Escape`: Quit
-
-## 🎥 Demo
-https://github.com/user-attachments/assets/1cb331a7-c9d2-474f-96e2-d78a18bd3a5c
-
+* `r`: Region Mode
+* `w`: Window Mode
+* `s`: Full Screen Capture
+* `t`: Toggle Temp Mode
+* `k`: Toggle KDE Share
+* `Esc,q`: Quit
 
 ## 📦 Requirements
 
-1.  **[Quickshell](https://github.com/outfoxxed/quickshell)** (0.2.1+)
-2.  `grim` (Screen capture)
-3.  `imagemagick` (Image processing)
-4.  `wl-clipboard` (Clipboard support)
-5.  `satty` (Optional: for Editor Mode)
-6.  `kdeconnect` (Optional: for Share Mode)
-7.  `libnotify` (For notifications)
+1. **[Quickshell](https://github.com/outfoxxed/quickshell)** 
+2. `grim` (Screen capture)
+3. `imagemagick` (Image processing)
+4. `wl-clipboard` (Clipboard support)
+5. `satty` or `gradia` (Optional: for Editor Mode)
+6. `kdeconnect` (Optional: for Share Mode)
+7. `libnotify` (For notifications)
 
 ## 🚀 Installation
 
 ### 1. Install System Dependencies
+
 **Arch Linux:**
+
 ```bash
-sudo pacman -S grim imagemagick wl-clipboard satty libnotify
+sudo pacman -S grim imagemagick wl-clipboard libnotify satty # Add satty or gradia depending on preference
+```
+
+**Fedora:**
+
+```bash
+sudo dnf install grim ImageMagick wl-clipboard libnotify satty # Add satty or gradia depending on preference
 ```
 
 ### 2. Install Quickshell
+
+**Arch Linux:**
+
 ```bash
 yay -S quickshell-git
 ```
 
-### 3. Clone Repository
+### 3. Install HyprQuickFrame
+
+**AUR (Recommended):** Maintainer: [knownasnaffy](https://github.com/knownasnaffy)
+
+```bash
+yay -S hyprquickframe-git
+```
+
+**Manual:**
+
+1. Clone Repository
+
 ```bash
 git clone https://github.com/Ronin-CK/HyprQuickFrame ~/.config/quickshell/HyprQuickFrame
 ```
 
-### 4. Basic Test
+2. Basic Test
+
 ```bash
+# On Arch Linux:
+quickshell -c HyprQuickFrame -n
+
+# On Fedora:
 quickshell -c HyprQuickFrame -n
 ```
 
@@ -70,17 +97,21 @@ quickshell -c HyprQuickFrame -n
 This project includes a `flake.nix` for easy installation.
 
 **Run directly:**
+
 ```bash
 nix run github:Ronin-CK/HyprQuickFrame
 ```
 
 **Install in configuration:**
 Add to your inputs:
+
 ```nix
 inputs.HyprQuickFrame.url = "github:Ronin-CK/HyprQuickFrame";
 inputs.HyprQuickFrame.inputs.nixpkgs.follows = "nixpkgs";
 ```
+
 Then add to your packages:
+
 ```nix
 environment.systemPackages = [ inputs.HyprQuickFrame.packages.${pkgs.system}.default ];
 ```
@@ -92,7 +123,53 @@ Add the following keybinding to your `hyprland.conf`:
 ```ini
 # Opens HyprQuickFrame - Decided on-the-fly whether to Edit, Save, or Copy
 bind = SUPER SHIFT, S, exec, quickshell -c HyprQuickFrame -n
+
+# Pre-selects the "window" mode (options: region, window)
+bind = SUPER SHIFT, W, exec, env HQF_MODE=window quickshell -c HyprQuickFrame -n
+
+# Pre-selects the "temp" action (options: temp, edit, share) natively
+bind = SUPER SHIFT, C, exec, env HQF_ACTION=temp quickshell -c HyprQuickFrame -n
 ```
+
+## 🛠️ Theme Configuration
+
+Copy the default `theme.toml` to `~/.config/hyprquickframe/theme.toml` to customize. Changes apply instantly!
+
+The application checks for `theme.toml` in this order:
+1. `~/.config/hyprquickframe/theme.toml` (Recommended)
+2. `~/.config/quickshell/HyprQuickFrame/theme.toml`
+3. `[Install Directory]/theme.toml`
+
+### Global Options
+
+Configure animations and your preferred annotation tool inside `theme.toml`:
+
+```toml
+# Enable or disable animations (default: true)
+animations = true
+# Tool to use for the "edit" screenshot action (e.g., "satty" or "gradia")
+annotationTool = "satty"
+```
+
+## 🌌 Noctalia Support
+
+HyprQuickFrame can automatically sync its colors with your wallpaper using [Noctalia](https://github.com/Ronin-CK/Noctalia).
+
+### Setup
+
+1. Make the sync script executable:
+   ```bash
+   chmod +x /path/to/HyprQuickFrame/scripts/sync_theme.py
+   ```
+2. Add it to your Noctalia `wallpaperChange` hook in `~/.config/noctalia/settings.json`:
+   ```json
+   "hooks": {
+       "enabled": true,
+       "wallpaperChange": "python3 /path/to/HyprQuickFrame/scripts/sync_theme.py"
+   }
+   ```
+3. **Dynamic Toggle Colors (Optional):** To allow toggle buttons to sync dynamically, delete or comment out the `background` key under the `[toggle]` section in your `theme.toml`.
+
 
 ## ⚖️ License & Attribution
 

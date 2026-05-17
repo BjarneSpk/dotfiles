@@ -27,6 +27,7 @@
  */
 
 import QtQuick
+import QtQuick.Shapes
 
 Item {
     id: root
@@ -34,7 +35,7 @@ Item {
     property real dimOpacity: 0.6
     property real borderRadius: 10
     property real outlineThickness: 2
-    property url fragmentShader: Qt.resolvedUrl("dimming.frag.qsb")
+    property url fragmentShader: Qt.resolvedUrl("../shaders/dimming.frag.qsb")
     property point startPos
     property real selectionX: 0
     property real selectionY: 0
@@ -49,6 +50,7 @@ Item {
     property bool canceled: false
     property bool selecting: false
     property bool animateSelection: true
+    property bool globalAnimations: true
     property alias pressed: mouseArea.pressed
 
     signal regionSelected(real x, real y, real width, real height)
@@ -68,13 +70,6 @@ Item {
         guides.requestPaint();
     }
 
-    onSelectionXChanged: guides.requestPaint()
-    onSelectionYChanged: guides.requestPaint()
-    onSelectionWidthChanged: guides.requestPaint()
-    onSelectionHeightChanged: guides.requestPaint()
-    onMouseXChanged: guides.requestPaint()
-    onMouseYChanged: guides.requestPaint()
-
     ShaderEffect {
         property vector4d selectionRect: Qt.vector4d(root.selectionX, root.selectionY, root.selectionWidth, root.selectionHeight)
         property real dimOpacity: root.dimOpacity
@@ -87,34 +82,79 @@ Item {
         fragmentShader: root.fragmentShader
     }
 
-    Canvas {
+    Item {
         id: guides
-
         anchors.fill: parent
         z: 2
-        onPaint: {
-            var ctx = getContext("2d");
-            ctx.clearRect(0, 0, width, height);
-            ctx.beginPath();
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
-            ctx.lineWidth = 1;
-            ctx.setLineDash([5, 5]);
-            if (!root.selecting) {
-                ctx.moveTo(root.mouseX, 0);
-                ctx.lineTo(root.mouseX, root.height);
-                ctx.moveTo(0, root.mouseY);
-                ctx.lineTo(root.width, root.mouseY);
-            } else {
-                ctx.moveTo(root.selectionX, 0);
-                ctx.lineTo(root.selectionX, root.height);
-                ctx.moveTo(root.selectionX + root.selectionWidth, 0);
-                ctx.lineTo(root.selectionX + root.selectionWidth, root.height);
-                ctx.moveTo(0, root.selectionY);
-                ctx.lineTo(root.width, root.selectionY);
-                ctx.moveTo(0, root.selectionY + root.selectionHeight);
-                ctx.lineTo(root.width, root.selectionY + root.selectionHeight);
+
+        function requestPaint() {}
+
+        readonly property color guideColor: Qt.rgba(1, 1, 1, 0.5)
+
+        Shape {
+            anchors.fill: parent
+            visible: !root.selecting
+
+            ShapePath {
+                strokeWidth: 1
+                strokeColor: guides.guideColor
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [4, 4]
+                fillColor: "transparent"
+                startX: root.mouseX; startY: 0
+                PathLine { x: root.mouseX; y: guides.height }
             }
-            ctx.stroke();
+            ShapePath {
+                strokeWidth: 1
+                strokeColor: guides.guideColor
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [4, 4]
+                fillColor: "transparent"
+                startX: 0; startY: root.mouseY
+                PathLine { x: guides.width; y: root.mouseY }
+            }
+        }
+
+        Shape {
+            anchors.fill: parent
+            visible: root.selecting
+
+            ShapePath {
+                strokeWidth: 1
+                strokeColor: guides.guideColor
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [4, 4]
+                fillColor: "transparent"
+                startX: root.selectionX; startY: 0
+                PathLine { x: root.selectionX; y: guides.height }
+            }
+            ShapePath {
+                strokeWidth: 1
+                strokeColor: guides.guideColor
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [4, 4]
+                fillColor: "transparent"
+                startX: root.selectionX + root.selectionWidth; startY: 0
+                PathLine { x: root.selectionX + root.selectionWidth; y: guides.height }
+            }
+            ShapePath {
+                strokeWidth: 1
+                strokeColor: guides.guideColor
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [4, 4]
+                fillColor: "transparent"
+                startX: 0; startY: root.selectionY
+                PathLine { x: guides.width; y: root.selectionY }
+            }
+            ShapePath {
+                strokeWidth: 1
+                strokeColor: guides.guideColor
+                strokeStyle: ShapePath.DashLine
+                dashPattern: [4, 4]
+                fillColor: "transparent"
+                startX: 0; startY: root.selectionY + root.selectionHeight
+                PathLine { x: guides.width; y: root.selectionY + root.selectionHeight }
+            }
         }
     }
 
@@ -127,7 +167,6 @@ Item {
         acceptedButtons: Qt.LeftButton | Qt.RightButton
         cursorShape: Qt.CrossCursor
         onPressed: (mouse) => {
-            // Right-click to cancel selection
             if (mouse.button === Qt.RightButton) {
                 root.canceled = true;
                 root.clearSelection();
@@ -153,7 +192,6 @@ Item {
             }
         }
         onReleased: (mouse) => {
-            // Default to full-screen selection on zero-size input
             if (mouse.button === Qt.RightButton || root.canceled) {
                 if (mouse.buttons === 0)
                     root.canceled = false;
@@ -189,8 +227,17 @@ Item {
 
         visible: root.selecting && !root.canceled && root.selectionWidth > 20
         z: 4
-        x: root.selectionX + root.selectionWidth / 2 - width / 2
-        y: root.selectionY < 40 ? root.selectionY + 10 : root.selectionY - 35
+        x: Math.max(10, Math.min(root.width - width - 10, root.selectionX + root.selectionWidth / 2 - width / 2))
+        y: {
+            const labelHeight = height;
+            if (root.selectionY - labelHeight - 10 > 10)
+                return root.selectionY - labelHeight - 10;
+            
+            if (root.selectionY + root.selectionHeight + labelHeight + 10 < root.height - 10)
+                return root.selectionY + root.selectionHeight + 10;
+                
+            return root.selectionY + 10; // Fallback to inside top if no space above or below
+        }
         width: labelText.implicitWidth + 16
         height: labelText.implicitHeight + 8
         radius: 6
@@ -209,42 +256,49 @@ Item {
     }
 
     Behavior on selectionX {
-        enabled: root.animateSelection
+        enabled: root.animateSelection && root.globalAnimations
 
-        // Selection animations using spring dynamics
         SpringAnimation {
-            spring: 4
-            damping: 0.4
+            spring: 5
+            damping: 0.7
+            mass: 1.0
+            epsilon: 0.1
         }
 
     }
 
     Behavior on selectionY {
-        enabled: root.animateSelection
+        enabled: root.animateSelection && root.globalAnimations
 
         SpringAnimation {
-            spring: 4
-            damping: 0.4
+            spring: 5
+            damping: 0.7
+            mass: 1.0
+            epsilon: 0.1
         }
 
     }
 
     Behavior on selectionWidth {
-        enabled: root.animateSelection
+        enabled: root.animateSelection && root.globalAnimations
 
         SpringAnimation {
-            spring: 4
-            damping: 0.4
+            spring: 5
+            damping: 0.7
+            mass: 1.0
+            epsilon: 0.1
         }
 
     }
 
     Behavior on selectionHeight {
-        enabled: root.animateSelection
+        enabled: root.animateSelection && root.globalAnimations
 
         SpringAnimation {
-            spring: 4
-            damping: 0.4
+            spring: 5
+            damping: 0.7
+            mass: 1.0
+            epsilon: 0.1
         }
 
     }
