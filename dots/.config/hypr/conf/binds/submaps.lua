@@ -58,8 +58,6 @@ local function with_notification(submap)
 		end
 	end
 
-	submap.notification_text = nil
-	submap.notification_icon = nil
 	return submap
 end
 
