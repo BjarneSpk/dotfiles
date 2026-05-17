@@ -55,7 +55,7 @@ end
 
 local function apply_scale(step)
 	local monitor = M.get_active()
-	local new_scale = find_next_valid(monitor, step)
+	local new_scale = find_next_valid(monitor.scale, step)
 	if not new_scale then
 		return
 	end

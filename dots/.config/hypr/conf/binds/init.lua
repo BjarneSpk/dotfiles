@@ -4,9 +4,18 @@ local function register(binds)
     end
 end
 
+local function enter_submap(submap)
+    return function()
+        if submap.on_enter ~= nil then
+            submap.on_enter()
+        end
+        hl.dispatch(hl.dsp.submap(submap.name))
+    end
+end
+
 local function register_submaps(defs)
     for _, submap in ipairs(defs) do
-        hl.bind(submap.trigger, hl.dsp.submap(submap.name))
+        hl.bind(submap.trigger, enter_submap(submap))
         hl.define_submap(submap.name, function()
             register(submap.binds)
         end)
