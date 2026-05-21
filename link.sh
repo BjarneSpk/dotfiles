@@ -38,10 +38,11 @@ link() {
 }
 
 install_config() {
-  link "$DOTFILES/dots/.zshenv" "$HOME/.zshenv"
-  link "$DOTFILES/dots/.gtkrc-2.0" "$HOME/.gtkrc-2.0"
+  local dotfiles_home="${DOTFILES:-~/dotfiles}/home"
+  link "$dotfiles_home/.zshenv" "$HOME/.zshenv"
+  link "$dotfiles_home/.gtkrc-2.0" "$HOME/.gtkrc-2.0"
 
-  SRC_DIR="$DOTFILES/dots/.config"
+  SRC_DIR="$dotfiles_home/.config"
   for file in "$SRC_DIR"/*; do
       base=$(basename "$file")
 
@@ -49,6 +50,6 @@ install_config() {
   done
 }
 
-source ./dots/.zshenv
+source ./home/.zshenv
 
 install_config
