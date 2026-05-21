@@ -13,3 +13,5 @@ nvim.bak/
 /home/.config/quickshell/HyprQuickFrame/theme.toml
 /home/.config/hypr/config/hypr/look/colors.lua
 /home/.config/zsh/colors.zsh
+/home/.config/hypr/conf/look/colors.lua
+/home/.config/matugen/templates/zsh-colors.zsh
