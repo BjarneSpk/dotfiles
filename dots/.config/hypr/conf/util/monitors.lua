@@ -42,10 +42,9 @@ local function is_valid_scale(width, height, scale)
 	return is_int(width / scale) and is_int(height / scale)
 end
 
-local function find_next_valid(current, step)
-	local monitor = M.get_active()
+local function find_next_valid(monitor, step)
 	for i = 1, 200 do
-		local candidate = math.floor((current + step * i) * 100 + 0.5) / 100
+		local candidate = math.floor((monitor.scale + step * i) * 100 + 0.5) / 100
 		if is_valid_scale(monitor.width, monitor.height, candidate) then
 			return candidate
 		end
@@ -55,11 +54,13 @@ end
 
 local function apply_scale(step)
 	local monitor = M.get_active()
-	local new_scale = find_next_valid(monitor.scale, step)
+	local new_scale = find_next_valid(monitor, step)
 	if not new_scale then
+    hl.notification.create({ text = "No scaling factor found", icon = 1, duration = 2000 })
 		return
 	end
 	hl.monitor({ output = monitor.name, mode = "preferred", position = "auto", scale = new_scale })
+  hl.notification.create({ text = "Scaling Factor: " .. new_scale, icon = 1, duration = 2000 })
 end
 
 function M.scale_up()

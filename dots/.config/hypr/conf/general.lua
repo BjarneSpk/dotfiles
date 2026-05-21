@@ -42,7 +42,7 @@ else
 	hl.monitor({ output = "eDP-1", mode = "preferred", position = "auto", scale = 1 })
 end
 
-hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = 1 })
+hl.monitor({ output = "HDMI-A-1", mode = "preferred", position = "auto", scale = 1.6 })
 hl.monitor({ output = "HDMI-A-2", mode = "preferred", position = "auto", scale = 1.6 })
 hl.monitor({ output = "DP-1", mode = "preferred", position = "auto", scale = 1.5 })
 hl.monitor({ output = "DP-2", mode = "preferred", position = "auto", scale = 1.5 })

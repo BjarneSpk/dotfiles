@@ -1,4 +1,12 @@
 return {
+  {
+		name = "satty-floating",
+		match = { class = "com.gabm.satty" },
+		size = { "monitor_w * 0.75", "monitor_h * 0.75" },
+		float = true,
+		center = true,
+    dim_around = true,
+  },
 	{
 		match = { class = "org.gnome.Nautilus" },
 		opacity = "0.85 override 0.85 override 0.85 override",
