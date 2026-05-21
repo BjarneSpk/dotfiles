@@ -4,11 +4,12 @@ adwaita-qt5-git
 adwaita-qt6-git
 alsa-utils
 archlinux-xdg-menu
-awww-bin
+awww
 base
 base-devel
 bat
 bind
+bitwarden
 blueman
 bluez-deprecated-tools
 bluez-utils
@@ -21,6 +22,7 @@ cliphist
 ddcutil
 dnscrypt-proxy
 efibootmgr
+element-desktop
 eza
 fastfetch
 fd
@@ -39,6 +41,7 @@ gvfs
 hypridle
 hyprland
 hyprlock
+hyprpicker
 hyprpolkitagent
 hyprsunset
 imagemagick
@@ -47,6 +50,8 @@ intel-media-sdk
 intel-ucode
 inter-font
 jq
+jupyter-notebook
+keyd
 kitty
 lazygit
 ldns
@@ -80,6 +85,10 @@ pipewire-pulse
 podman
 podman-compose
 protonmail-bridge
+python-ipympl
+python-pandas
+python-scikit-learn
+python-seaborn
 qt5-wayland
 qt5ct
 qt6ct
@@ -87,6 +96,7 @@ quickshell
 resvg
 ripgrep
 rofi
+rpi-imager
 satty
 sddm
 socat
@@ -95,12 +105,15 @@ spotify-launcher
 sudo
 swaync
 thunderbird
+tldr
 tlp
 tlpui
 ttf-meslo-nerd
 unzip
 vdpauinfo
-vscodium-bin
+vlc
+vlc-plugin-ffmpeg
+vscodium
 vscodium-marketplace
 vulkan-intel
 vulkan-tools

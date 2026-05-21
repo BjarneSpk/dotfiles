@@ -43,8 +43,8 @@ local function is_valid_scale(width, height, scale)
 end
 
 local function find_next_valid(monitor, step)
-	for i = 1, 200 do
-		local candidate = math.floor((monitor.scale + step * i) * 100 + 0.5) / 100
+	for i = 1, 2000 do
+		local candidate = math.floor((monitor.scale + 100 * step + step * i) * 100 + 0.5) / 100
 		if is_valid_scale(monitor.width, monitor.height, candidate) then
 			return candidate
 		end
@@ -64,11 +64,11 @@ local function apply_scale(step)
 end
 
 function M.scale_up()
-	apply_scale(0.01)
+	apply_scale(0.001)
 end
 
 function M.scale_down()
-	apply_scale(-0.01)
+	apply_scale(-0.001)
 end
 
 return M

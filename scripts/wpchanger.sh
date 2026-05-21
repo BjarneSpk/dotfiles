@@ -67,7 +67,7 @@ ln -sf "$img_path" "$cache_dir/current"
 
 awww img "$cache_dir/current" -t random --transition-pos 0.5,0.5 --transition-fps 60 --transition-duration 1
 
-active_output="$(awww query | awk 'NR==1 {print $1}' | tr -d ':')"
+active_output="$(awww query | sed -n '1{s/^[[:space:]:]*//;s/:.*$//;p;}')"
 template_file="$(find "$XDG_CACHE_HOME/awww" -type f -name "$active_output" -print -quit)"
 if [[ -n "$template_file" ]]; then
     for name in $(ls /sys/class/drm/ | grep -oP 'card\d+-\K.*' | awk '{print $1}'); do
