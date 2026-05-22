@@ -13,21 +13,21 @@ export HIST_STAMPS="yyyy/mm/dd"
 export HISTSIZE=10000
 export SAVEHIST=10000
 
-source "$DOTFILES/dots/.config/zsh/colors.zsh"
+source "$ZDOTDIR/colors.zsh"
 
-source "${DOTFILES}/dots/.config/zsh/aliases.zsh"
+source "$ZDOTDIR/aliases.zsh"
 
 bindkey -v
 export KEYTIMEOUT=1
 
-source "${DOTFILES}/dots/.config/zsh/cursor_mode.zsh"
+source "$ZDOTDIR/cursor_mode.zsh"
 
 # completions
-source "${DOTFILES}/dots/.config/zsh/completions.zsh"
-source "${DOTFILES}/dots/.config/zsh/netbird_completions.zsh"
+source "$ZDOTDIR/completions.zsh"
+source "$ZDOTDIR/netbird_completions.zsh"
 
 source <(fzf --zsh)
-source "${DOTFILES}/dots/.config/zsh/fzf.zsh"
+source "$ZDOTDIR/fzf.zsh"
 
 # export _ZO_ECHO=1
 eval "$(zoxide init zsh)"

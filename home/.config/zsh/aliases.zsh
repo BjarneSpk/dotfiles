@@ -37,7 +37,7 @@ mcd() {
 
 # used to reload colors with matugen
 TRAPUSR1() {
-  source "$DOTFILES/dots/.config/zsh/colors.zsh"
+  source "$ZDOTDIR/colors.zsh"
 }
 
 _ps1_setup() {
