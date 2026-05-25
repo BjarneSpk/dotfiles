@@ -3,12 +3,6 @@ nvim.bak/
 .zcompdump
 .zhistory
 .zsh_history
-/home/.config/gtk-3.0/gtk.css
-/home/.config/gtk-4.0/gtk.css
-/home/.config/rofi/colors.rasi
-/home/.config/swaync/colors.css
-/home/.config/zsh/colors.zsh
-/home/.config/waybar/colors.css
 /home/.config/hypr/conf.d/30-colors.conf
 /home/.config/quickshell/HyprQuickFrame/theme.toml
 /home/.config/hypr/config/hypr/look/colors.lua
@@ -22,3 +16,4 @@ nvim.bak/
 /home/.config/rofi/colors.rasi
 /home/.config/swaync/colors.css
 /home/.config/zsh/colors.zsh
+/home/.config/waybar/colors.css
