@@ -7,6 +7,7 @@ return {
 	file_manager = "nautilus",
 	lock_screen = "hyprlock",
 	logout = "wlogout -b 6 -m 500",
+  waybar_theme = "glass",
 
 	main_mod = "SUPER",
 }
