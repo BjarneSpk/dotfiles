@@ -2,8 +2,8 @@ local G = require("conf.globals")
 local monitors = require("conf.util.monitors")
 
 local execs = {
+	"awww-daemon && awww img -t none " .. G.cache .. "/wallpaper/current",
 	"waybar",
-	"awww-daemon & sleep 0.1 && awww img -t none " .. G.cache .. "/wallpaper/current",
 	"hypridle",
 	"systemctl --user start hyprpolkitagent",
 	"wl-paste --type text --watch cliphist store",

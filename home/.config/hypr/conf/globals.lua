@@ -6,7 +6,7 @@ return {
 	browser = "firefox",
 	file_manager = "nautilus",
 	lock_screen = "hyprlock",
-	logout = "wlogout",
+	logout = "wlogout -b 6 -m 500",
 
 	main_mod = "SUPER",
 }

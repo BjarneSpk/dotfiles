@@ -44,4 +44,10 @@ return {
 		float = true,
 		center = true,
 	},
+  {
+    name = "logout",
+    match = { title = "wlogout -b 6 -p layer-shell" },
+		size = { "monitor_w * 0.6", "monitor_h * 0.4" },
+    opacity = "0.50",
+  }
 }

@@ -17,12 +17,6 @@
     "keybind" : "u"
 }
 {
-    "label" : "hibernate",
-    "action" : "systemctl hibernate",
-    "text" : "Hibernate",
-    "keybind" : "h"
-}
-{
     "label" : "reboot",
     "action" : "power.sh reboot",
     "text" : "Restart",
@@ -33,4 +27,10 @@
     "action" : "power.sh shutdown",
     "text" : "Power Off",
     "keybind" : "s"
+}
+{
+    "label" : "hibernate",
+    "action" : "systemctl hibernate",
+    "text" : "Hibernate",
+    "keybind" : "h"
 }
