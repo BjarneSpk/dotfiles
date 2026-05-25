@@ -12,6 +12,8 @@ cd ~/dotfiles
 sudo pacman -S --needed - < pkglist.txt
 
 ./stow.sh
+
+./system-install.sh
 ```
 
 ## Bundle packages

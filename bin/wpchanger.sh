@@ -3,7 +3,7 @@
 set -euo pipefail
 # Don't react on USR1, as it is used by matugen to signal zsh to reload color theme.
 trap '' USR1
-source $SCRIPTS/notification_handler.sh
+source ~/.local/bin/notification_handler.sh
 
 update_sddm=false
 

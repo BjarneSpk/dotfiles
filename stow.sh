@@ -28,8 +28,4 @@ if [[ -d "$SCRIPT_DIR/bin" ]]; then
   stow -t "$BIN_TARGET" bin
 fi
 
-if [[ -d "$SCRIPT_DIR/system" ]]; then
-  sudo stow -t / system
-fi
-
 echo "Stow complete."
