@@ -3,7 +3,7 @@ local monitors = require("conf.util.monitors")
 
 local execs = {
 	"awww-daemon && awww img -t none " .. G.cache .. "/wallpaper/current",
-	"waybar",
+	"waybar -c ~/.config/waybar/themes/glass/config -s ~/.config/waybar/themes/glass/style.css",
 	"hypridle",
 	"systemctl --user start hyprpolkitagent",
 	"wl-paste --type text --watch cliphist store",

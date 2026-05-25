@@ -8,7 +8,7 @@
     "margin-right": 0,
     "spacing": 0,
     "include": [
-        "~/.config/waybar/modules.json"
+        "~/.config/waybar/themes/minimal/modules.json"
     ],
     "modules-left": [
         "custom/appmenu",
