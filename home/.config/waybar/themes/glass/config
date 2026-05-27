@@ -12,6 +12,8 @@
     "hyprland/workspaces",
     "custom/separator",
     "custom/mpris",
+    "custom/mpris-prev",
+    "custom/mpris-next",
     "custom/separator",
     "clock",
     "custom/pomo",
@@ -54,12 +56,25 @@
   },
 
   "custom/mpris": {
-    "exec": "~/.config/waybar/themes/glass/mpris.sh",
+    "exec": "~/.config/waybar/themes/glass/scripts/mpris.sh",
     "interval": 2,
     "return-type": "json",
+    "escape": false,
     "max-length": 25,
     "min-length": 25,
     "on-click": "playerctl play-pause",
+    "on-click-right": "playerctl next",
+    "on-click-middle": "playerctl previous",
+    "tooltip": false
+  },
+  "custom/mpris-prev": {
+    "format": "",
+    "on-click": "playerctl previous",
+    "tooltip": false
+  },
+  "custom/mpris-next": {
+    "format": "",
+    "on-click": "playerctl next",
     "tooltip": false
   },
 
@@ -111,7 +126,7 @@
   },
 
   "custom/memorypie": {
-    "exec": "~/.config/waybar/themes/glass/memory_pie.sh",
+    "exec": "~/.config/waybar/themes/glass/scripts/memory_pie.sh",
     "interval": 2,
     "return-type": "json",
     "tooltip": false
@@ -155,11 +170,11 @@
   },
 
   "custom/pomo": {
-    "exec": "~/.config/waybar/themes/glass/pomo.sh",
-    "on-click": "~/.config/waybar/themes/glass/pomo.sh toggle",
-    "on-click-right": "~/.config/waybar/themes/glass/pomo.sh stop",
-    "on-scroll-up": "~/.config/waybar/themes/glass/pomo.sh preset-next",
-    "on-scroll-down": "~/.config/waybar/themes/glass/pomo.sh preset-prev",
+    "exec": "~/.config/waybar/themes/glass/scripts/pomo.sh",
+    "on-click": "~/.config/waybar/themes/glass/scripts/pomo.sh toggle",
+    "on-click-right": "~/.config/waybar/themes/glass/scripts/pomo.sh stop",
+    "on-scroll-up": "~/.config/waybar/themes/glass/scripts/pomo.sh preset-next",
+    "on-scroll-down": "~/.config/waybar/themes/glass/scripts/pomo.sh preset-prev",
     "interval": 1,
     "return-type": "json",
     "format": "{}",

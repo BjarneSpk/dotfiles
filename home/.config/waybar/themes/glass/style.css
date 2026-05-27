@@ -23,7 +23,9 @@ window#waybar {
 
 #workspaces,
 #window,
+#custom-mpris-prev,
 #custom-mpris,
+#custom-mpris-next,
 #clock,
 #custom-pomo,
 #pulseaudio,
@@ -68,7 +70,7 @@ window#waybar {
 
 #workspaces button {
   background: transparent;
-  color: @on_surface_variant;
+  color: @outline;
   padding: 0 4px;
   margin: 0;
   border-radius: 999px;
@@ -106,6 +108,8 @@ window#waybar {
 }
 
 #custom-mpris:hover,
+#custom-mpris-prev:hover,
+#custom-mpris-next:hover,
 #window:hover,
 #clock:hover,
 #custom-pomo:hover,
