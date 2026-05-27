@@ -102,6 +102,7 @@ sddm
 socat
 sof-firmware
 spotify-launcher
+stow
 sudo
 swaync
 thunderbird
@@ -118,6 +119,7 @@ vscodium-marketplace
 vulkan-intel
 vulkan-tools
 waybar
+wev
 wget
 whois
 wireguard-tools

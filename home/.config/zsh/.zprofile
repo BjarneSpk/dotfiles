@@ -1,5 +1,5 @@
 export DOTFILES="$HOME/dotfiles"
-# export PATH="$DOTFILES/scripts:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # Add cargo to PATH
 if [[ -f "$HOME/.cargo/env" ]]; then
