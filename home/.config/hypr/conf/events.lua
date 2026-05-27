@@ -12,6 +12,8 @@ local execs = {
 	"waybar_auto_hide",
 	"hyprsunset",
 	"gnome-keyring-daemon --start --components=secrets",
+  "nm-applet",
+  "blueman-applet",
 }
 
 local function redetect_brightness()
