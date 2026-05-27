@@ -7,6 +7,7 @@ local binds = {
 	{ main_mod .. " + T", hl.dsp.layout("togglesplit") },
 	{ main_mod .. " + F", hl.dsp.window.fullscreen() },
 	{ main_mod .. " + N", hl.dsp.window.float({ action = "toggle" }) },
+	{ main_mod .. " + SHIFT + N", windows.toggle_all_float },
 	{ main_mod .. " + M", hl.dsp.layout("movetoroot") },
 	{ main_mod .. " + TAB", hl.dsp.focus({ monitor = "+1" }) },
 	{ main_mod .. " + SHIFT + TAB", hl.dsp.workspace.move({ monitor = "+1" }) },

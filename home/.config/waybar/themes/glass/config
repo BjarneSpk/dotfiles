@@ -119,8 +119,8 @@
   "backlight": {
     "format": "{icon} {percent}%",
     "format-icons": ["󰃞", "󰃟", "󰃠"],
-    "on-scroll-up": "brightness.sh increase",
-    "on-scroll-down": "brightness.sh decrease",
+    "on-scroll-up": "brightness.sh increase 5",
+    "on-scroll-down": "brightness.sh decrease 5",
     "smooth-scrolling-threshold": 0.2,
     "tooltip": false
   },
