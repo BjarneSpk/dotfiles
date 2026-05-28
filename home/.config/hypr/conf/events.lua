@@ -14,6 +14,7 @@ local execs = {
 	"gnome-keyring-daemon --start --components=secrets",
   "nm-applet",
   "blueman-applet",
+  "brightness.sh redetect"
 }
 
 local function redetect_brightness()

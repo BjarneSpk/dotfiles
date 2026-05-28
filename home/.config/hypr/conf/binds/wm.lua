@@ -4,6 +4,7 @@ local windows = require("conf.util.windows")
 
 local binds = {
 	{ main_mod .. " + P", hl.dsp.window.pseudo() },
+	{ main_mod .. " + SHIFT + P", windows.toggle_all_pseudo },
 	{ main_mod .. " + T", hl.dsp.layout("togglesplit") },
 	{ main_mod .. " + F", hl.dsp.window.fullscreen() },
 	{ main_mod .. " + N", hl.dsp.window.float({ action = "toggle" }) },
