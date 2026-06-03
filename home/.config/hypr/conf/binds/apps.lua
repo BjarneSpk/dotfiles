@@ -7,7 +7,7 @@ return {
 	{ main_mod .. " + RETURN", hl.dsp.exec_cmd(G.terminal) },
 	{ main_mod .. " + B", hl.dsp.exec_cmd(G.browser) },
 	{ main_mod .. " + E", hl.dsp.exec_cmd(G.file_manager) },
-	{ main_mod .. " + SHIFT + Q", hl.dsp.exec_cmd(G.logout) },
+	{ main_mod .. " + SHIFT + Q", G.logout },
 	{ main_mod .. " + Q", hl.dsp.exec_cmd(G.lock_screen) },
 	{ main_mod .. " + W", hl.dsp.exec_cmd("toggle-waybar.sh") },
 	{ main_mod .. " + SHIFT + W", hl.dsp.exec_cmd("wallpaper.sh") },
