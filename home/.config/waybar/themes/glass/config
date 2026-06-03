@@ -13,6 +13,7 @@
     "custom/separator",
     "custom/mpris",
     "custom/mpris-prev",
+    "custom/mpris-toggle",
     "custom/mpris-next",
     "custom/separator",
     "clock",
@@ -62,14 +63,19 @@
     "escape": false,
     "max-length": 25,
     "min-length": 25,
-    "on-click": "playerctl play-pause",
-    "on-click-right": "playerctl next",
-    "on-click-middle": "playerctl previous",
     "tooltip": false
   },
   "custom/mpris-prev": {
     "format": "",
     "on-click": "playerctl previous",
+    "tooltip": false
+  },
+  "custom/mpris-toggle": {
+    "exec": "~/.config/waybar/themes/glass/scripts/mpris_toggle.sh",
+    "exec-if": "playerctl -l",
+    "interval": 2,
+    "return-type": "json",
+    "on-click": "playerctl play-pause",
     "tooltip": false
   },
   "custom/mpris-next": {

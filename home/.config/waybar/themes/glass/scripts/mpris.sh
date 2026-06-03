@@ -3,13 +3,6 @@
 set -u
 
 fallback_text="Nothing is playing"
-script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-colors_file="$script_dir/../../../colors.css"
-pause_color="#9ecafc"
-if [ -r "$colors_file" ]; then
-  pause_color="$(awk '$1=="@define-color" && $2=="primary"{gsub(/;$/, "", $3); print $3; exit}' "$colors_file")"
-  [ -n "$pause_color" ] || pause_color="#9ecafc"
-fi
 
 json_escape() {
   printf '%s' "$1" | sed 's/\\/\\\\/g; s/"/\\"/g'
@@ -51,7 +44,6 @@ if [ -z "$target_player" ]; then
   exit 0
 fi
 
-status="$(playerctl -p "$target_player" status 2>/dev/null || true)"
 title="$(playerctl -p "$target_player" metadata xesam:title 2>/dev/null || true)"
 artist="$(playerctl -p "$target_player" metadata xesam:artist 2>/dev/null | paste -sd ', ' - || true)"
 icon="$(player_icon "$target_player")"
@@ -63,19 +55,10 @@ artist_text="$(pango_escape "$artist")"
   exit 0
 }
 
-if [ "$status" = "Paused" ]; then
-  pause_icon="<span foreground=\"$pause_color\"></span>"
-  if [ -n "$artist" ]; then
-    text="$pause_icon $icon $title_text - $artist_text"
-  else
-    text="$pause_icon $icon $title_text"
-  fi
+if [ -n "$artist" ]; then
+  text="$icon $title_text - $artist_text"
 else
-  if [ -n "$artist" ]; then
-    text="$icon $title_text - $artist_text"
-  else
-    text="$icon $title_text"
-  fi
+  text="$icon $title_text"
 fi
 tooltip="$title"
 [ -n "$artist" ] && tooltip="$title - $artist"

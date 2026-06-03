@@ -25,6 +25,7 @@ window#waybar {
 #window,
 #custom-mpris-prev,
 #custom-mpris,
+#custom-mpris-toggle,
 #custom-mpris-next,
 #clock,
 #custom-pomo,
@@ -109,6 +110,7 @@ window#waybar {
 
 #custom-mpris:hover,
 #custom-mpris-prev:hover,
+#custom-mpris-toggle:hover,
 #custom-mpris-next:hover,
 #window:hover,
 #clock:hover,
