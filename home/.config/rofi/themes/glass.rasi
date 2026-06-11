@@ -1,0 +1,148 @@
+@import "~/.config/rofi/colors.rasi"
+
+* {
+    font: "JetBrainsMono Nerd Font 14px";
+}
+
+window {
+    transparency: "real";
+    location: center;
+    anchor: center;
+    width: 26%;
+
+    border: 1px;
+    border-color: @outline;
+    border-radius: 24px;
+
+    background-color: @surface-alpha;
+    padding: 9px;
+}
+
+mainbox {
+    background-color: transparent;
+    spacing: 8px;
+    children: [ inputbar, listview ];
+}
+
+inputbar {
+    background-color: @surface-container-high-alpha;
+    border: 1px;
+    border-color: @outline;
+    border-radius: 999px;
+
+    padding: 8px 14px;
+    spacing: 10px;
+    children: [ entry ];
+}
+
+prompt {
+    enabled: false;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @on-surface;
+    placeholder: "Search apps...";
+    placeholder-color: @on-surface-variant;
+    expand: true;
+}
+
+listview {
+    background-color: transparent;
+    border: 0;
+    padding: 2px;
+    margin: 0;
+    spacing: 10px;
+    columns: 1;
+    lines: 8;
+    cycle: true;
+    dynamic: true;
+    fixed-height: false;
+    layout: vertical;
+    scrollbar: false;
+}
+
+element {
+    orientation: horizontal;
+    children: [ element-icon, element-text ];
+
+    background-color: @surface-container-alpha;
+    border: 1px;
+    border-color: @outline;
+    border-radius: 999px;
+
+    padding: 8px 12px;
+    margin: 0;
+    spacing: 10px;
+
+    text-color: @on-surface;
+}
+
+element-icon {
+    background-color: transparent;
+    size: 1.1em;
+}
+
+element-text {
+    background-color: transparent;
+    text-color: inherit;
+    highlight: none;
+    expand: true;
+    vertical-align: 0.5;
+    format: "{text}";
+}
+
+element normal.normal {
+    background-color: @surface-container-alpha;
+    text-color: @on-surface;
+}
+
+element selected.normal {
+    background-color: @primary-alpha;
+    border: 2px;
+    border-color: @outline;
+    text-color: @on-primary;
+}
+
+element normal.active {
+    background-color: @secondary;
+    border: 2px;
+    border-color: @outline;
+    text-color: @on-secondary;
+}
+
+element selected.active {
+    background-color: @primary-alpha;
+    border: 2px;
+    border-color: @outline;
+    text-color: @on-primary;
+}
+
+element normal.urgent,
+element selected.urgent {
+    background-color: @error;
+    border: 1px;
+    border-color: @error;
+    text-color: @on-error;
+}
+
+element alternate.normal,
+element alternate.active,
+element alternate.urgent {
+    background-color: @surface-container-alpha;
+    border-color: @outline;
+    text-color: @on-surface;
+}
+
+scrollbar {
+    enabled: false;
+}
+
+message {
+    background-color: transparent;
+}
+
+textbox {
+    background-color: transparent;
+    text-color: @on-surface;
+}
