@@ -17,7 +17,7 @@ pkill -x waybar || true
 
 # Check if waybar-disabled file exists
 HYPRLAND_SIGNATURE=$(hyprctl instances -j | jq -r '.[0].instance')
-HYPRLAND_INSTANCE_SIGNATURE="$HYPRLAND_SIGNATURE" waybar &
+HYPRLAND_INSTANCE_SIGNATURE="$HYPRLAND_SIGNATURE" waybar --style ~/.config/waybar/themes/glass/style.css -c ~/.config/waybar/themes/glass/config &
 
 # Explicitly release the lock (optional) -> flock releases on exit
 flock -u 200
