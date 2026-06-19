@@ -5,6 +5,18 @@
     "keybind" : "l"
 }
 {
+    "label" : "shutdown",
+    "action" : "power.sh shutdown",
+    "text" : "Power Off",
+    "keybind" : "s"
+}
+{
+    "label" : "reboot",
+    "action" : "power.sh reboot",
+    "text" : "Restart",
+    "keybind" : "r"
+}
+{
     "label" : "logout",
     "action" : "power.sh exit",
     "text" : "Log Out",
@@ -15,18 +27,6 @@
     "action" : "power.sh suspend",
     "text" : "Suspend",
     "keybind" : "u"
-}
-{
-    "label" : "reboot",
-    "action" : "power.sh reboot",
-    "text" : "Restart",
-    "keybind" : "r"
-}
-{
-    "label" : "shutdown",
-    "action" : "power.sh shutdown",
-    "text" : "Power Off",
-    "keybind" : "s"
 }
 {
     "label" : "hibernate",
