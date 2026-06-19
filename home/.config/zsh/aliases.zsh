@@ -1,6 +1,7 @@
 #!/usr/bin/env zsh
 
 alias cd="z"
+alias yay="yay --diffmenu"
 alias lg="lazygit"
 alias vim="nvim"
 alias vi="nvim"
@@ -14,6 +15,7 @@ alias cat="bat"
 alias top="btop"
 # alias pow="upower -i $(upower -e | grep BAT) | grep -oP '(percentage:\s*\K(\d*%)|state:\s*\K(.*))' | sort | tr '\n' ' ' && echo"
 alias pacbrowse="pacman -Qq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
+alias pacforeign="pacman -Qmq | fzf --preview 'pacman -Qil {}' --layout=reverse --bind 'enter:execute(pacman -Qil {} | less)'"
 alias open="xdg-open"
 alias infvpn="sudo openconnect --protocol=anyconnect vpn.informatik.uni-stuttgart.de --cafile ~/Downloads/infcacert.crt"
 
