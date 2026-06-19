@@ -4,11 +4,11 @@ local M = {}
 
 local DEFAULT_OPTS = {
 	float = {
-		scale = 0.8,
+		scale = 0.9,
 		center = true,
 	},
 	pseudo = {
-		scale = 0.8,
+		scale = 0.9,
 	},
 }
 

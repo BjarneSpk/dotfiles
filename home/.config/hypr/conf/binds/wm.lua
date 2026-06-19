@@ -14,6 +14,8 @@ local binds = {
 	{ main_mod .. " + SHIFT + TAB", hl.dsp.workspace.move({ monitor = "+1" }) },
 	{ main_mod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true } },
 	{ main_mod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true } },
+	{ main_mod .. " + Next", hl.dsp.focus({ workspace = "+1" }), { repeating = true } },
+	{ main_mod .. " + Prior", hl.dsp.focus({ workspace = "-1" }), { repeating = true } },
 	{
 		main_mod .. " + equal",
 		monitors.scale_up,

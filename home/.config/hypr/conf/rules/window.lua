@@ -49,5 +49,10 @@ return {
     match = { title = "^wlogout" },
 		size = { "monitor_w * 0.6", "monitor_h * 0.4" },
     opacity = "0.50",
+  },
+  {
+    name = "rofi",
+    match = { title = "^rofi" },
+    opacity = "0.85",
   }
 }

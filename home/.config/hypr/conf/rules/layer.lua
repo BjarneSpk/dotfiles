@@ -13,5 +13,7 @@ return {
 	{
 		match = { namespace = "rofi" },
 		no_anim = true,
+    blur = true,
+    ignore_alpha = 0,
 	},
 }
