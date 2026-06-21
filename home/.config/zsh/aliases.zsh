@@ -1,7 +1,6 @@
 #!/usr/bin/env zsh
 
 alias cd="z"
-alias yay="yay --diffmenu"
 alias lg="lazygit"
 alias vim="nvim"
 alias vi="nvim"

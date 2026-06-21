@@ -1,3 +1,6 @@
+local log_path = (os.getenv("XDG_STATE_HOME") or (os.getenv("HOME") .. "/.local/state")) .. "/yay/install.log"
+local log_dir  = log_path:match("^(.+)/[^/]+$")
+
 yay.create_autocmd("PostInstall", {
   desc = "append every installed/upgraded package to a persistent log",
   callback = function(event)
